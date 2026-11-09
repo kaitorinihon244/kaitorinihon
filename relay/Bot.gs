@@ -317,15 +317,15 @@ function summaryText_() {
   const ov = ordersTab_().getDataRange().getValues().slice(1);
   const rv = sheet_().getDataRange().getValues().slice(1);
   const sv = stockTab_().getDataRange().getValues().slice(1);
-  const todayOrders = ov.filter(function (r) { return String(r[1]).indexOf(d) === 0; });
-  const todayReq = rv.filter(function (r) { return String(r[1]).indexOf(d) === 0; });
+  const todayOrders = ov.filter(function (r) { return fmtD_(r[1]) === d; });
+  const todayReq = rv.filter(function (r) { return fmtD_(r[1]) === d; });
   const bought = sv.filter(function (r) { return fmtD_(r[1]) === d; });
   const sold = sv.filter(function (r) { return fmtD_(r[8]) === d && r[7] === '販売済'; });
   const inStock = sv.filter(function (r) { return r[7] === '在庫'; });
   const sum = function (rows, c) { return rows.reduce(function (a, r) { return a + (Number(r[c]) || 0); }, 0); };
   const openOrders = ov.filter(function (r) { return CLOSED.indexOf(r[13]) < 0; }).length;
   const sa = salesTab_().getDataRange().getValues().slice(1);
-  const todaySales = sa.filter(function (r) { return String(r[1]).indexOf(d) === 0; });
+  const todaySales = sa.filter(function (r) { return fmtD_(r[1]) === d; });
   const unpaid = sa.filter(function (r) { return r[15] === '入金待ち'; });
   const late = overdueSales_();
   return ['📊 ' + d + ' のまとめ',

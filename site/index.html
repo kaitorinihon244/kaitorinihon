@@ -1722,7 +1722,7 @@ html[data-mode="sell"] .pmode-note{display:flex}
     </div>
     <div class="rq-done" id="rqDone" hidden>
       <div class="sbadge"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg></div>
-      <h2>送信画面を開きました</h2>
+      <h2 id="rqDoneTitle">送信画面を開きました</h2>
       <p id="rqDoneMsg"></p>
       <div class="nd-actions" style="justify-content:center"><button class="pill outline" id="rqBack"><span>入力画面に戻る</span></button><button class="pill dark" id="rqDoneClose"><span>閉じる</span></button></div>
     </div>
@@ -2454,7 +2454,7 @@ $('#rqFile').addEventListener('change',async e=>{ const fs=[...e.target.files].f
   for(const f of fs){ const small=await rqShrink(f); rqFiles.push({file:small,url:URL.createObjectURL(small)}); } rqDraw(); });
 $('#rqPhotos').addEventListener('click',e=>{ const b=e.target.closest('[data-rqdel]'); if(!b) return; const [f]=rqFiles.splice(+b.dataset.rqdel,1); URL.revokeObjectURL(f.url); rqDraw(); });
 rqm.addEventListener('input',e=>{ if(e.target.closest('#rqForm')&&e.target.id!=='rqFile'){ const er=e.target.parentElement.querySelector('.err'); if(er&&e.target.value.trim()){ er.hidden=true; e.target.classList.remove('bad'); } clearTimeout(rqDraw.t); rqDraw.t=setTimeout(rqDraw,250); } });
-function rqDone(msg){ $('#rqForm').hidden=true; $('#rqDone').hidden=false; $('#rqDoneMsg').textContent=msg; setTimeout(()=>$('#rqDoneClose').focus(),60); }
+function rqDone(msg,title){ $('#rqForm').hidden=true; $('#rqDone').hidden=false; $('#rqDoneTitle').textContent=title||'送信画面を開きました'; $('#rqDoneMsg').textContent=msg; setTimeout(()=>$('#rqDoneClose').focus(),60); }
 $('#rqSend').addEventListener('click',async e=>{ const b=e.target.closest('[data-rqsend]'); if(!b) return; const kind=b.dataset.rqsend;
   if(!rqValidate()){ e.preventDefault(); return; }
   const text=rqText();
@@ -2466,7 +2466,7 @@ $('#rqSend').addEventListener('click',async e=>{ const b=e.target.closest('[data
       const res=await fetch(rqRelay(),{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)});
       const out=await res.json().catch(()=>({}));
       if(!out.ok) throw new Error(out.error||'failed');
-      rqBusy=false; rqDone(`受付番号 ${out.id||''}　担当者が内容を確認し、ご入力の連絡先へご連絡します。`);
+      rqBusy=false; rqDone(`受付番号 ${out.id||''}　担当者が内容を確認し、ご入力の連絡先へご連絡します。`,'ご相談を受け付けました');
       for(const f of rqFiles) URL.revokeObjectURL(f.url); rqFiles=[]; ['rqName','rqMaker','rqAcc','rqQ'].forEach(id=>$('#'+id).value=''); rqDraw();
     }catch(err){ rqBusy=false; rqFallback=true; rqDraw(); const er=$('#rqErr'); er.hidden=false; er.textContent=err&&err.message==='busy'?'ただいま混み合っています。下の方法でお送りいただくか、時間をおいてお試しください。':'送信できませんでした。お手数ですが、下の方法でお送りください。'; }
     return; }
