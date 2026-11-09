@@ -1,5 +1,7 @@
 # Request relay setup (Gmail + Telegram + receipt)
 
+**Live site:** https://kaitorinihon.jp (and www), served by Cloudflare Pages project `kaitorinihon` (also at kaitorinihon.pages.dev). The domain is registered at お名前.com, which can't be transferred to Cloudflare because Cloudflare doesn't register .jp. Its nameservers point to the Cloudflare account kaitorinihon777@gmail.com (hunts/ursula), set up 9 Nov 2026. The MX record (mail.gmell.site) was kept from the old setup.
+
 **Status (2 Nov 2026):** deployed and connected to the site. Gmail and receipts work.
 Web app URL: https://script.google.com/macros/s/AKfycbxAG-kODT-6sITS7capta4vWqdATSkk-A4B3tsFSIExgvYe4Vil7yUWsDAKmHRli1kp/exec
 Apps Script project: 「買取日本 受付リレー」 in the kaitorinihon777 Google account.
