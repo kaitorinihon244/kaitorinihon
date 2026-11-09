@@ -1,0 +1,15 @@
+# built upload file (rebuilt by work/build-site.ps1)
+kaitori-site.zip
+
+# scratch from price research and testing; only the scripts and the master data are kept
+work/*
+!work/*.ps1
+!work/site.json
+
+# local Claude Code settings
+.claude/settings.local.json
+
+# OS files
+Thumbs.db
+desktop.ini
+.DS_Store
