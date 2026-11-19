@@ -1555,7 +1555,7 @@ html[data-mode="sell"] .pmode-note{display:flex}
     </div>
     <div class="fcols">
       <div class="fbrand"><img data-logo-img alt="" hidden><span data-logo-text><b data-t="texts.brand">買取日本</b><small data-t="texts.romaji">Kaitorinihon</small></span><p data-t="texts.footTagline">スマホ・ゲーム・カメラ・トレカ・ウイスキーを、東京相場で高価買取。</p></div>
-      <div class="fcol"><h4>買取について</h4><ul><li><button class="alink" data-go="prices"><span>買取価格表</span></button></li><li><button class="alink" data-go="flow"><span>買取の流れ</span></button></li><li><button class="alink" data-go="faq"><span>よくあるご質問</span></button></li><li><button class="alink" data-go="stores"><span>店舗一覧</span></button></li><li><button class="alink" data-request><span>未掲載商品の相談</span></button></li></ul></div>
+      <div class="fcol"><h4>買取について</h4><ul><li><button class="alink" data-go="prices"><span>買取価格表</span></button></li><li><a class="alink" href="https://kaitorinihon.jp/kaitori/"><span>商品別 買取価格一覧</span></a></li><li><button class="alink" data-go="flow"><span>買取の流れ</span></button></li><li><button class="alink" data-go="faq"><span>よくあるご質問</span></button></li><li><button class="alink" data-go="stores"><span>店舗一覧</span></button></li><li><button class="alink" data-request><span>未掲載商品の相談</span></button></li></ul></div>
       <div class="fcol"><h4>カテゴリー</h4><ul id="footCats"></ul></div>
       <div class="fcol"><h4>公式SNS</h4><ul id="snsFoot"></ul></div>
     </div>
@@ -2167,7 +2167,7 @@ function applyTexts(){
   $$('[data-t]').forEach(el=>{ const v=getPath(site,el.dataset.t)??''; if(el.hasAttribute('data-chars')) splitChars(el,String(v)); else if(el.hasAttribute('data-hl')) el.innerHTML=hl(v); else el.textContent=v; });
   if(!canHover) $('#hint').textContent='なぞって査定額をチェック';
   $$('[data-lines]').forEach(el=>{ const base=+(el.dataset.d||0), st=+(el.dataset.stagger||0); $$('.ln>span',el).forEach((s,i)=>s.style.transitionDelay=(base+i*st)+'ms'); });
-  document.title=`${site.texts.watermark||'KAITORI'} ${site.texts.brand||''}`.trim();
+  document.title=site.texts.seoTitle||(/買取/.test(document.title)&&document.title.length>12?document.title:`${site.texts.watermark||'KAITORI'} ${site.texts.brand||''}`.trim());
   /* optional lines (rating, 古物商許可, stats note) disappear when left empty in the editor */
   const T=site.texts; $('.rating').hidden=!String(T.ratingText||'').trim();
   $$('[data-hide-empty]').forEach(el=>{ el.hidden=!String(getPath(site,el.dataset.t)||'').trim(); });

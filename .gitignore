@@ -5,6 +5,7 @@ kaitori-site.zip
 work/*
 !work/*.ps1
 !work/site.json
+!work/seo-build.js
 
 # local Claude Code settings
 .claude/settings.local.json

@@ -4,8 +4,26 @@
     {
       "name": "kaitori",
       "runtimeExecutable": "powershell",
-      "runtimeArgs": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", ".claude/serve.ps1", "-Port", "8766"],
+      "runtimeArgs": [
+        "-NoProfile",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        ".claude/serve.ps1",
+        "-Port",
+        "8766"
+      ],
       "port": 8766
+    },
+    {
+      "name": "site-build",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        ".claude/serve-site.js",
+        "site",
+        "8788"
+      ],
+      "port": 8788
     }
   ]
 }
