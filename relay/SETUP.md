@@ -161,3 +161,13 @@ Every product on the site has an RJP code (RJP-000001…). The JAN stays in the 
 - To stop it: Project Settings → Script properties → add `AUTO_PRICES` = `off`. Delete it (or set `on`) to resume.
 - `AUTO_PRICES_LAST` shows the last good run; `AUTO_PRICES_ERROR` shows a failed download (the last good prices stay).
 - First run (19 Nov 15:25): 7,043 items, 296 products matched, 17 changed, 0 skipped.
+
+## SEO (19 Nov 2026)
+
+- `work/build-site.ps1` runs `work/seo-build.js`, which adds the page title, canonical, social-preview tags, icons and
+  structured data (company, 4 stores, FAQ) to index.html, and writes `/kaitori/` price pages (one per category),
+  robots.txt, sitemap.xml and 404.html. Rebuild + upload to refresh the dated prices on those pages.
+- Title/description can be overridden with `texts.seoTitle` / `texts.seoDescription` in site.json.
+- www.kaitorinihon.jp → kaitorinihon.jp: Cloudflare Redirect Rule "Redirect from WWW to root" (301).
+  kaitorinihon.pages.dev and www send `X-Robots-Tag: noindex` (in _headers).
+- Still to do by the owner: Google Search Console (submit https://kaitorinihon.jp/sitemap.xml) and a Google Business Profile per store.
