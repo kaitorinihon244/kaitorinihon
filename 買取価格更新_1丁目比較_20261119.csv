@@ -1,0 +1,297 @@
+﻿商品,照合,買取1丁目の商品名,新品(旧),新品(新),差額,中古(旧),中古(新),開封(1丁目)
+"iPhone 18 Pro 256GB",JAN,"iPhone 18 Pro 256GB",202000,206500,4500,173300,164000,185000
+"iPhone 18 Pro 512GB",名称,"iPhone 18 Pro 512GB",240000,240000,0,189200,192000,221000
+"iPhone 18 Pro 1TB",JAN,"iPhone 18 Pro 1TB",310000,301000,-9000,250000,235000,257000
+"iPhone 18 Pro 2TB",JAN,"iPhone 18 Pro 2TB",380000,375000,-5000,277300,260000,310000
+"iPhone 18 Pro Max 256GB",JAN,"iPhone 18 Pro Max 256GB",231000,226000,-5000,188100,183000,213000
+"iPhone 18 Pro Max 512GB",JAN,"iPhone 18 Pro Max 512GB ",267000,261000,-6000,212100,208000,250000
+"iPhone 18 Pro Max 1TB",JAN,"iPhone 18 Pro Max 1TB",337000,331000,-6000,253200,260000,290000
+"iPhone 18 Pro Max 2TB",JAN,"iPhone 18 Pro Max 2TB",395000,397000,2000,283600,290000,325000
+"iPhone Duo 256GB",JAN,"iPhone Duo 256GB",373000,360000,-13000,298400,288000,340000
+"iPhone Duo 512GB",JAN,"iPhone Duo 512GB",424000,401000,-23000,304200,287700,375000
+"iPhone Duo 1TB",JAN,"iPhone Duo 1TB",491000,475000,-16000,379900,367500,410000
+"iPhone Duo 2TB",JAN,"iPhone Duo 2TB",604000,575000,-29000,510300,485800,500000
+"iPhone 17 Pro Max 256GB",名称,"iPhone 17 Pro Max 256GB",191000,192000,1000,159000,159000,173000
+"iPhone 17 Pro Max 512GB",名称,"iPhone 17 Pro Max 512GB",217000,217000,0,185000,185000,201000
+"iPhone 17 Pro Max 1TB",名称,"iPhone 17 Pro Max 1TB",239000,240000,1000,209000,200000,226000
+"iPhone 17 Pro Max 2TB",名称,"iPhone 17 Pro Max 2TB",270000,270000,0,231000,223000,230000
+"iPhone 17 Pro 256GB",名称,"iPhone 17 Pro 256GB",174000,175000,1000,145000,145000,156000
+"iPhone 17 Pro 512GB",名称,"iPhone 17 Pro 512GB",202500,203500,1000,167000,167000,183000
+"iPhone 17 Pro 1TB",名称,"iPhone 17 Pro 1TB",205000,205000,0,185000,180000,190000
+"iPhone 17 256GB",名称,"iPhone 17 256GB",139000,139500,500,105000,105000,118500
+"iPhone 17 512GB",名称,"iPhone 17 512GB",150000,151000,1000,127000,127000,136000
+"iPhone Air 256GB",名称,"iPhone Air 256GB",134000,134500,500,105000,105000,115000
+"iPhone Air 512GB",名称,"iPhone Air 512GB",141000,142000,1000,116000,116000,128000
+"iPhone Air 1TB",名称,"iPhone Air 1TB",150000,152000,2000,124000,124000,142000
+"iPhone 14 Pro Max 128GB",JAN,"iPhone 14 Pro MAX 128GB",110000,110000,0,73000,70000,95000
+"iPhone 14 Pro Max 256GB",JAN,"iPhone 14 Pro MAX 256GB",115000,115000,0,78000,78000,105000
+"iPhone 16 Pro 128GB",JAN,"iPhone 16 Pro 128GB",149000,149000,0,105000,105000,129000
+"iPhone 14 Pro Max 512GB",名称,"iPhone 14 Pro MAX 512GB",130000,130000,0,82000,82000,120000
+"iPhone 14 Pro Max 1TB",名称,"iPhone 14 Pro MAX 1TB",140000,140000,0,86000,86000,130000
+"iPhone 14 128GB",JAN,"iPhone 14 128GB",73500,73500,0,44000,44000,65000
+"iPhone 14 Pro 128GB",名称,"iPhone 14 Pro 128GB",90000,90000,0,62000,60000,80000
+"iPhone 14 256GB",JAN,"iPhone 14 256GB",77500,77500,0,48000,48000,70000
+"iPhone 14 Pro 256GB",名称,"iPhone 14 Pro 256GB",105000,105000,0,67000,65000,95000
+"iPhone 14 Pro 512GB",名称,"iPhone 14 Pro 512GB",110000,110000,0,72000,70000,100000
+"iPhone 14 512GB",名称,"iPhone 14 512GB",84000,84000,0,53000,53000,74000
+"iPhone 14 Pro 1TB",名称,"iPhone 14 Pro 1TB",120000,120000,0,75000,75000,110000
+"iPhone 14 Plus 128GB",名称,"iPhone 14 Plus 128GB",77000,77000,0,49000,49000,70000
+"iPhone 14 Plus 256GB",名称,"iPhone 14 Plus 256GB",88000,88000,0,53000,53000,78000
+"iPhone 14 Plus 512GB",名称,"iPhone 14 Plus 512GB",90000,90000,0,58000,58000,80000
+"iPhone 17e 256GB",名称,"iPhone 17e 256GB",111000,110000,-1000,77000,77000,81000
+"iPhone 16e 128GB",JAN,"iPhone 16e 128GB",87000,87000,0,66000,66000,70000
+"iPhone 17e 512GB",名称,"iPhone 17e 512GB",117000,117000,0,92000,92000,100000
+"iPhone 15 128GB",JAN,"iPhone 15 128GB",84500,84500,0,61000,61000,72000
+"iPhone 16e 256GB",JAN,"iPhone 16e 256GB",88000,88000,0,71000,70000,75000
+"iPhone 16e 512GB",JAN,"iPhone 16e 512GB",95000,95000,0,81000,81000,85000
+"iPhone 15 Pro Max 256GB",名称,"iPhone 15 Pro Max 256GB",150000,150000,0,100000,100000,143000
+"iPhone 15 Pro Max 512GB",名称,"iPhone 15 Pro Max 512GB",162000,162000,0,110000,110000,155000
+"iPhone 15 Pro Max 1TB",名称,"iPhone 15 Pro Max 1TB",169000,169000,0,120000,120000,162000
+"iPhone 15 Plus 128GB",JAN,"iPhone 15 Plus 128GB",92500,92500,0,65000,65000,87000
+"iPhone 15 Plus 256GB",JAN,"iPhone 15 Plus 256GB",105500,105500,0,74000,74000,97000
+"iPhone 15 Plus 512GB",名称,"iPhone 15 Plus 512GB",113500,113500,0,81000,81000,103000
+"iPhone 13 Pro Max 1TB",名称,"iPhone 13 Pro MAX 1TB",97000,97000,0,63000,63000,0
+"iPhone 13 Pro Max 512GB",名称,"iPhone 13 Pro MAX 512GB",92000,92000,0,58000,58000,0
+"iPhone 13 Pro Max 256GB",名称,"iPhone 13 Pro MAX 256GB",87000,87000,0,55000,55000,0
+"iPhone 13 Pro Max 128GB",名称,"iPhone 13 Pro MAX 128GB",82000,82000,0,51000,50000,0
+"iPhone 13 Pro 1TB",名称,"iPhone 13 Pro 1TB",85000,85000,0,53000,50000,0
+"iPhone 13 Pro 512GB",名称,"iPhone 13 Pro 512GB",83000,83000,0,48000,48000,0
+"iPhone 13 Pro 256GB",名称,"iPhone 13 Pro 256GB",80000,80000,0,45000,45000,0
+"iPhone 13 Pro 128GB",名称,"iPhone 13 Pro 128GB",75000,75000,0,41000,40000,0
+"iPhone 13 mini 512GB",名称,"iPhone 13 mini 512GB",75000,75000,0,38000,38000,0
+"iPhone 13 mini 256GB",名称,"iPhone 13 mini 256GB",70000,70000,0,33000,33000,0
+"iPhone 13 mini 128GB",名称,"iPhone 13 mini 128GB",65000,65000,0,28000,28000,0
+"iPhone 13 512GB",名称,"iPhone 13 512GB",70000,70000,0,41000,40000,0
+"iPhone 13 256GB",名称,"iPhone 13 256GB",60000,60000,0,36000,35000,0
+"iPhone 13 128GB",名称,"iPhone 13 128GB",58000,58000,0,32000,32000,0
+"iPhone 16 Pro 256GB",JAN,"iPhone 16 Pro 256GB",168500,168500,0,114000,114000,147000
+"iPhone 16 Pro 512GB",JAN,"iPhone 16 Pro 512GB",170000,170000,0,127000,127000,150000
+"iPhone 16 Pro Max 256GB",JAN,"iPhone 16 Pro Max 256GB",180000,181000,1000,124000,132000,160000
+"iPhone 16 Pro 1TB",JAN,"iPhone 16 Pro 1TB",185000,185000,0,136000,136000,165000
+"iPhone 16 Pro Max 512GB",JAN,"iPhone 16 Pro Max 512GB",205000,205000,0,141000,141000,185000
+"iPhone 16 128GB",JAN,"iPhone 16 128GB",110000,110500,500,85000,83000,90000
+"iPhone 16 Pro Max 1TB",JAN,"iPhone 16 Pro Max 1TB",220000,220000,0,150000,150000,200000
+"iPhone 16 256GB",JAN,"iPhone 16 256GB",117000,117000,0,95000,95000,99000
+"iPhone 16 512GB",JAN,"iPhone 16 512GB",121000,123000,2000,102000,102000,104000
+"iPhone 16 Plus 128GB",JAN,"iPhone 16 Plus 128GB",110500,110000,-500,88000,88000,91000
+"iPhone 15 Pro 128GB",名称,"iPhone 15 Pro 128GB",131000,131000,0,80000,80000,115000
+"iPhone 16 Plus 256GB",JAN,"iPhone 16 Plus 256GB",120000,120000,0,101000,101000,101000
+"iPhone 15 Pro 256GB",名称,"iPhone 15 Pro 256GB",141000,141000,0,88000,88000,129000
+"iPhone 16 Plus 512GB",JAN,"iPhone 16 Plus 512GB",127000,127000,0,109000,105000,108000
+"iPhone 15 Pro 512GB",名称,"iPhone 15 Pro 512GB",151000,151000,0,97000,97000,139000
+"iPhone 15 Pro 1TB",名称,"iPhone 15 Pro 1TB",158000,158000,0,103000,103000,145000
+"iPhone 15 256GB",JAN,"iPhone 15 256GB",92500,92500,0,70000,70000,82000
+"iPhone 15 512GB",JAN,"iPhone 15 512GB",100000,100000,0,77000,77000,90000
+"Google Pixel 11 256GB",名称,"Google Pixel 11 256GB",106000,107000,1000,74300,75000,0
+"Google Pixel 11 512GB",名称,"Google Pixel 11 512GB",119000,119000,0,87800,87800,0
+"Google Pixel 11 Pro 256GB",名称,"Google Pixel 11 Pro 256GB",141000,141000,0,98000,98000,0
+"Google Pixel 11 Pro 512GB",名称,"Google Pixel 11 Pro 512GB",159000,159000,0,118000,118000,0
+"Google Pixel 11 Pro 1TB",名称,"Google Pixel 11 Pro 1TB",189000,189000,0,154900,154900,0
+"Google Pixel 11 Pro XL 256GB",名称,"Google Pixel 11 Pro XL 256GB",146000,146000,0,127300,127300,0
+"Google Pixel 11 Pro XL 512GB",名称,"Google Pixel 11 Pro XL 512GB",172500,172500,0,147900,147900,0
+"Google Pixel 11 Pro XL 1TB",名称,"Google Pixel 11 Pro XL 1TB",210000,210000,0,181700,181700,0
+"Google Pixel 11 Pro Fold 256GB",名称,"Google Pixel 11 Pro Fold 256GB",212000,212000,0,180000,180000,0
+"Google Pixel 10 256GB",名称,"Google Pixel 10 256GB",98000,98000,0,67300,67300,0
+"Google Pixel 10a 128GB",名称,"Google Pixel 10a 128GB",69500,69000,-500,43100,42800,0
+"Google Pixel 10a 256GB",名称,"Google Pixel 10a 256GB",82000,86000,4000,51800,54300,0
+"Google Pixel 10 Pro 256GB",名称,"Google Pixel 10 Pro 256GB",136000,122000,-14000,92000,82500,0
+"Google Pixel 10 Pro 512GB",名称,"Google Pixel 10 Pro 512GB",145000,145000,0,100000,100000,0
+"Google Pixel 10 Pro XL 256GB",名称,"Google Pixel 10 Pro XL 256GB",130000,140000,10000,91500,98500,0
+"Google Pixel 10 Pro XL 512GB",名称,"Google Pixel 10 Pro XL 512GB",140000,163500,23500,93300,109000,0
+"Google Pixel 10 Pro Fold 256GB",名称,"Google Pixel 10 Pro Fold 256GB",176000,176000,0,120000,120000,0
+"Google Pixel 10 Pro Fold 512GB",名称,"Google Pixel 10 Pro Fold 512GB",185000,185000,0,0,,0
+"Google Pixel 9a 128GB",名称,"Google Pixel 9a 128GB",63000,63000,0,38200,38200,0
+"Google Pixel 9a 256GB",名称,"Google Pixel 9a 256GB",68500,68500,0,43900,43900,0
+"Galaxy S26 Ultra SM-S948Q 16G+1TB",名称,"Galaxy S26 Ultra SM-S948Q 16G+1TB SIMフリー",225000,225000,0,139300,139300,0
+"Galaxy S26 Ultra SM-S948Q 512G SIMフリー",JAN,"Galaxy S26 Ultra SM-S948Q 12G+512G SIMフリー",180000,180000,0,133700,133700,0
+"Galaxy S26 Ultra SM-S948Q 256GB",JAN,"Galaxy S26 Ultra SM-S948Q 12G+256G SIMフリー",163000,163000,0,121500,121500,0
+"moto g06 SIMフリー 4GB/128GB PB9B0014JP / PB9B0013JP",JAN,"moto g06 SIMフリー",14000,14500,500,0,,0
+"Motorola moto g05 8GB/128GB",JAN,"moto g05 8GB+128GB",15000,15000,0,0,,0
+"Redmi Note 14 Pro 5G 256GB",JAN,"Redmi Note 14 Pro 5G 8G+256G",32000,32000,0,0,,0
+"moto g64 5G",名称,"moto g64 5G",25000,25000,0,13200,13200,0
+"AQUOS R8 SH-R80",名称,"AQUOS R8 SH-R80",54000,54000,0,38000,38000,0
+"Xperia 10 VI SOG14",名称,"Xperia 10 VI SOG14",45000,45000,0,20000,20000,0
+"Xperia 1 VI SOG13",名称,"Xperia 1 VI SOG13",150000,150000,0,96400,96400,0
+"SONY Xperia10 VII SO-52F docomo版SIMフリー",型番,"Xperia 10 VII  SO-52F docomo",52000,52000,0,34700,34700,0
+"Xperia 10 VI SO-52E",名称,"Xperia 10 VI SO-52E",40000,40000,0,17800,17800,0
+"arrows We2 F-52E docomo版",型番,"arrows We2 F-52E",15500,15500,0,3900,3900,0
+"AQUOS wish5 SH-52F docomo版",型番,"AQUOS wish5 SH-52F",27000,27000,0,14000,14000,0
+"SAMSUNG Galaxy Z Fold7 SC-56F docomo版",型番,"Galaxy Z Fold7 12GB+256GB docomo SC-56F",175000,175000,0,0,,0
+"AQUOS wish4 SH-52E docomo版",型番,"AQUOS wish4 SH-52E",18000,18000,0,6300,6300,0
+"arrows We2 Plus F-51E",名称,"arrows We2 Plus F-51E",23000,23000,0,13400,13400,0
+"AQUOS R8 pro SH-51D",名称,"AQUOS R8 pro SH-51D",50000,50000,0,30800,30800,0
+"Xperia 1 VI SO-51E",名称,"Xperia 1 VI SO-51E",150000,150000,0,107100,107100,0
+"AQUOS R8 SH-R80",名称,"AQUOS R8 SH-R80",54000,54000,0,33200,33200,0
+"iPad (A16) 第11世代 Wi-Fiモデル 128GB",JAN,"2025年 iPad 11インチ Wi-Fi 128GB",66100,66200,100,40700,40800,45000
+"Apple Pencil Pro MX2D3ZA/A",JAN,"Apple Pencil Pro MX2D3ZA/A",18000,18400,400,10600,10800,0
+"Apple Pencil USB-C MUWA3ZA/A",JAN,"Apple Pencil USB-C MUWA3ZA/A",8500,8500,0,2400,2400,0
+"2025年 iPad Pro (M5) 13インチ Wi-Fi 256GB",名称,"2025年 iPad Pro (M5) 13インチ Wi-Fi 256GB",198000,200000,2000,125100,126400,0
+"2025年 iPad Pro (M5) 13インチ Wi-Fi 512GB",名称,"2025年 iPad Pro (M5) 13インチ Wi-Fi 512GB",215000,220000,5000,130000,133000,0
+"iPad Pro 11インチ (M5) Wi-Fi 256GB 2025年秋モデル",JAN,"2025年 iPad Pro (M5) 11インチ Wi-Fi 256GB",168000,169000,1000,120000,120700,0
+"iPad Pro (M5) 11インチ Wi-Fi 512GB 2025年秋モデル",JAN,"2025年 iPad Pro (M5) 11インチ Wi-Fi 512GB",183500,184500,1000,120100,120800,0
+"iPad Pro (M4) 13インチ 2024年 256GB WiFiモデル",JAN,"2024年 iPad Pro (M4) 13インチ Wi-Fi 256GB (標準ガラス搭載)",163000,163000,0,130000,130000,144000
+"iPad Pro (M4) 13インチ 2024年 512GB WiFiモデル",JAN,"2024年 iPad Pro (M4) 13インチ Wi-Fi 512GB (標準ガラス搭載)",173000,173000,0,135000,135000,155000
+"iPad Pro (M4) 13インチ 2024年 1TB WiFiモデル",JAN,"2024年 iPad Pro (M4) 13インチ Wi-Fi 1TB (標準ガラス搭載)",178000,178000,0,136800,136800,165000
+"iPad Pro (M4) 13インチ 2024年 2TB WiFiモデル",JAN,"2024年 iPad Pro (M4) 13インチ Wi-Fi 2TB (標準ガラス搭載)",181000,181000,0,140800,140800,169000
+"iPad Air (M3) 13インチ 128GB WiFiモデル",JAN,"2025年 iPad Air (M3) 13インチ Wi-Fi 128GB",94000,94000,0,69300,69300,0
+"iPad Air (M3) 13インチ 256GB WiFiモデル",JAN,"2025年 iPad Air (M3) 13インチ Wi-Fi 256GB",109000,109000,0,75000,75000,0
+"iPad Air (M3) 11インチ 128GB WiFiモデル",JAN,"2025年 iPad Air (M3) 11インチ Wi-Fi 128GB",76000,77000,1000,60800,61600,0
+"iPad Air (M3) 11インチ 256GB WiFiモデル",JAN,"2025年 iPad Air (M3) 11インチ Wi-Fi 256GB",86000,86000,0,57300,57300,72000
+"iPad mini (A17 Pro) Wi-Fi 128GB",JAN,"2024年 iPad mini (A17 Pro) 8.3インチ Wi-Fi 128GB",71000,71000,0,50000,50000,50000
+"iPad Pro (M4) 11インチ 2024年 256GB WiFiモデル",JAN,"2024年 iPad Pro (M4) 11インチ Wi-Fi 256GB (標準ガラス搭載)",129000,129000,0,99200,99200,120000
+"iPad mini (A17 Pro) Wi-Fi 256GB",JAN,"2024年 iPad mini (A17 Pro) 8.3インチ Wi-Fi 256GB",81000,81000,0,60000,60000,66000
+"iPad mini (A17 Pro) Wi-Fi 512GB",JAN,"2024年 iPad mini (A17 Pro) 8.3インチ Wi-Fi 512GB",96000,96000,0,82600,82600,80000
+"iPad Pro (M4) 11インチ 2024年 512GB WiFiモデル",JAN,"2024年 iPad Pro (M4) 11インチ Wi-Fi 512GB (標準ガラス搭載)",146000,146000,0,108500,108500,135000
+"iPad Pro (M4) 11インチ 2024年 1TB WiFiモデル",JAN,"2024年 iPad Pro (M4) 11インチ Wi-Fi 1TB (標準ガラス搭載)",158000,158000,0,125000,125000,148000
+"iPad Pro (M4) 11インチ 2024年 2TB WiFiモデル",JAN,"2024年 iPad Pro (M4) 11インチ Wi-Fi 2TB (標準ガラス搭載)",161000,161000,0,123100,123100,152000
+"iPad (A16) 第11世代 Wi-Fiモデル 256GB",JAN,"2025年 iPad 11インチ Wi-Fi 256GB",81000,81500,500,50900,51200,55000
+"iPad (A16) 第11世代 Wi-Fiモデル 512GB",JAN,"2025年 iPad 11インチ Wi-Fi 512GB",87000,87000,0,58000,58000,0
+"Apple Watch SE3 40mm GPSモデル",JAN,"Apple Watch SE 3 GPS 40mm アルミニウムケース",31700,31500,-200,19800,19700,0
+"Apple Watch SE3 44mm GPSモデル",JAN,"Apple Watch SE 3 GPS 44mm アルミニウムケース",34500,35000,500,24600,25000,0
+"Apple Watch 第11世代 42mm （GPS + Cellularモデル）（チタンケース+ミラネーゼループ）",JAN,"Apple Watch Series 11 GPS+Cellular 42mm ゴールド チタニウムケース",45000,45000,0,0,,0
+"Apple Watch 第11世代 46mm （GPS + Cellularモデル）（チタンケース+ミラネーゼループ）",JAN,"Apple Watch Series 11 GPS+Cellular 46mm ゴールド チタニウムケース",50000,50000,0,0,,0
+"Apple Watch 第12世代 42mm GPSモデル (アルミニウムケース)",JAN,"Apple Watch Series 12 GPS 42mm アルミニウムケース",57000,55000,-2000,39300,37900,0
+"Apple Watch Series 11 42mm チタンケース+スポーツバンド（GPS + Cellularモデル）",JAN,"Apple Watch Series 11 GPS+Cellular 42mm ゴールド チタニウムケース",45000,45000,0,25700,25700,0
+"Apple Watch Series 11 46mm チタンケース+スポーツバンド（GPS + Cellularモデル）",JAN,"Apple Watch Series 11 GPS+Cellular 46mm ナチュラル チタニウムケース",50000,50000,0,28700,28700,0
+"POCKETALK S Plus グローバル通信(2年)付き PTSPGW",JAN,"POCKETALK S Plus",13300,13300,0,0,,0
+"POCKETALK S グローバル通信(2年)付き PTSG",JAN,"POCKETALK 通訳器 ソースネクスト ポケトークS グローバル通信付き ホワイト",9000,9000,0,0,,0
+"POCKETALK S2 スタンダード グローバル通信(2年)付き",JAN,"POCKETALK S2 スタンダード グローバル通信(2年)付き ホワイト",14500,15000,500,2000,2100,0
+"Nintendo Switch 2（日本語・国内専用） スプラトゥーン レイダース セット BEE-S-KB6PE",JAN,"Nintendo Switch 2（日本語・国内専用）スプラトゥーン レイダース セット",55500,55100,-400,31400,31200,0
+"Nintendo Switch 2 多言語版",JAN,"Nintendo Switch 2 多言語版",82400,82000,-400,54600,54300,0
+"Nintendo Switch 2 マリオカート ワールドセット 日本語・国内専用",JAN,"Nintendo Switch 2（日本語・国内専用）マリオカート ワールドセット",57000,59000,2000,30900,32000,0
+"Joy-Con 2 (L)/(R) BEE-A-JAAAA [ライトブルー/ライトレッド]",JAN,"Nintendo Switch Joy-Con 2 (L) ライトブルー/(R) ライトレッド",8000,8100,100,3700,3700,0
+"Switch 2本体（日本語・国内専用） Pokémon LEGENDS Z-A Nintendo Switch 2 Edition セット",JAN,"Nintendo Switch 2（日本語・国内専用） Pokemon LEGENDS Z-A Nintendo Switch 2 Edition セット",54000,56300,2300,30600,31900,0
+"Nintendo Switch 2 (日本語版)",JAN,"Nintendo Switch 2 日本語・国内専用",51800,52700,900,29900,30400,0
+"Nintendo Switch 有機ELモデル マリオレッド",JAN,"Nintendo Switch (有機ELモデル) マリオレッド",45000,45500,500,21400,21600,0
+"Nintendo Switch （有機ELモデル）ネオンブルー・ネオンレッド",JAN,"Nintendo Switch (有機ELモデル) ネオンブルー・ネオンレッド 中古",44000,44000,0,29000,27000,0
+"Nintendo Switch （有機ELモデル）ホワイト",JAN,"Nintendo Switch (有機ELモデル) ホワイト　中古",44000,44000,0,29000,26000,0
+"Nintendo Switch Joy-Con(L) ネオンブルー/(R) ネオンレッド HAD-S-KABAH",JAN,"Nintendo Switch 新型 バッテリー強化版 ネオンブルー/(R) ネオンレッド",38700,39000,300,14300,14400,0
+"Nintendo Switch Joy-Con(L)/(R) グレー HAD-S-KAAAH",JAN,"Nintendo Switch バッテリー強化版 グレー",38500,38500,0,19500,19000,0
+"Nintendo Switch（有機ELモデル）ゼルダの伝説",JAN,"Nintendo Switch (有機ELモデル) ゼルダの伝説",0,45500,45500,19000,19000,0
+"Nintendo Switch（有機ELモデル）スカーレット・バイオレット",JAN,"Nintendo Switch (有機ELモデル) スカーレット・バイオレット",0,45500,45500,19000,19000,0
+"Nintendo Switch（有機ELモデル）スプラトゥーン3",JAN,"Nintendo Switch (有機ELモデル) スプラトゥーン3",0,45500,45500,19000,19000,0
+"Nintendo Switch Joy-Con (L)/(R) パステルピンク",JAN,"Nintendo Switch Joy-Con (L)/(R) パステルピンク",7500,6500,-1000,1200,1000,0
+"Nintendo Switch Joy-Con (L)/(R)ネオンレッド/ネオンブルー",JAN,"Nintendo Switch Joy-Con (L)/(R)  ネオンレッド/ネオンブルー",7600,6500,-1100,1200,1000,0
+"Nintendo Switch Joy-Con(L)/(R) ネオンパープル/ネオンオレンジ",JAN,"Nintendo Switch Joy-Con(L)/(R) ネオンパープル/ネオンオレンジ",7600,6500,-1100,1200,1000,0
+"Nintendo Switch Joy-Con (L)/(R) ネオングリーン/ネオンピンク",JAN,"Nintendo Switch Joy-Con (L)/(R) ネオングリーン/ネオンピンク",7600,6500,-1100,1100,900,0
+"Nintendo Switch Joy-Con (L)/(R)パステルピンク/パステルイエロー",JAN,"Nintendo Switch Joy-Con (L)/(R)パステルピンク/パステルイエロー",7500,6500,-1000,1200,1000,0
+"Nintendo Switch Joy-Con (L)/(R)パステルパープル/ パステルグリーン",JAN,"Nintendo Switch Joy-Con (L)/(R)パステルパープル/ パステルグリーン",6700,6500,-200,1100,1100,0
+"Nintendo Switch 2 Proコントローラー BEE-A-FSSKA",JAN,"Nintendo Switch 2 Proコントローラー",8400,8600,200,4500,4600,0
+"Nintendo Switch 2 ゼルダの伝説 40周年 アニバーサリーエディション BEE-S-KL6CC",JAN,"Nintendo Switch 2（日本語・国内専用）ゼルダの伝説 40周年 アニバーサリーエディション",57700,56000,-1700,36500,35400,0
+"Nintendo Switch 2 Sandisk Micro SD Express 256GB SDカード",JAN,"Nintendo Switch 2 Sandisk Micro SD Express 256GB SDカード",7500,7500,0,0,,0
+"任天堂 Nintendo Joy-Con 2 （L） ブルー/（R） ライトイエロー [コントローラー]",JAN,"Nintendo Switch Joy-Con 2 (L) ブルー/(R) ライトイエロー",8000,8200,200,0,,0
+"ポケットモンスター ポケなで モンスターボール",JAN,"ポケモン ポケなで モンスターボール",3000,3000,0,0,,0
+"Nintendo Switch 2 Proコントローラー バイオハザード レクイエム エディション BEE-A-FSSKD",JAN,"Nintendo Switch 2 Proコントローラー バイオハザード レクイエム エディション BEEAFSSKD",10200,10400,200,0,,0
+"Joy-Con 2 (L)/(R) BEE-A-JABAB [ライトパープル/ライトグリーン]",JAN,"Nintendo Switch Joy-Con 2 (L) ライトパープル/(R) ライトグリーン",8100,8300,200,3800,3900,0
+"Nintendo Switch 2 Samsung Micro SD Express 256GB SDカード",JAN,"Nintendo Switch 2 Samsung Micro SD Express 256GB SDカード",6700,7000,300,0,,0
+"Nintendo Switch ニンテンドーサウンドクロック Alarmo",JAN,"Nintendo Switch ニンテンドーサウンドクロック Alarmo",10400,10600,200,0,,0
+"Nintendo Switch Proコントローラー ゼルダの伝説",JAN,"Nintendo Switch Proコントローラー ゼルダの伝説",6800,6500,-300,2300,2200,0
+"Nintendo Switch Proコントローラー スプラトゥーン3エディション",JAN,"Nintendo Switch Proコントローラー スプラトゥーン3エディション",6800,6500,-300,2300,2200,0
+"PlayStation5 Slim CFI-2000A01",JAN,"PlayStation5 Slim Disc CFI-2000A01　中古",118000,118000,0,73000,73000,0
+"PlayStation5 Slim デジタル・エディション CFI-2000B01",JAN,"PlayStation5 Slim Digital CFI-2000B01　中古",103000,103000,0,63000,63000,0
+"SONY PlayStation5 デジタル・エディション 30周年アニバーサリー リミテッドエディションCFI-2000B30",JAN,"PlayStation5 Slim Digital  30周年エディション CFI-2000B30",81000,81000,0,44200,63500,0
+"PlayStation5 Slim コントローラー ダブルパック CFIJ-10018",JAN,"PlayStation5 Slim コントローラー ダブルパック CFIJ-10018",120700,120700,0,47200,47200,0
+"PlayStation5 Slim デジタル・エディション コントローラー ダブルパック CFIJ-10019",JAN,"PlayStation5 Slim デジタル・エディション コントローラー ダブルパック CFIJ-10019",110200,110000,-200,42800,42700,0
+"アストロボット ジョイフル リミテッドエディション CFI-ZCT1JZC",JAN,"PS5 コントローラーアストロボット ジョイフル リミテッドエディション CFI-ZCT1JZC",9250,8800,-450,0,,0
+"PlayStation(R)5 Ghost of Yotei ゴールド リミテッドエディション CFIJ-10029",JAN,"PlayStation5 Slim Ghost of Yotei エディション CFIJ-10029",116700,116700,0,49900,73000,0
+"PS5 ワイヤレスコントローラー ”Ghost of Yotei” ブラック リミテッドエディション CFI-ZCT1JZ8",JAN,"PS5 ワイヤレスコントローラー “Ghost of Yotei” ブラック リミテッドエディション CFI-ZCT1JZ8",9700,10000,300,0,,0
+"PS5 ワイヤレスコントローラー ”Ghost of Yotei” ゴールド リミテッドエディション CFI-ZCT1JZ7",JAN,"PS5 ワイヤレスコントローラー “Ghost of Yotei” ゴールド リミテッドエディション CFI-ZCT1JZ7",9400,10000,600,0,,0
+"“ゴッド・オブ・ウォー“ 20th Anniversary リミテッドエディション CFI-ZCT1JZA",JAN,"PS5 ワイヤレスコントローラー “ゴッド・オブ・ウォー” 20th Anniversary リミテッドエディション CFI-ZCT1JZA",9800,9800,0,0,,0
+"PS5 Edge コントローラー CFI-ZCP1J",JAN,"PS5 Edge コントローラー CFI-ZCP1J",23500,24000,500,0,,0
+"PS5 コントローラー カモ CFI-ZCT1J06",JAN,"PS5 コントローラー グレー カモフラージュ CFI-ZCT1J06",8800,8400,-400,0,,0
+"PS5 コントローラー ロボット CFI-ZCT1JZ3",JAN,"PS5 コントローラー ロボット CFI-ZCT1JZ3",10500,10600,100,0,,0
+"PS5 コントローラー “ゴッド・オブ・ウォー",JAN,"PS5 コントローラー  “ゴッド・オブ・ウォー" CFI-ZCT1JZ1",10000,10000,0,0,,0
+"PS5 コントローラー “Spider-Man 2",JAN,"PS5 コントローラー “Spider-Man 2”  CFI-ZCT1JZ2",14000,14000,0,0,,0
+"PS5 コントローラー “モンスターハンターワイルズ“ CFI-ZCT1JZ5",JAN,"PS5 コントローラー “モンスターハンターワイルズ” CFI-ZCT1JZ5",9500,8600,-900,0,,0
+"PS5 コントローラー クロマ パール CFI-ZCT1J12",JAN,"PS5 コントローラー クロマ パール CFI-ZCT1J12",8800,8600,-200,0,,0
+"PS5 コントローラー コバルト ブルー",JAN,"PS5 コントローラー コバルト ブルー CFI-ZCT1J09",8800,8600,-200,0,,0
+"PS5 コントローラー クロマ グリーン CFI-ZCT1J10",JAN,"PS5 コントローラー クロマ グリーン CFI-ZCT1J10",8800,8600,-200,0,,0
+"PS5 コントローラー 30周年 CFI-ZCT1J30",JAN,"PS5 コントローラー 30周年 CFI-ZCT1J30",10400,10500,100,0,,0
+"PS5 コントローラー フォートナイ CFI-ZCT1JZ4",JAN,"PS5 コントローラー フォートナイ CFI-ZCT1JZ4",10100,10200,100,0,,0
+"PS5 コントローラー インディゴ CFI-ZCT1J11",JAN,"PS5 コントローラー インディゴ CFI-ZCT1J11",8800,8600,-200,0,,0
+"PS5 コントローラー “FINAL FANTASY” CFIJ-15500",JAN,"PS5 コントローラー “FINAL FANTASY”  CFIJ-15500",10000,10000,0,0,,0
+"PS5 コントローラー シルバー CFI-ZCT1J08",JAN,"PS5 コントローラー シルバー CFI-ZCT1J08",8800,8600,-200,0,,0
+"PlayStation Portal リモートプレーヤー CFIJ-18000",JAN,"PlayStation Portal リモートプレーヤー CFIJ-18000",32200,32900,700,15100,15400,0
+"PlayStation Portal(TM) リモートプレーヤー 30周年 CFIJ-18030",JAN,"PlayStation Portal リモートプレーヤー 30周年 CFIJ-18030",34000,35400,1400,0,,0
+"“Marvel's Wolverine” バトルイエロー リミテッドエディション /CFI-ZCT2JZJ",JAN,"PS5 コントローラー “Marvel’s Wolverine” バトルイエロー リミテッドエディション CFI-ZCT2JZJ",11800,11800,0,0,,0
+"プレイステーション5 デジタル・エディション Marvel's Wolverine バトルイエロー リミテッドエディション",JAN,"PlayStation5 デジタル・エディション “Marvel’s Wolverine” バトルイエロー リミテッドエディション　",108900,108900,0,0,,0
+"PlayStation 5 デジタル・エディション 825GB 日本語専用 Console Language：Japanese only DualSense ワイヤレスコントローラー ダブルパック [CFIJ-10032]",JAN,"PlayStation 5 デジタルED ダブルパック 日本語専用 CFIJ-10032 4948872850599",57500,58600,1100,0,,0
+"PlayStation VR2 [ CFIJ-17000 ]",JAN,"PlayStation VR2 CFIJ-17000",46000,46300,300,0,,0
+"PlayStation VR2 Horizon Call of the Mountain 同梱版 [CFIJ-17001]",JAN,"PlayStation VR2 “Horizon Call of the Mountain” 同梱版 CFIJ-17001",46000,46300,300,0,,0
+"PS5 原神 リミテッドエディション/CFI-ZCT2JZE",JAN,"PS5 ワイヤレスコントローラー “原神” リミテッドエディション CFI-ZCT2JZE",10000,10000,0,0,,0
+"PlayStation 5 デジタル・エディション 日本語専用 CFI‑2200B01",JAN,"PlayStation 5 デジタル ・ エディション 日本語 専用 CFI-2200B01 4948872417419",50500,50500,0,34000,34000,0
+"PlayStation Portal リモートプレーヤー ブラック CFIJ-18001",JAN,"PlayStation Portal リモートプレーヤー ブラック CFIJ-18001",32800,33200,400,0,,0
+"PS5 ディスクドライブ CFI-ZDD1J",JAN,"PS5 ディスクドライブ  CFI-ZDD1J",9000,8500,-500,0,,0
+"ROG Xbox Ally X RC73XA-Z2E24G 1TB",JAN,"ASUS ROG Xbox Ally X 1TB ブラック",154500,154500,0,0,,0
+"ROG Xbox Ally RC73YA-Z2A 16GB 512GB",JAN,"ASUS ROG Xbox Ally 512GB ホワイト",86700,86700,0,0,,0
+"Xbox Series S EP2-10065/512㎇",JAN,"Xbox Series S 512GB EP2-10065",79800,79800,0,0,,0
+"Xbox コントローラー レッド QAU-00015",JAN,"Xbox コントローラー レッド QAU-00015",6400,6400,0,1100,1100,0
+"Xbox コントローラー USB-C 1V8-00005",JAN,"Xbox コントローラー + USB-C 1V8-00005",5700,5400,-300,1300,1200,0
+"Xbox コントローラー ブルー QAU-00005",JAN,"Xbox コントローラー ブルー QAU-00005/EP2-29941",6400,6400,0,1100,1100,0
+"Xbox コントローラー ホワイト QAS-00005",JAN,"Xbox コントローラー ホワイト QAS-00005",5700,5700,0,1100,1100,0
+"Xbox コントローラー ブラック QAT-00005",JAN,"Xbox コントローラー ブラック QAT-00005",5700,5700,0,1100,1100,0
+"Xbox Series S 1TB ホワイト EP2-00650 未開封",JAN,"Xbox Series S 1TB ホワイト EP2-00650",90000,89000,-1000,28100,27800,0
+"Xbox Series S 1TB XXU-00015 未開封",JAN,"Xbox Series S 1TB ブラック XXU-00015",90000,89000,-1000,28100,27800,0
+"Xbox Series X RRT-00015 未開封",JAN,"Xbox Series X 1TB RRT-00015",124000,121800,-2200,35400,34800,0
+"Xbox Series X 1TB デジタル エディション ホワイト EP2-00708 未開封",JAN,"Xbox Series X 1TB デジタル EP2-00708",114000,110200,-3800,38000,36700,0
+"Meta Quest 3S 256GB",JAN,"Meta Quest 3S 256GB",62000,62400,400,30000,30200,0
+"Meta Quest 3S 128GB",JAN,"Meta Quest 3S 128GB",47500,48300,800,24000,24400,0
+"Meta Quest 3 512GB",JAN,"Meta Quest 3 512GB",91800,92400,600,55500,55900,0
+"Nintendo Pokémon LEGENDS Z-A Switch 2",JAN,"【NS2】Pokemon LEGENDS Z-A Nintendo Switch 2 Edition",4300,4300,0,0,,0
+"Pokémon LEGENDS Z-A",JAN,"【NS1】Pokemon LEGENDS Z-A",4000,4000,0,0,,0
+"桃太郎電鉄2 ～あなたの町も きっとある～ Nintendo Switch 2 Edition 東日本編＋西日本編",JAN,"【NS2】桃太郎電鉄2 ～あなたの町も きっとある～ Nintendo Switch 2 Edition 東日本編＋西日本編/Switch 2",6000,5700,-300,0,,0
+"スーパーマリオブラザーズ ワンダー",JAN,"【NS1】スーパーマリオブラザーズ ワンダー",4800,4800,0,0,,0
+"Nintendo ファイアーエムブレム 万紫千紅 [Switch 2 ソフト]",JAN,"【NS2】ファイアーエムブレム 万紫千紅",7600,8000,400,0,,0
+"リズム天国 ミラクルスターズ [Nintendo Switch]",JAN,"【NS1】リズム天国 ミラクルスターズ T",4500,4800,300,0,,0
+"スプラトゥーン レイダース [Nintendo Switch 2 専用]",JAN,"【NS2】スプラトゥーン レイダース",4900,4900,0,0,,0
+"Nintendo スーパーマリオブラザーズ ワンダー",JAN,"【NS2】スーパーマリオブラザーズ ワンダー Nintendo Switch 2 Edition + みんなでリンリンパーク ",6400,6400,0,0,,0
+"ヨッシーとフカシギの図鑑 [Nintendo Switch 2 ソフト]",JAN,"【NS2】ヨッシーとフカシギの図鑑",5000,5000,0,0,,0
+"トモダチコレクション わくわく生活",JAN,"【NS1】トモダチコレクション わくわく生活",5100,5100,0,0,,0
+"星のカービィ Wiiデラックス [Nintendo Switch]",JAN,"【NS1】星のカービィ Wii デラックス",4600,4600,0,600,600,0
+"マリオテニス フィーバー [Nintendo Switch 2 専用]",JAN,"【NS2】マリオテニス フィーバー",6100,6100,0,0,,0
+"ぽこ あ ポケモン [Nintendo Switch 2 専用]",JAN,"【NS2】ぽこ あ ポケモン",6800,6900,100,0,,0
+"【Switch2】Split Fiction（スプリット・フィクション）",JAN,"【NS2】Split Fiction",3600,3600,0,0,,0
+"【Switch2】牧場物語 Let's！風のグランドバザール Nintendo Switch 2 Edition",JAN,"【NS2】牧場物語 Lets！風のグランドバザール Nintendo Switch 2 Edition",5000,5100,100,0,,0
+"Switch2】星のカービィ ディスカバリー Nintendo Switch 2 Edition ＋ スターリーワールド",JAN,"【NS2】星のカービィ ディスカバリー Nintendo Switch 2 Edition ＋ スターリーワールド",6600,6600,0,0,,0
+"【Switch2】ドラゴンクエストVII Reimagined",JAN,"【NS2】ドラゴンクエストVII Reimagined -Switch T",4500,4500,0,0,,0
+"【Switch2】カービィのエアライダー",JAN,"【NS2】カービィのエアライダー　T",4300,4000,-300,0,,0
+"【Switch2】 ゼルダの伝説 ブレス オブ ザ ワイルド Nintendo Switch 2 Edition NXS-P-AAAAH",JAN,"【NS2】ゼルダの伝説　ブレス オブ ザ ワイルド Nintendo Switch 2 Edition",6700,6900,200,2100,2200,0
+"スーパー マリオパーティ ジャンボリー Nintendo Switch 2 Edition + ジャンボリーTV",JAN,"【NS2】スーパー マリオパーティ ジャンボリー Nintendo Switch 2 Edition ＋ ジャンボリーTV",6700,6500,-200,0,,0
+"ドンキーコング バナンザ [Nintendo Switch 2 専用]",JAN,"【NS2】ドンキーコング バナンザ",6700,6900,200,0,,0
+"ゼルダの伝説 ティアーズ オブ ザ キングダム Nintendo Switch 2 Edition",JAN,"【NS2】ゼルダの伝説　ティアーズ オブ ザ キングダム Nintendo Switch 2 Edition",6900,7000,100,0,,0
+"マリオカート ワールド [Nintendo Switch 2 専用]",JAN,"【NS2】マリオカート ワールド",7400,7600,200,0,,0
+"星のカービィ ディスカバリー",JAN,"【NS1】星のカービィ ディスカバリー",4700,4700,0,1000,1000,0
+"ゼルダの伝説 ティアーズ オブ ザ キングダム",JAN,"【NS1】ゼルダの伝説　ティアーズ オブ ザ キングダム",5900,5900,0,1100,1100,0
+"ゼルダの伝説 ブレス オブ ザ ワイルド",JAN,"【NS1】ゼルダの伝説 ブレス オブ ザ ワイルド",5700,5700,0,1200,1200,0
+"Pokemon LEGENDS アルセウス",JAN,"【NS1】Pokemon LEGENDS アルセウス",4700,4800,100,1100,1100,0
+"スーパー マリオパーティ ジャンボリー",JAN,"【NS1】スーパー マリオパーティ ジャンボリー",5400,5400,0,1000,1000,0
+"スプラトゥーン３",JAN,"【NS1】スプラトゥーン３",4700,4700,0,1200,1200,0
+"スーパーマリオ オデッセイ",JAN,"【NS1】スーパーマリオ オデッセイ ",4900,4900,0,1200,1200,0
+"ルイージマンション3",JAN,"【NS1】ルイージマンション3 ",4900,4900,0,1200,1200,0
+"マリオカート8 デラックス",JAN,"【NS1】マリオカート8 デラックス",4900,4900,0,1400,1400,0
+"マリオテニスエース",JAN,"【NS1】マリオテニスエース",4500,4500,0,1100,1100,0
+"ゼルダの伝説 夢をみる島",JAN,"【NS1】ゼルダの伝説 夢をみる島",4600,4600,0,0,,0
+"ポケットモンスター バイオレット",JAN,"【NS1】ポケットモンスター バイオレット",4700,4800,100,0,,0
+"ポケットモンスター スカーレット",JAN,"【NS1】ポケットモンスター スカーレット",4700,4800,100,0,,0
+"Nintendo Switch Sports",JAN,"【NS1】Nintendo Switch Sports",3900,4000,100,0,,0
+"007 ファースト・ライト [PS5ソフト]",JAN,"【PS5】007 ファースト・ライト",5800,5800,0,0,,0
+"「PS5」Ghost of Yotei",JAN,"【PS5】Ghost of Yotei",6100,4800,-1300,0,,0
+"「PS5」DEATH STRANDING 2: ON THE BEACH",JAN,"【PS5】DEATH STRANDING 2: ON THE BEACH",4000,4200,200,0,,0
+"「PS5」アストロボット",JAN,"【PS5】アストロボット",4300,4300,0,0,,0
+"「PS5」黒神話：悟空",JAN,"【PS5】黒神話：悟空",5600,5600,0,0,,0
+"「PS5」Split Fiction",JAN,"【PS5】Split Fiction",3200,3200,0,0,,0
+"Steam Deck 有機EL 1TB",名称,"Steam Deck 有機EL 1TB",163300,164600,1300,0,,0
+"Steam Deck 有機EL 512GB",JAN,"Steam Deck 有機EL 512GB",136500,138700,2200,0,,0
+"MacBook Air 13インチ M5 2026年 16GB/1TB",JAN,"MacBook Air 13.6インチ Liquid Retinaディスプレイ MDHJ4J/A スカイブルー 4549995656862",208000,209500,1500,146300,147400,0
+"MacBook Air 15インチ M5 2026年 24GB/1TB",JAN,"MacBook Air 15.3インチ Liquid Retinaディスプレイ M5チップ MDVF4J/A スターライト ",265200,266700,1500,192300,193400,0
+"MacBook Air 15インチ M5 2026年 16GB/1TB",JAN,"MacBook Air 15.3インチ Liquid Retinaディスプレイ M5チップ MDVK4J/A ミッドナイト",238000,239500,1500,170000,171100,0
+"MacBook Air 15インチ M5 2026年 16GB/512G",JAN,"MacBook Air 15.3インチ Liquid Retinaディスプレイ M5チップ MDVD4J/A スターライト",214000,215500,1500,152900,154000,0
+"MacBook Pro 14.2インチ M5チップ 24GB/2TB MDE64J/A MDE34J/A",JAN,"MacBook Pro 14.2インチ Liquid Retina XDRディスプレイ MDE64J/A シルバー",266000,266100,100,193500,193600,0
+"MacBook Pro 14.2インチ16GB/512GB M5チップ MDE44J/A MDE04J/A",JAN,"MacBook Pro 14.2インチ Liquid Retina XDRディスプレイ M5チップ MDE04J/A スペースブラック",195500,201500,6000,158500,163400,0
+"MacBook Air 13インチ Apple M5チップ 24GB 1TB",JAN,"MacBook Air 13.6インチ Liquid Retinaディスプレイ MDHG4J/A ミッドナイト 4549995656824",240000,241500,1500,150000,150900,0
+"MacBook Air 13インチ Apple M5チップ 16GB 1TB",JAN,"MacBook Air 13.6インチ Liquid Retinaディスプレイ MDHF4J/A ミッドナイト 4549995656800",208200,209700,1500,156500,157600,0
+"MacBook Air 13インチ Apple M5チップ 16GB 512GB",JAN,"MacBook Air 13.6インチ Liquid Retinaディスプレイ MDH74J/A [シルバー] 4549995656664",185200,186700,1500,130500,131600,0
+"MacBook Neo 256GB",JAN,"MacBook Neo 13インチ Liquid Retinaディスプレイ MHFA4J/A シルバー 4549995664591",98000,99500,1500,72200,73300,0
+"MacBook Pro 14.2インチ 16GB/1TB M5チップ 16GB/1TB MDE54J/A MDE14J/A",型番,"MacBook Pro 14.2インチ Liquid Retina XDRディスプレイ M5チップ MDE14J/A スペースブラック",200500,223100,22600,150400,167400,0
+
+要確認（差が大きいため変更していません）
