@@ -60,7 +60,7 @@ function page({ title, desc, canonical, h1, crumbs, body, ld }) {
 <meta name="theme-color" content="#16233A"><style>${css}</style>${(ld || []).map(o => `<script type="application/ld+json">${json(o)}</script>`).join('')}</head><body>
 <header><a class="logo" href="/">${esc(brand)} <small style="font-weight:500;font-size:12px;color:#6B7890">KAITORI</small></a><a class="cta" href="/">無料で査定する</a></header>
 <main><nav class="bc">${crumbs.map(c => c.url ? `<a href="${c.url}">${esc(c.name)}</a>` : esc(c.name)).join(' › ')}</nav><h1>${esc(h1)}</h1>${body}</main>
-<footer><p><a href="/">トップページ</a> ・ <a href="/kaitori/">買取価格一覧</a></p><p>${esc(T.copyright || '© 2026 買取日本 Kaitorinihon. All rights reserved.')}</p></footer></body></html>`;
+<footer><p><a href="/">トップページ</a> ・ <a href="/kaitori/">買取価格一覧</a></p><p>${esc(T.copyright || '© 2026 買取日本 Kaitorinihon. All rights reserved.')}</p>${T.license ? `<p>${esc(T.legalName ? T.legalName + '　' : '')}${esc(T.license)}</p>` : ''}</footer></body></html>`;
 }
 const crumbLd = list => ({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: list.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: SITE + (c.url || c.self) })) });
 
@@ -121,7 +121,7 @@ write('favicon.svg', `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64
 const idx = path.join(out, 'index.html');
 let html = fs.readFileSync(idx, 'utf8');
 const org = {
-  '@context': 'https://schema.org', '@type': 'Organization', '@id': SITE + '/#org', name: brand, alternateName: ['KAITORI', 'Kaitorinihon', 'Royal Japan'],
+  '@context': 'https://schema.org', '@type': 'Organization', '@id': SITE + '/#org', name: brand, legalName: T.legalName || undefined, alternateName: ['KAITORI', 'Kaitorinihon', 'Royal Japan'],
   url: SITE + '/', logo: SITE + '/apple-touch-icon.png',
   sameAs: [T.instagramUrl, T.tiktokUrl, T.xUrl, T.youtubeUrl, T.lineUrl].filter(Boolean)
 };
