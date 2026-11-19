@@ -2620,7 +2620,23 @@ function specView(p){ const sp=specOf(p); return SELL()?sp.map(c=>{ const fx=fix
 let stockItems=null, stockLoading=false;
 const stockKey=s=>String(s||'').toLowerCase().replace(/[\s　()（）\[\]【】・\-_/]/g,'');
 function stockFor(p){ if(!stockItems||!stockItems.length) return []; const k=stockKey(p.n); return stockItems.filter(it=>{ const s=stockKey(it.name); return s&&k&&(s.includes(k)||k.includes(s)); }); }
-function loadStock(){ const relay=rqRelay(); if(!relay||stockItems||stockLoading) return; stockLoading=true;
+/* buying prices kept current by the relay (from 1-chome.com, every 6 hours); the page keeps its own prices if this fails.
+   Same rules as relay/Prices.gs and work/ichome-match.ps1: options scale with the new price, colours take 1-chome's difference. */
+const icNorm=t=>!t?'':String(t).normalize('NFKC').toLowerCase().replace(/[【\[（(][^】\]）)]*(新品|中古|国内版|simフリー|sim free|正規品)[^】\]）)]*[】\]）)]/g,'').replace(/simフリー|sim free|国内版|正規品|新品|未開封/g,'').replace(/[\s　・\-_/【】\[\]（）()「」"'◆★☆,.、。]/g,'');
+const icRound100=v=>{ const x=v/100, f=Math.floor(x), d=x-f; return (d>0.5?f+1:d<0.5?f:(f%2===0?f:f+1))*100; };
+let pricesLoaded=false;
+function applyAutoPrices(items){ let n=0;
+  site.products.forEach(p=>{ const a=items[p.rjp]; if(!a||!(a[0]>0)) return; const [newP,usedP,openP,colors]=a, oldNew=+p.new||0;
+    (p.opts||[]).forEach(c=>{ const max=Math.max(0,...c.options.map(o=>+o.price||0)); if(!max) return;
+      const target=c.type==='new'?newP:c.type==='opened'?(openP>0?openP:(oldNew>0?icRound100(max*newP/oldNew):0)):c.type==='used'?(+usedP||0):0;
+      if(!(target>0)) return;
+      c.options.forEach(o=>{ if(!o.price) return; const cn=icNorm(o.label);
+        o.price=(c.type==='new'&&colors&&Object.prototype.hasOwnProperty.call(colors,cn))?target+colors[cn]:icRound100(o.price*target/max); }); });
+    p.new=newP; if(usedP!=null) p.used=usedP; n++; });
+  return n; }
+function loadPrices(){ const relay=rqRelay(); if(!relay||pricesLoaded) return; pricesLoaded=true;
+  fetch(relay+'?prices=1').then(r=>r.json()).then(out=>{ if(!out||!out.ok||!out.items) return;
+    if(applyAutoPrices(out.items)){ render(false); heroCard.refresh(); drawCart(); if(pdOpen) drawPD(); } }).catch(()=>{}); }function loadStock(){ const relay=rqRelay(); if(!relay||stockItems||stockLoading) return; stockLoading=true;
   fetch(relay+'?stock=1').then(r=>r.json()).then(out=>{ stockItems=out&&out.ok&&Array.isArray(out.items)?out.items:[]; }).catch(()=>{ stockItems=[]; })
     .finally(()=>{ stockLoading=false; if(SELL()) render(false); }); }
 function syncModeUI(){ document.documentElement.dataset.mode=priceMode; document.querySelector('meta[name="theme-color"]')?.setAttribute('content',SELL()?'#0A101C':'#16233A'); $('#pmode').setAttribute('aria-checked',SELL()); if(SELL()) loadStock();
@@ -2885,7 +2901,7 @@ function applySite(){
 await siteReady;
 tabsCtl=makeTabs($('#tabs'),()=>liveTabs().map(t=>({id:t.id,label:t.label})),tab,v=>{ q=''; onlyFav=false; $('#q').value=''; tab=v; page=1; render(); });
 mt=makeTabs($('#mtabs'),()=>site.models.map((m,i)=>({id:String(i),label:m.label})),'0',v=>{ curModel=+v; const l=$('#modelList'); l.classList.add('swap'); setTimeout(()=>{ drawModels(); l.classList.remove('swap'); },reduced?0:200); });
-applySite();
+applySite(); loadPrices();
 observe(document); io.observe($('#sellband'));
 booted=true; clockTick(); scrollWork();
 
