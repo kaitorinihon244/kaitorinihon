@@ -147,3 +147,15 @@ Every product on the site has an RJP code (RJP-000001…). The JAN stays in the 
 - **Stock:** send one line to the stock bot, such as `RJP-000005 ブラック 新品`. `/in` is optional, the words can be in any order and `rjp5` also works. Numbers are the buy then selling price: `RJP-000005 ブラック 新品 190000 225000`. Stock has no locations, because it's shared across all stores (在庫 column K is hidden and unused). `/price ST0002 140000` changes every in-stock unit with the same code and 状態. With no buy price, 新品/未開封 and 中古 use the listed price from 商品マスタ. An unknown code is refused. Items with no code use `/in 商品名 | 状態 | 買取価格 | 販売価格 | 場所 | メモ`. 在庫 column L holds the code.
 - **Sales:** 売上記録 column E and 機種別集計 column A hold the code. Online orders carry it in the item lines as `[RJP-000005] 機種名（カラー） ×1 ¥230,000`, so it also shows in order emails and Telegram.
 - `/model RJP-000005` and `/stock RJP-000005` search by code. The Excel file now includes 商品マスタ.
+
+## Automatic buying prices (19 Nov 2026, deployment version 13)
+
+- `Prices.gs` downloads 1-chome.com's buying-price list every 6 hours (`autoPrices`, timer installed by `setupAutoPrices`).
+  It matches our products the same way as `work/ichome-match.ps1` (JAN → name → model number with matching specs).
+- Results go to the **買取価格** tab, and 商品マスタ columns E/F (the bots' listed price) follow.
+- The site asks the relay for `?prices=1` when it opens and uses those prices over its own. If that fails, it keeps the prices in `site.json`.
+- A price that would change by more than ×0.4–×2.5 is not changed; the Telegram summary lists it under ⚠️.
+- Telegram gets a 💹 summary only when something changed.
+- To stop it: Project Settings → Script properties → add `AUTO_PRICES` = `off`. Delete it (or set `on`) to resume.
+- `AUTO_PRICES_LAST` shows the last good run; `AUTO_PRICES_ERROR` shows a failed download (the last good prices stay).
+- First run (19 Nov 15:25): 7,043 items, 296 products matched, 17 changed, 0 skipped.

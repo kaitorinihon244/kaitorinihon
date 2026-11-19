@@ -96,6 +96,7 @@ function doPost(e) {
 function doGet(e) {
   const p = (e && e.parameter) || {};
   if (p.stock === '1') return stockJson_();                          // site 販売 mode → Bot.gs
+  if (p.prices === '1') return pricesJson_();                        // automatic buying prices → Prices.gs
   if (!p.receipt) return HtmlService.createHtmlOutput('<p>受付リレーは動作しています。</p>');
   if (!prop_('RECEIPT_KEY') || p.key !== receiptSig_(p.receipt)) return HtmlService.createHtmlOutput('<p>リンクが正しくありません。</p>');
   const row = findRow_(p.receipt);
