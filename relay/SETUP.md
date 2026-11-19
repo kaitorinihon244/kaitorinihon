@@ -148,9 +148,11 @@ Every product on the site has an RJP code (RJP-000001…). The JAN stays in the 
 - **Sales:** 売上記録 column E and 機種別集計 column A hold the code. Online orders carry it in the item lines as `[RJP-000005] 機種名（カラー） ×1 ¥230,000`, so it also shows in order emails and Telegram.
 - `/model RJP-000005` and `/stock RJP-000005` search by code. The Excel file now includes 商品マスタ.
 
-## Automatic buying prices (19 Nov 2026, deployment version 13)
+## Automatic buying prices (19 Nov 2026, deployment version 13; every 2 hours since 19 Nov 16:11)
 
-- `Prices.gs` downloads 1-chome.com's buying-price list every 6 hours (`autoPrices`, timer installed by `setupAutoPrices`).
+- `Prices.gs` downloads 1-chome.com's buying-price list every 2 hours (`autoPrices`, timer installed by `setupAutoPrices`).
+  To change how often: edit `PRICE_EVERY_HOURS` at the top of Prices.gs (1, 2, 4, 6, 8 or 12), save, run `setupAutoPrices` once.
+  Each run takes about 1.5 minutes of the daily Apps Script trigger time; if the Telegram bots ever stop with a quota error, raise it to 4 or 6.
   It matches our products the same way as `work/ichome-match.ps1` (JAN → name → model number with matching specs).
 - Results go to the **買取価格** tab, and 商品マスタ columns E/F (the bots' listed price) follow.
 - The site asks the relay for `?prices=1` when it opens and uses those prices over its own. If that fails, it keeps the prices in `site.json`.

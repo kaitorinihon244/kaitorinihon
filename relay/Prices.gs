@@ -1,7 +1,7 @@
 /**
  * 買取日本 — automatic buying prices from 1-chome.com (same Apps Script project as Code.gs / Bot.gs)
  *
- * autoPrices() runs every 6 hours (setupAutoPrices installs the timer). It downloads 1-chome's
+ * autoPrices() runs every 2 hours (setupAutoPrices installs the timer). It downloads 1-chome's
  * price list, matches it to our products with the same rules as work/ichome-match.ps1 (JAN, then
  * normalised name, then model number with matching specs), and writes the result to the 買取価格 tab.
  * The site reads that tab from ?prices=1 and applies it over its own data, so no upload is needed.
@@ -10,6 +10,7 @@
  */
 
 const PRICE_HEAD = ['RJPコード', '機種名', '買取（新品）', '買取（中古）', '開封未使用', 'カラー差額', '1丁目の商品名', '照合', '更新日時'];
+const PRICE_EVERY_HOURS = 2;   // how often autoPrices runs (1, 2, 4, 6, 8 or 12); run setupAutoPrices after changing
 const IC_LISTS = [['goods', 'R0000002'], ['keitai', 'R0000001'], ['goods', 'R0000004']];
 const IC_NEW_EX = /開封済|開封品|開封未使用|開封新品|使用感|傷|ジャンク|来店|難あり|欠品|中古|箱なし|本体のみ/;
 const IC_OPEN = /開封済|開封品|開封未使用|開封新品/;
@@ -112,7 +113,7 @@ function icDownload_() {
   return { items: items, requests: requests };
 }
 
-/** Runs every 6 hours. Safe to run by hand; does nothing while AUTO_PRICES is off. */
+/** Runs every 2 hours. Safe to run by hand; does nothing while AUTO_PRICES is off. */
 function autoPrices() {
   if (prop_('AUTO_PRICES', 'on') === 'off') { console.log('AUTO_PRICES is off'); return; }
   let got;
@@ -175,10 +176,10 @@ function pricesJson_() {
   return ContentService.createTextOutput(out).setMimeType(ContentService.MimeType.JSON);
 }
 
-/** Run once from the editor: installs the 6-hour timer (safe to run again). */
+/** Run once from the editor: installs the timer (replaces the old one; safe to run again). */
 function setupAutoPrices() {
   priceTab_();
-  if (ScriptApp.getProjectTriggers().map(function (t) { return t.getHandlerFunction(); }).indexOf('autoPrices') < 0)
-    ScriptApp.newTrigger('autoPrices').timeBased().everyHours(6).create();
-  console.log('autoPrices runs every 6 hours. AUTO_PRICES = ' + prop_('AUTO_PRICES', 'on'));
+  ScriptApp.getProjectTriggers().forEach(function (t) { if (t.getHandlerFunction() === 'autoPrices') ScriptApp.deleteTrigger(t); });
+  ScriptApp.newTrigger('autoPrices').timeBased().everyHours(PRICE_EVERY_HOURS).create();
+  console.log('autoPrices runs every ' + PRICE_EVERY_HOURS + ' hours. AUTO_PRICES = ' + prop_('AUTO_PRICES', 'on'));
 }
