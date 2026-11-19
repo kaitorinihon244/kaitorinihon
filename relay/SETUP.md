@@ -170,4 +170,6 @@ Every product on the site has an RJP code (RJP-000001…). The JAN stays in the 
 - Title/description can be overridden with `texts.seoTitle` / `texts.seoDescription` in site.json.
 - www.kaitorinihon.jp → kaitorinihon.jp: Cloudflare Redirect Rule "Redirect from WWW to root" (301).
   kaitorinihon.pages.dev and www send `X-Robots-Tag: noindex` (in _headers).
-- Still to do by the owner: Google Search Console (submit https://kaitorinihon.jp/sitemap.xml) and a Google Business Profile per store.
+- Google Search Console: Domain property kaitorinihon.jp, verified 19 Nov 2026 by DNS TXT record (google-site-verification=…, do not delete it
+  in Cloudflare DNS). Sitemap submitted (21 pages). Account: kaitorinihon777@gmail.com.
+- Still to do by the owner: a Google Business Profile per store.
