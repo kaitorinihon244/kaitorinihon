@@ -2380,11 +2380,11 @@ const hero=(function(){
     if(w/dpr<1024){ const dw=w*2.1, dh=dw*ih/iw; return [(w-dw)/2, Math.max(h*.08, h*.42-dh/2), dw, dh]; }
     if(w/dpr>=1024||!sp.offsetHeight){ ax=w*.01; ay=h*.07; aw=w*.98; ah=h*.8; } else { const r=sp.getBoundingClientRect(), wr=wrap.getBoundingClientRect(); ax=(r.left-wr.left)*dpr; ay=(r.top-wr.top)*dpr; aw=r.width*dpr; ah=r.height*dpr; } const s=Math.min(aw/iw,ah/ih); const dw=iw*s, dh=ih*s; return [ax+(aw-dw)/2, ay+(ah-dh)/2, dw, dh]; }
   function rr(g,x,y,w,h,r){ g.beginPath(); g.moveTo(x+r,y); g.arcTo(x+w,y,x+w,y+h,r); g.arcTo(x+w,y+h,x,y+h,r); g.arcTo(x,y+h,x,y,r); g.arcTo(x,y,x+w,y,r); g.closePath(); }
-  function tag(g,cx,cy,txt,k,colored){ g.save(); g.translate(cx,cy); g.rotate(-.12); g.font=`700 ${15*k}px ${colored?"'Roboto Mono',monospace":"'Noto Sans JP',sans-serif"}`; const label=colored?txt:'査定前'; const tw=g.measureText(label).width; const w=tw+40*k, h=32*k;
+  function tag(g,cx,cy,txt,k,colored){ g.save(); g.translate(cx,cy); g.rotate(-.12); g.font=`700 ${15*k}px ${colored?"'Roboto Mono',monospace":getComputedStyle(document.documentElement).getPropertyValue('--font')||"'Noto Sans JP',sans-serif"}`; const T=s=>window.I18N?I18N.t(s):s; const label=colored?txt:T('査定前'); const tw=g.measureText(label).width; const w=tw+40*k, h=32*k;
     g.globalCompositeOperation='source-over'; g.fillStyle='#fff'; rr(g,0,0,w,h,8*k); g.fill(); g.lineWidth=(colored?2:1.2)*k; g.strokeStyle=colored?site.colors.price:'#C9D3E0'; g.stroke();
     g.beginPath(); g.arc(14*k,h/2,4*k,0,Math.PI*2); g.fillStyle=site.colors.heroBg; g.fill(); g.stroke();
     g.fillStyle=colored?site.colors.price:'#A9B6C8'; g.textBaseline='middle'; g.fillText(label,26*k,h/2+1*k);
-    if(colored){ g.font=`700 ${10*k}px 'Noto Sans JP',sans-serif`; const bw=g.measureText('強化').width+12*k; g.fillStyle=site.colors.brand; rr(g,0,-18*k,bw,15*k,4*k); g.fill(); g.fillStyle='#fff'; g.fillText('強化',6*k,-10*k); }
+    if(colored){ g.font=`700 ${10*k}px 'Noto Sans JP',sans-serif`; const bw=g.measureText(T('強化')).width+12*k; g.fillStyle=site.colors.brand; rr(g,0,-18*k,bw,15*k,4*k); g.fill(); g.fillStyle='#fff'; g.fillText(T('強化'),6*k,-10*k); }
     g.restore(); }
   function compose(g,w,h,colored){
     const dark=SELL();
