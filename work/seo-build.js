@@ -140,10 +140,14 @@ const faq = (d.faq || []).length ? {
   '@context': 'https://schema.org', '@type': 'FAQPage',
   mainEntity: d.faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } }))
 } : null;
+// the same page in other languages (?lang=…, translated in the browser from data/i18n)
+const LANGS = [['ja', ''], ['en', 'en'], ['zh-Hant', 'zh-Hant'], ['ko', 'ko'], ['bn', 'bn'], ['si', 'si'], ['ne', 'ne']];
+const hreflang = LANGS.map(([h, q]) => `<link rel="alternate" hreflang="${h}" href="${SITE}/${q ? '?lang=' + q : ''}">`).join('') + `<link rel="alternate" hreflang="x-default" href="${SITE}/">`;
 const head = `<title>${esc(TITLE)}</title><meta name="description" content="${esc(DESC)}"><link rel="canonical" href="${SITE}/">
 <meta property="og:type" content="website"><meta property="og:site_name" content="${esc(brand)}"><meta property="og:title" content="${esc(TITLE)}"><meta property="og:description" content="${esc(DESC)}">
 <meta property="og:url" content="${SITE}/"><meta property="og:image" content="${OG_IMG}"><meta property="og:locale" content="ja_JP"><meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+${hreflang}
 ${[org, site, ...shops, faq].filter(Boolean).map(o => `<script type="application/ld+json">${json(o)}</script>`).join('\n')}`;
 // the page body carries its own short <title> and description; the build's versions replace them
 html = html.replace(/<title>[^<]*<\/title>/, '').replace(/<meta name="description"[^>]*>/, '');

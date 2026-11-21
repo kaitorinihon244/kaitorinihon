@@ -10,6 +10,9 @@ $body = [IO.File]::ReadAllText((Join-Path $Root 'uridoki.html'), $utf8)
 $html = '<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="referrer" content="strict-origin-when-cross-origin"></head><body>' + $body + '</body></html>'
 [IO.File]::WriteAllText((Join-Path $out 'index.html'), $html, $utf8)
 Copy-Item (Join-Path $Root 'work\site.json') (Join-Path $out 'data\site.json')
+# translations (data/i18n/<code>.json); source.json is the extracted Japanese list and is not served
+New-Item -ItemType Directory -Force (Join-Path $out 'data\i18n') | Out-Null
+Get-ChildItem (Join-Path $Root 'work\i18n') -Filter *.json -ErrorAction SilentlyContinue | Where-Object { $_.Name -notin @('source.json','keys.json','harvest.json') } | ForEach-Object { Copy-Item $_.FullName (Join-Path $out ('data\i18n\' + $_.Name)) }
 Copy-Item (Join-Path $Root 'img') (Join-Path $out 'img') -Recurse
 Copy-Item (Join-Path $Root 'hero-products-hd.jpg') $out
 

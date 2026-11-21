@@ -108,6 +108,7 @@ h1,h2,h3{text-wrap:balance;font-weight:inherit}
 @keyframes pulse{50%{opacity:.25}}
 @media (min-width:1600px){.clock{display:flex}}
 @media (min-width:1024px) and (max-width:1366px){#loginLbl{display:none}.login .login-short{display:inline}.login{padding:.4375rem .75rem}.top .shell{gap:.75rem}.pnav button{padding-inline:.5rem}}
+html:not([lang=ja]) .ps{flex-wrap:wrap;row-gap:0}html:not([lang=ja]) .ps span{min-width:0;overflow-wrap:anywhere}.langw{position:relative;flex:none}.ibtn.langb{width:auto;min-width:2.5rem;padding:0 .625rem;grid-auto-flow:column;gap:.25rem;border-radius:9999px}.langb .langc{font-size:.6875rem;font-weight:800;letter-spacing:.02em}.langm{position:absolute;top:calc(100% + .5rem);right:0;z-index:60;min-width:10rem;background:#fff;border:1px solid var(--line);border-radius:.875rem;box-shadow:0 .75rem 2rem rgba(22,35,58,.16);padding:.375rem;display:grid}.langm button{text-align:left;padding:.5rem .75rem;border-radius:.5rem;font-size:.875rem;font-weight:600;color:var(--foreground)}.langm button:hover,.langm button:focus-visible{background:var(--brand-tint)}.langm button[aria-checked="true"]{color:var(--brand-strong);font-weight:800}.langm button[aria-checked="true"]::after{content:" ✓"}@media (max-width:640px){.ibtn.langb{min-width:2.25rem;padding:0 .5rem}.langb .langc{display:none}}
 .ibtn{width:2.5rem;height:2.5rem;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--brand);display:grid;place-items:center;position:relative;flex:none;font-size:1.125rem}
 .ibtn .badge{position:absolute;top:-.25rem;right:-.25rem;background:var(--hot);color:#fff;font-size:.65rem;min-width:1.125rem;height:1.125rem;border-radius:9999px;display:grid;place-items:center;font-family:var(--mono);font-weight:700;padding:0 .25rem}
 .login-short{display:none}
@@ -1061,7 +1062,7 @@ body::before{content:"";position:fixed;inset:-10vmax;z-index:-1;pointer-events:n
 .sns-icons a i{width:2.75rem;height:2.75rem;border-radius:50%;background:var(--sn);display:grid;place-items:center;box-shadow:0 8px 18px -8px var(--sn-c),inset 0 1px 0 rgba(255,255,255,.3)}
 .sns-icons a i svg{width:1.375rem;height:1.375rem}
 .hsns{margin-top:1.25rem}
-.hsns::before{content:"公式SNS";font-size:.75rem;font-weight:800;letter-spacing:.06em;color:var(--muted);margin-right:.25rem}
+.hsns::before{content:var(--t-sns,"公式SNS");font-size:.75rem;font-weight:800;letter-spacing:.06em;color:var(--muted);margin-right:.25rem}
 .fside{display:flex;flex-direction:column;gap:1rem;align-items:flex-start}
 @media (min-width:1024px){.fside{align-items:flex-end}}
 .fsns a{padding:.25rem .875rem .25rem .25rem;border-radius:9999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)}
@@ -1296,6 +1297,153 @@ html[data-mode="sell"] .pmode-note{display:flex}
 </style>
 
 <script>document.documentElement.classList.add('js')</script>
+<script>
+/* Languages. Japanese is written in the page; other languages come from data/i18n/<code>.json and replace the text
+   as the page draws it (staff-facing data, forms and orders stay Japanese). Dictionary keys are the Japanese text:
+   {0},{1}… stand for numbers or Latin names the page inserts, ⟨①⟩…⟨/①⟩ for inline tags (<em>, <b>…) and ⏎ for <br>.
+   Choosing a language reloads the page with ?lang=<code>. */
+(function(){
+  var LANGS=[['ja','日本語',''],['en','English',''],['zh-Hant','繁體中文','Noto+Sans+TC:wght@400;500;700;900'],['ko','한국어','Noto+Sans+KR:wght@400;500;700;900'],['bn','বাংলা','Noto+Sans+Bengali:wght@400;500;700;900'],['si','සිංහල','Noto+Sans+Sinhala:wght@400;500;700;900'],['ne','नेपाली','Noto+Sans+Devanagari:wght@400;500;700;900']];
+  var KEY='kaitori-lang', J=/[぀-ヿ㐀-鿿！-｠]/;
+  function read(){ try{ return localStorage.getItem(KEY)||sessionStorage.getItem(KEY)||''; }catch(e){ return ''; } }
+  var q=(location.search.match(/[?&]lang=([\w-]+)/)||[])[1]||'';
+  var lang=q||read()||'ja'; if(!LANGS.some(function(l){ return l[0]===lang; })) lang='ja';
+  var D=null, miss=new Set(), done=new WeakMap(), doneA=new WeakMap();
+  var SPACED=!/^(ja|zh|ko)/.test(lang);
+  function look(t){
+    if(!D) return null; var r=D[t]; if(r!=null) return r;
+    var v=[], k=t.replace(/[¥￥]?\d[\d,，.]*/g,function(m){ v.push(m); return '{'+(v.length-1)+'}'; });
+    if(D[k]!=null) return fill(D[k],v);
+    v=[]; k=t.replace(/[A-Za-z0-9¥￥#@][A-Za-z0-9¥￥ .,+\-\/()'&!:_#@]*[A-Za-z0-9)]|[A-Za-z0-9]/g,function(m){ v.push(m); return '{'+(v.length-1)+'}'; });
+    if(D[k]!=null) return fill(D[k],v);
+    return null;
+  }
+  function fill(tpl,v){ return tpl.replace(/\{(\d+)\}/g,function(m,i){ return v[+i]!=null?v[+i]:m; }); }
+  function t(s){ if(!D||!s||!J.test(s)) return s; var k=String(s).replace(/\s+/g,' ').trim(), r=look(k); if(r==null){ miss.add(k); return s; } return String(s).replace(String(s).trim(),r); }
+  var SKIP='script,style,textarea,[contenteditable],#ed,[data-no-i18n]';
+  var INLINE={EM:1,B:1,STRONG:1,I:1,SMALL:1,U:1,MARK:1,SUP:1,SUB:1,SPAN:1,A:1,BR:1};
+  var CIRC='①②③④⑤⑥⑦⑧⑨⑩';
+  // an element whose children are text plus simple inline tags is translated as one sentence
+  function phrase(el){
+    var kids=el.childNodes, hasEl=false; if(kids.length<2) return null;
+    for(var i=0;i<kids.length;i++){ var c=kids[i];
+      if(c.nodeType===1){ if(!INLINE[c.tagName]||c.hasAttribute('data-no-i18n')) return null; if(c.tagName!=='BR'){ for(var j=0;j<c.childNodes.length;j++) if(c.childNodes[j].nodeType!==3) return null; } hasEl=true; }
+      else if(c.nodeType!==3) return null; }
+    if(!hasEl) return null;
+    var own=false; for(i=0;i<kids.length;i++) if(kids[i].nodeType===3&&J.test(kids[i].data)) own=true;
+    if(!own) return null;   // only a sentence with its own Japanese text; containers of separate pieces are done piece by piece
+    var key='', n=0, els=[];
+    for(i=0;i<kids.length;i++){ c=kids[i];
+      if(c.nodeType===3) key+=c.data;
+      else if(c.tagName==='BR') key+='⏎';
+      else { if(n>=CIRC.length) return null; els.push(c); key+='⟨'+CIRC[n]+'⟩'+c.textContent+'⟨/'+CIRC[n]+'⟩'; n++; } }
+    return {key:key.replace(/\s+/g,' ').trim(), els:els};
+  }
+  function trPhrase(el){
+    var p=phrase(el); if(!p) return false;
+    if(done.get(el)===el.innerHTML) return true;
+    var r=look(p.key); if(r==null){ miss.add(p.key); return false; }
+    var br=el.querySelector('br'), frag=document.createDocumentFragment();
+    r.split(/(⟨[①-⑩]⟩[\s\S]*?⟨\/[①-⑩]⟩|⏎)/).forEach(function(part){
+      if(!part) return;
+      if(part==='⏎'){ frag.appendChild(br?br.cloneNode(false):document.createElement('br')); return; }
+      var m=part.match(/^⟨([①-⑩])⟩([\s\S]*?)⟨\/[①-⑩]⟩$/);
+      if(m){ var src=p.els[CIRC.indexOf(m[1])]; var e=src?src.cloneNode(false):document.createElement('span'); e.textContent=m[2]; frag.appendChild(e); return; }
+      frag.appendChild(document.createTextNode(part));
+    });
+    el.textContent=''; el.appendChild(frag); done.set(el,el.innerHTML); return true;
+  }
+  // headings drawn one letter per <span class="ch"> (data-chars): translate the whole heading (kept in aria-label)
+  // and redraw it one word per span, so words do not break across lines
+  function trChars(el){
+    var v=el.getAttribute('aria-label')||el.textContent; if(!J.test(v)||done.get(el)===el.innerHTML) return;
+    var r=look(v.replace(/\s+/g,' ').trim()); if(r==null){ miss.add(v); done.set(el,el.innerHTML); return; }
+    var cjk=/[㐀-鿿가-힯]/.test(r), parts=cjk?Array.from(r):r.split(/(\s+)/);
+    el.setAttribute('aria-label',r);
+    el.innerHTML=parts.filter(function(x){ return x!==''; }).map(function(x,i){ return /^\s+$/.test(x)?' ':'<span class="ch" aria-hidden="true" style="transition-delay:'+(i*22)+'ms">'+x.replace(/[&<>]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]; })+'</span>'; }).join('');
+    done.set(el,el.innerHTML);
+  }
+  function trText(n){
+    var s=n.data; if(done.get(n)===s||!J.test(s)) return;
+    var p=n.parentNode; if(!p||(p.closest&&p.closest(SKIP))) return;
+    if(!p.isConnected) return;
+    var ch=p.closest&&p.closest('[data-chars]'); if(ch){ trChars(ch); return; }
+    // a sentence with bold/linked parts is matched as a whole first (from its parent), then piece by piece
+    if(INLINE[p.tagName]&&p.parentElement&&trPhrase(p.parentElement)) return;
+    if(p.nodeType===1&&trPhrase(p)) return;
+    var k=s.replace(/\s+/g,' ').trim(), r=look(k);
+    if(r==null){ miss.add(k); done.set(n,s); return; }
+    var out=s.replace(/^(\s*)[\s\S]*?(\s*)$/,function(m,a,b){ return a+r+b; });
+    // Japanese needs no spaces around a link or bold word; languages written with spaces do
+    if(SPACED){ var nx=n.nextSibling, pv=n.previousSibling;
+      if(nx&&nx.nodeType===1&&nx.tagName!=='BR'&&/[^\s(（「]$/.test(out)) out+=' ';
+      if(pv&&pv.nodeType===1&&pv.tagName!=='BR'&&/^[^\s.,:;!?)）」。、।]/.test(out)) out=' '+out; }
+    n.data=out; done.set(n,out);
+  }
+  var ATTRS=['placeholder','aria-label','title','alt'];
+  function trAttrs(el){
+    if(el.closest&&el.closest(SKIP)) return; if(el.hasAttribute&&el.hasAttribute('data-chars')){ trChars(el); return; }
+    var seen=doneA.get(el)||{};
+    for(var i=0;i<ATTRS.length;i++){ var a=ATTRS[i], v=el.getAttribute(a); if(!v||seen[a]===v||!J.test(v)) continue;
+      var r=look(v.replace(/\s+/g,' ').trim()); if(r==null){ miss.add(v); seen[a]=v; continue; } el.setAttribute(a,r); seen[a]=r; }
+    doneA.set(el,seen);
+  }
+  function walk(root){
+    if(!root) return;
+    if(root.nodeType===3){ trText(root); return; }
+    if(root.nodeType!==1||(root.closest&&root.closest(SKIP))) return;
+    var w=document.createTreeWalker(root,5,{acceptNode:function(n){ return n.nodeType===1&&n.matches(SKIP)?2:1; }}), n=root;
+    var texts=[], els=[];
+    do{ if(n.nodeType===3) texts.push(n); else els.push(n); } while((n=w.nextNode()));
+    els.forEach(trAttrs); texts.forEach(trText);
+  }
+  function start(){
+    walk(document.documentElement);
+    new MutationObserver(function(ms){ ms.forEach(function(m){
+      if(m.type==='childList') m.addedNodes.forEach(walk);
+      else if(m.type==='characterData') trText(m.target);
+      else if(m.type==='attributes') trAttrs(m.target);
+    }); }).observe(document.documentElement,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:ATTRS});
+    var sns=look('公式SNS'); if(sns) document.documentElement.style.setProperty('--t-sns','"'+sns.replace(/"/g,'')+'"');
+  }
+  function save(code){ try{ var all=localStorage.getItem('kaitori-consent')==='all'; localStorage.removeItem(KEY); sessionStorage.removeItem(KEY); if(code!=='ja') (all?localStorage:sessionStorage).setItem(KEY,code); }catch(e){} }
+  window.I18N={ langs:LANGS, lang:lang, t:t, missing:function(){ return Array.from(miss); },
+    set:function(code){ save(code); var u=new URL(location.href); if(code==='ja') u.searchParams.delete('lang'); else u.searchParams.set('lang',code); location.href=u.toString(); } };
+  if(q) save(q);
+  document.documentElement.lang=lang;
+  // language button in the header (globe + current language) with a menu of all languages
+  function ui(){
+    var right=document.querySelector('.top .hright'); if(!right||document.getElementById('langBtn')) return;
+    var cur=LANGS.filter(function(l){ return l[0]===lang; })[0];
+    var wrap=document.createElement('div'); wrap.className='langw'; wrap.setAttribute('data-no-i18n','');
+    var b=document.createElement('button'); b.type='button'; b.className='ibtn langb'; b.id='langBtn'; b.setAttribute('aria-haspopup','menu'); b.setAttribute('aria-expanded','false'); b.setAttribute('aria-label','Language / 言語');
+    b.innerHTML='<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg><span class="langc"></span>';
+    b.querySelector('.langc').textContent=cur[0]==='zh-Hant'?'繁':cur[0].toUpperCase();
+    var m=document.createElement('div'); m.className='langm'; m.setAttribute('role','menu'); m.hidden=true;
+    LANGS.forEach(function(l){ var o=document.createElement('button'); o.type='button'; o.setAttribute('role','menuitemradio'); o.setAttribute('aria-checked',l[0]===lang?'true':'false'); o.lang=l[0]; o.textContent=l[1];
+      if(l[2]) o.style.fontFamily="'"+l[2].split(':')[0].replace(/\+/g,' ')+"',sans-serif";
+      o.addEventListener('click',function(){ if(l[0]!==lang) window.I18N.set(l[0]); else close(); }); m.appendChild(o); });
+    function close(){ m.hidden=true; b.setAttribute('aria-expanded','false'); }
+    b.addEventListener('click',function(e){ e.stopPropagation(); m.hidden=!m.hidden; b.setAttribute('aria-expanded',String(!m.hidden)); if(!m.hidden) m.querySelector('[aria-checked="true"]').focus(); });
+    document.addEventListener('click',function(e){ if(!wrap.contains(e.target)) close(); });
+    m.addEventListener('keydown',function(e){ var it=[].slice.call(m.children), i=it.indexOf(document.activeElement);
+      if(e.key==='Escape'){ close(); b.focus(); } else if(e.key==='ArrowDown'){ e.preventDefault(); it[(i+1)%it.length].focus(); } else if(e.key==='ArrowUp'){ e.preventDefault(); it[(i-1+it.length)%it.length].focus(); } });
+    wrap.appendChild(b); wrap.appendChild(m); right.insertBefore(wrap,document.getElementById('favBtn')||right.firstChild);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',ui); else ui();
+  if(lang==='ja') return;
+  // this language version is its own page for search engines (kaitorinihon.jp/?lang=xx)
+  var cn=document.querySelector('link[rel=canonical]'); if(cn&&cn.href.indexOf('https://kaitorinihon.jp/')===0) cn.href='https://kaitorinihon.jp/?lang='+lang;
+  // font for the language's script, loaded fonts only once the language is chosen
+  // (Japanese stays as a fallback for product names)
+  var f=LANGS.filter(function(l){ return l[0]===lang; })[0][2];
+  if(f){ var ln=document.createElement('link'); ln.rel='stylesheet'; ln.href='https://fonts.googleapis.com/css2?family='+f+'&display=swap'; document.head.appendChild(ln);
+    document.documentElement.style.setProperty('--font',"'"+f.split(':')[0].replace(/\+/g,' ')+"','Noto Sans JP','Hiragino Sans','Yu Gothic','Meiryo',sans-serif"); }
+  fetch('data/i18n/'+lang.toLowerCase()+'.json').then(function(r){ return r.json(); }).then(function(d){
+    D=d.t||{}; if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start); else start();
+  }).catch(function(){});
+})();
+</script>
 
 <!-- ============ LOADER ============ -->
 <div class="loader" id="loader" role="status" aria-live="polite">
@@ -1315,7 +1463,7 @@ html[data-mode="sell"] .pmode-note{display:flex}
 <!-- ============ HEADER ============ -->
 <header class="top" id="top">
   <div class="shell">
-    <button class="logo" data-go="home" aria-label="トップへ"><span data-hv="logo"><img data-logo-img alt="" hidden><span data-logo-text style="display:flex;flex-direction:column;align-items:flex-start"><b data-t="texts.brand">買取日本</b><small data-t="texts.romaji">Kaitorinihon</small></span></span></button>
+    <button class="logo" data-go="home" aria-label="トップへ"><span data-hv="logo"><img data-logo-img alt="" hidden><span data-logo-text style="display:flex;flex-direction:column;align-items:flex-start"><b data-t="texts.brand" data-no-i18n>買取日本</b><small data-t="texts.romaji">Kaitorinihon</small></span></span></button>
     <button class="pmode" id="pmode" role="switch" aria-checked="false" aria-label="価格表示の切り替え（買取／販売）"><span class="pm-k" aria-hidden="true"></span><span class="pm-l" data-m="buy">買取</span><span class="pm-l" data-m="sell">販売</span></button>
     <div class="tagpill"><i>✓</i><span data-t="texts.headerPill">高価買取・現金即払い・全国郵送OK</span></div>
     <nav class="pnav" aria-label="メイン">
@@ -1554,7 +1702,7 @@ html[data-mode="sell"] .pmode-note{display:flex}
       </div>
     </div>
     <div class="fcols">
-      <div class="fbrand"><img data-logo-img alt="" hidden><span data-logo-text><b data-t="texts.brand">買取日本</b><small data-t="texts.romaji">Kaitorinihon</small></span><p data-t="texts.footTagline">スマホ・ゲーム・カメラ・トレカ・ウイスキーを、東京相場で高価買取。</p></div>
+      <div class="fbrand"><img data-logo-img alt="" hidden><span data-logo-text><b data-t="texts.brand" data-no-i18n>買取日本</b><small data-t="texts.romaji">Kaitorinihon</small></span><p data-t="texts.footTagline">スマホ・ゲーム・カメラ・トレカ・ウイスキーを、東京相場で高価買取。</p></div>
       <div class="fcol"><h4>買取について</h4><ul><li><button class="alink" data-go="prices"><span>買取価格表</span></button></li><li><a class="alink" href="https://kaitorinihon.jp/kaitori/"><span>商品別 買取価格一覧</span></a></li><li><button class="alink" data-go="flow"><span>買取の流れ</span></button></li><li><button class="alink" data-go="faq"><span>よくあるご質問</span></button></li><li><button class="alink" data-go="stores"><span>店舗一覧</span></button></li><li><button class="alink" data-request><span>未掲載商品の相談</span></button></li></ul></div>
       <div class="fcol"><h4>カテゴリー</h4><ul id="footCats"></ul></div>
       <div class="fcol"><h4>公式SNS</h4><ul id="snsFoot"></ul></div>
@@ -2167,7 +2315,7 @@ function applyTexts(){
   $$('[data-t]').forEach(el=>{ const v=getPath(site,el.dataset.t)??''; if(el.hasAttribute('data-chars')) splitChars(el,String(v)); else if(el.hasAttribute('data-hl')) el.innerHTML=hl(v); else el.textContent=v; });
   if(!canHover) $('#hint').textContent='なぞって査定額をチェック';
   $$('[data-lines]').forEach(el=>{ const base=+(el.dataset.d||0), st=+(el.dataset.stagger||0); $$('.ln>span',el).forEach((s,i)=>s.style.transitionDelay=(base+i*st)+'ms'); });
-  document.title=site.texts.seoTitle||(/買取/.test(document.title)&&document.title.length>12?document.title:`${site.texts.watermark||'KAITORI'} ${site.texts.brand||''}`.trim());
+  document.title=site.texts.seoTitle||(document.title.length>12?document.title:`${site.texts.watermark||'KAITORI'} ${site.texts.brand||''}`.trim());
   /* optional lines (rating, 古物商許可, stats note) disappear when left empty in the editor */
   const T=site.texts; $('.rating').hidden=!String(T.ratingText||'').trim();
   $$('[data-hide-empty]').forEach(el=>{ el.hidden=!String(getPath(site,el.dataset.t)||'').trim(); });

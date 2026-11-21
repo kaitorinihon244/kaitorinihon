@@ -1,0 +1,894 @@
+# English. index|first 2 characters of the Japanese|translation   ("=" keeps the Japanese)
+0|・|·
+1|＋|+
+2|+点|+ items
+3|お酒|Liquor
+4|から|from
+5|価格|Price
+6|家電|Appliances
+7|解除|Remove
+8|確認|Review
+9|完了|Done
+10|強化|Boosted
+11|検索|Search
+12|現金|Cash
+13|厚岸|Akkeshi
+14|混雑|Busy
+15|査定|Appraisal
+16|最高|Max
+17|削除|Delete
+18|撮影|Photograph
+19|山崎|Yamazaki
+20|時間|Hours
+21|次へ|Next
+22|終了|Finish
+23|状態|Condition
+24|新品|New
+25|数量|Quantity
+26|前へ|Previous
+27|中古|Used
+28|貯蓄|Savings
+29|通常|Standard
+30|店舗|Stores
+31|当座|Checking
+32|配送|Delivery
+33|買取|Sell
+34|売る|Sell
+35|白州|Hakushu
+36|発送|Shipping
+37|販売|Buy
+38|備考|Notes
+39|不明|Unknown
+40|普通|Ordinary
+41|郵送|By mail
+42|余市|Yoichi
+43|お名前|Name
+44|カー|Cart
+45|カメ|Cameras
+46|から|.
+47|ゲー|Games
+48|コピ|Copy
+49|ご住|Address
+50|ご注|Order
+51|ご来|Visit
+52|すべ|All
+53|スマ|Smartphones
+54|テレ|TVs
+55|ホー|Home
+56|ボト|Bottle
+57|まず|Start with a
+58|メイ|Main
+59|メー|Email
+60|ラン|Grade
+61|営業|Open now
+62|価格|Price list
+63|確認|Review
+64|顔認|Face check
+65|更新|Updated
+66|査定|Before appraisal
+67|査定|Appraising
+68|日本|=
+69|判定|Network △
+70|閉じ|Close
+71|未設|Not set
+72|遊戯|Yu-Gi-Oh!
+73|・送|· shipping extra
+74|‹ |‹ Previous
+75|‹ |‹ Back
+76|Aラ|Grade A
+77|Bラ|Grade B
+78|Cラ|Grade C
+79|Sラ|Grade S
+80|TE|TEL:
+81|いま|Now is the time:
+82|イヤ|Earphones
+83|おも|Toys
+84|お見|Quote
+85|お酒|even liquor.
+86|お酒|Liquor boost
+87|お振|Bank transfer
+88|お振|Payee account
+89|お知|News
+90|ギフ|Gift cards
+91|シル|Silver
+92|トッ|Back to top
+93|パソ|Computers
+94|ブラ|Black
+95|フリ|Name reading (katakana or alphabet)
+96|メー|Maker
+97|メニ|Menu
+98|ログ|Sign in
+99|確認|Checking…
+100|次へ|Next ›
+101|商品|No items
+102|上限|Maximum price
+103|申込|Application no.
+104|送信|Sending…
+105|注文|Order no.
+106|直接|Edit on page
+107|店頭|Store pickup
+108|店頭|In-store buyback
+109|店舗|Stores
+110|電動|Power tools
+111|電話|Phone number
+112|都道|Prefectures
+113|同意|Accept
+114|入力|Incomplete
+115|買取|Buyback prices
+116|買取|Buyback application
+117|買取|Kaitori Nihon
+118|買取|How to sell
+119|買取|Buyback booking
+120|繁體|=
+121|保存|Save
+122|保存|Saving…
+123|法人|Business buyback
+124|本人|ID check
+125|無料|free appraisal
+126|郵送|Mail-in buyback
+127|郵便|Postal code
+128|AU|au/UQ
+129|Aラ|Grade A △
+130|Aラ|Grade A ◯
+131|Bラ|Grade B ◯
+132|Sラ|Grade S △
+133|Sラ|Grade S ◯
+134|ウイ|Whisky
+135|お気|Favorites
+136|お客|Your details
+137|お振|Payee
+138|お名|Name *
+139|カテ|Categories
+140|ゲー|Games boost
+141|ご住|Address *
+142|ご請|Amount due:
+143|ご注|Items ordered
+144|ご来|Planned visit
+145|スク|Scroll
+146|スマ|Smartphone boost
+147|タブ|Tablets
+148|マイ|My page
+149|マッ|Macallan
+150|もっ|See more
+151|リス|List view
+152|ログ|Sign out
+153|営業|Closed now
+154|開封|Open box
+155|確認|Verification code
+156|検品|Inspection & appraisal
+157|公式|Official social media
+158|購入|Shopping cart
+159|査定|Appraisal cart
+160|山田|Taro Yamada
+161|支店|Branch *
+162|受付|Confirmation email
+163|書類|Choose your ID
+164|商品|Search products
+165|詳し|Learn more
+166|詳細|Details & buy
+167|赤ロ|Blacklisted (red-flag) phones
+168|直接|Editing on page
+169|通信|Connection error
+170|投稿|View post
+171|動画|Watch video
+172|買取|How it works
+173|買取|Buyback price list
+174|買取|Now buying at higher prices
+175|発送|Shipping date
+176|判定|Network －/◯
+177|判定|Network (△)
+178|本日|Today's market
+179|友だ|Add friend
+180|{0|{0} Condition
+181|{0|{0} Quantity
+182|△ |△ Grade A
+183|△ |△ Grade S
+184|au|au/UQ model
+185|Aラ|Grade A ◯
+186|Aラ|Grade A max.
+187|Bラ|Grade B max.
+188|Cラ|Grade C max.
+189|S◯|S ◯ max. price
+190|SI|SIM-free
+191|Sラ|Grade S △
+192|Sラ|Grade S max.
+193|VR|VR headsets
+194|おも|Toys boost
+195|お客|To your details
+196|お申|Items to sell
+197|お問|Contact us
+198|カラ|Color & specs
+199|キャ|Campaigns
+200|グリ|Grid view
+201|グレ|Glacier
+202|ゲー|Other games
+203|ゲー|Video games
+204|ご購|Checkout
+205|ご注|How ordering works
+206|ご入|Payment confirmed
+207|ご来|Visit time
+208|サイ|Edit site
+209|で投|— view post
+210|トレ|Trading card boxes
+211|に同|.
+212|バー|Burgundy
+213|フォ|Follow
+214|フリ|Name reading *
+215|ベイ|Beyblade
+216|メー|Send by email
+217|ラン|Grade & network
+218|リン|Open link
+219|引取|Pickup or shipping
+220|開封|Opened, unused △
+221|楽天|Rakuten Mobile
+222|携帯|Handheld consoles
+223|検品|Inspection & payment
+224|口座|Account type *
+225|口座|Account number *
+226|購入|Go to checkout
+227|最高|Top buying price
+228|受け|How to receive
+229|受取|Pickup store *
+230|商品|Ship items to
+231|新品|New, sealed
+232|選ば|Why customers choose us
+233|台数|Decrease quantity
+234|台数|Increase quantity
+235|電話|Phone number *
+236|読み|Loading…
+237|内容|Copy details
+238|買取|About buyback
+239|買取|Estimated total
+240|買取|Buyback terms
+241|判定|Network △ quoted separately
+242|保存|Save & publish
+243|法人|For businesses
+244|郵便|Postal code *
+245|要問|Ask us
+246|例:|e.g. {0}
+247|Aラ|Grade A ◯/－
+248|Bラ|Grade B ◯/－
+249|Cラ|Grade C ◯/－
+250|LI|Ask on LINE
+251|LI|Send on LINE
+252|Sラ|Grade S ◯/－
+253|お近|Find a store near you
+254|お振|Transfer by:
+255|お振|Your bank account
+256|お知|News type
+257|キャ|Carrier network △
+258|ゲー|Console (boxed)
+259|ご質|Questions & requests
+260|すべ|See all ›
+261|スラ|Slide {0}
+262|ディ|Deep Blue
+263|ポケ|Pokémon cards
+264|メー|Email address
+265|メニ|Open menu
+266|ヤマ|TARO YAMADA
+267|よく|FAQ
+268|開封|Seal & network
+269|開封|Opened, new (△)
+270|金融|Bank name *
+271|現金|Paid in cash
+272|故障|Broken / for parts
+273|詳し|Learn more →
+274|状態|Condition: {0}
+275|申込|Application progress
+276|人気|Popular categories
+277|数量|Quantity: {0}
+278|据え|Console (black)
+279|据え|Console (white)
+280|続き|Read more ›
+281|中古|Used, Grade A
+282|中古|Used, Grade B
+283|中古|Used, Grade S
+284|注文|Place order
+285|通訳|Translators
+286|店頭|Pay in store
+287|入力|Back to the form
+288|買取|Apply to sell
+289|買取|See buying prices
+290|買取|Your buyback applications
+291|買取|I agree to the Buyback terms and the
+292|発送|Shipping date *
+293|必要|Essential only
+294|保存|Saved.
+295|本店|Head store & office
+296|本日|Today's top buys
+297|本日|Today's market —
+298|無料|Get a free quote
+299|予約|Booking approval email
+300|例:|e.g. Shinjuku branch
+301|－/|－/◯ Grade A
+302|－/|－/◯ Grade B
+303|－/|－/◯ Grade C
+304|－/|－/◯ Grade S
+305|{0|{0} How long we keep it
+306|{0|{0} Why we use it
+307|◯/|◯/－ Grade A
+308|◯/|◯/－ Grade B
+309|◯/|◯/－ Grade S
+310|◯/|◯/ー Grade A
+311|◯/|◯/ー Grade B
+312|◯/|◯/ー Grade S
+313|Aラ|Grade A －/◯
+314|Aラ|Grade A ◯/－
+315|Aラ|Grade A ◯/ー
+316|Bラ|Grade B －/◯
+317|Bラ|Grade B ◯/ー
+318|Co|Cookie settings
+319|Cラ|Grade C －/◯
+320|eK|eKYC ID check
+321|Go|Google boost
+322|iP|iPhone boost
+323|NE|NEWS & SOCIAL
+324|Sラ|Grade S －/◯
+325|Sラ|Grade S ◯/－
+326|Sラ|Grade S ◯/ー
+327|Xb|Xbox consoles
+328|お気|Show favorites
+329|お取|Order lead time:
+330|お取|Hold until:
+331|お知|News & social
+332|お届|Delivery address *
+333|お名|Name: {0}
+334|カー|Add to cart
+335|キャ|Carrier network △
+336|キャ|Carrier model (△)
+337|キャ|Carrier model, network △
+338|ご購|Purchase total (tax incl.
+339|ご質|Question: {0}
+340|ご注|Your order details
+341|ご来|Planned visit date *
+342|スト|Store / carrier model
+343|スト|Store model / network ◯
+344|スマ|Smartwatches
+345|タブ|Tablets & watches
+346|チャ|Visit channel
+347|ネッ|Network status
+348|モバ|Mobile menu
+349|ログ|Signed in
+350|開封|Open box
+351|開封|Opened, new ◯/-
+352|開封|Opened, unused △
+353|開封|Opened (network △)
+354|開封|Opened, unused ◯/－
+355|確認|Send code
+356|確認|Enter the code
+357|機種|Categories by model
+358|口座|Account no.: {0}
+359|購入|Add to shopping cart
+360|査定|Open appraisal cart
+361|次の|Next campaign
+362|写真|Photos: {0}
+363|主な|Main brands we buy
+364|商品|Product / model *
+365|承認|Ship on the approval day
+366|新機|New feature
+367|前の|Previous campaign
+368|中古|Used, Grade A
+369|中古|Used, Grade B
+370|入力|Please fill this in
+371|売る|Sell, appraise, cash
+372|売る|Ready to sell?
+373|販売|Selling price (guide)
+374|本日|Today's market time
+375|未開|Sealed (network △)
+376|未掲|Ask about unlisted items
+377|{0|{0} Outsourcing
+378|{0|{0} Changing your settings
+379|{0|{0}–{1} weeks
+380|Aラ|Grade A, network ◯/－
+381|Bl|Blue (◯/－)
+382|Bラ|Grade B, network ◯/－
+383|Cラ|Grade C, network ◯/－
+384|Sa|Sage (◯/－)
+385|Sa|Samsung boost
+386|SI|SIM-free phones
+387|Sラ|Grade S, network ◯/－
+388|Wi|Wi-Fi routers
+389|いま|Sell now with Kaitori Nihon.
+390|カー|Added to cart
+391|キャ|Carrier (network △)
+392|キャ|Carrier network (△)
+393|コス|Cosmic Orange
+394|コズ|Cosmic Orange
+395|この|Submit application
+396|この|Send
+397|ご連|Contact: {0}
+398|メー|Maker: {0}
+399|メー|Email address *
+400|ログ|Sign in / Sign up
+401|ログ|Signed in.
+402|会員|Sign up & eKYC
+403|会員|Sign up / Sign in
+404|開封|Opened, new (〇/ー)
+405|開封|Opened, new (network △)
+406|開封|Opened, unused △
+407|格安|Budget SIM carriers
+408|検品|Paid after inspection.
+409|最短|Quote as soon as the same day.
+410|詳細|Details & add to cart
+411|数字|Kaitori Nihon in numbers
+412|中古|Used (few scratches)
+413|都内|Pickup available in Tokyo.
+414|東京|Tokyo market price · updated every morning
+415|買取|Categories we're buying now
+416|買取|Before you sell
+417|表裏|Photograph front, back and edge.
+418|未開|Sealed (〇/－) blue
+419|未開|Sealed (network △)
+420|未掲|Unlisted item inquiry
+421|無料|Get a free quote →
+422|預金|Account type: ordinary
+423|－/|－/◯ limited warranty
+424|－/|－/◯ warranty expired
+425|{0|{0} Contact
+426|{0|{0} Color & specs
+427|{0|{0} Security measures
+428|{0|{0} External services
+429|■ |■ {0} How long we keep it
+430|■ |■ {0} Why we use it
+431|◯/|◯/－ warranty expired
+432|◯/|◯/ー limited warranty
+433|ー/|ー/◯ network, black
+434|ー/|ー/◯ network, white
+435|Bl|Black (◯/－)
+436|Co|Cookie policy
+437|iP|iPad & accessories
+438|SN|Official social accounts
+439|Wh|White (◯/－)
+440|お支|Payment & pickup
+441|スト|Store / carrier model ◯
+442|スマ|Phones, games,
+443|ナイ|Night Sky (in store)
+444|プラ|Privacy policy
+445|ブル|Blue (network 〇/－)
+446|メー|Change email address
+447|ログ|Signed out.
+448|開封|Opened, unused ◯/－
+449|開封|Opened (network 〇/－)
+450|確認|Review⟨①⟩⟨/①⟩
+451|期間|Limited-time campaign
+452|共有|Couldn't share
+453|強化|Top buys first
+454|写真|Choose or take photos
+455|写真|Send photos for a quote
+456|商品|Buying prices by product
+457|送信|Opened the send screen
+458|内容|Details copied
+459|内容|Please check your details
+460|買取|Buying prices (by model)
+461|買取|Estimated total (maximum)
+462|判定|Network ◯/－ Grade A
+463|判定|Network ◯/－ Grade B
+464|判定|Network ◯/－ Grade S
+465|付属|Accessories, when bought, etc.
+466|未開|Sealed (network ◯/－)
+467|郵送|Mail-in buyback area
+468|例:|e.g. Samsung
+469|例:|e.g. TARO YAMADA
+470|例:|e.g. MUFG Bank
+471|－/|－/◯ warranty remaining
+472|－/|－/◯ no warranty remaining
+473|－/|－/◯ warranty expired
+474|{0|{0} Changes to this policy
+475|{0|{0} What we don't use
+476|{0|{0} Sharing with third parties
+477|{0|{0} Customers under 18
+478|■ |■ {0} Outsourcing
+479|■ |■ {0} Changing your settings
+480|Aラ|Grade A －/◯
+481|Cラ|Grade C －/◯
+482|X（|X (formerly Twitter)
+483|いま|Sell now with [Kaitori Nihon].
+484|キャ|Carrier network (O/―)
+485|ゴー|Gold (network 〇/－)
+486|コピ|Couldn't copy
+487|ご相|We received your inquiry
+488|ご注|We received your order
+489|スタ|Star White (in store)
+490|スト|Store －/carrier ◯
+491|スト|Store / carrier model ◯
+492|ブラ|Black (network 〇/－)
+493|ホワ|White (network 〇/－)
+494|メイ|Skip to main content
+495|価格|Prices change daily.
+496|会員|Membership is coming soon.
+497|開封|Opened, new (network ◯/－)
+498|開封|Opened, unused ◯/－
+499|購入|Added to shopping cart
+500|最短|Approval email as soon as the same day.
+501|使え|Which IDs can I use?
+502|写真|Send photos for a quote
+503|商品|Product / model: {0}
+504|商品|Please enter the product name
+505|振込|Bank details copied
+506|正し|Please enter this correctly
+507|送り|Address copied
+508|大量|Large quantities welcome
+509|中古|Used (scratches, signs of use)
+510|電話|Phone number selected
+511|買取|Items with listed prices
+512|売ら|Appraisals are free, even if you don't sell
+513|備考|Notes (accessories, scratches, etc.)
+514|品目|Email us the items and quantities.
+515|法人|Bulk buyback for businesses
+516|本日|Today's top buys · {0}
+517|未開|Sealed (network 〇/－)
+518|未掲|Quote for unlisted items
+519|{0|{0} Contact point
+520|{0|{0} Personal information we collect
+521|{0|{0} Changes to this policy
+522|{0|I agree to visit within {0} days, and to the
+523|{0|{1}/{2}/{0}
+524|⟨①|⟨①⟩{0}⟨/①⟩Review
+525|⟨①|⟨①⟩{0}⟨/①⟩Done
+526|⟨①|⟨①⟩⟨/①⟩Official social media
+527|■ |■ {0} Contact
+528|■ |■ {0} Security measures
+529|■ |■ {0} External services
+530|Co|Change cookie settings
+531|iP|Now buying iPhones at higher prices
+532|Ni|Nintendo consoles
+533|ゲー|Switch games
+534|ご住|Please enter your address
+535|なぞ|Swipe to check the price
+536|まず|Start with a [free appraisal].
+537|営業|Open {0}–{1}
+538|会員|Member no. {0} {1}
+539|確認|We'll send you a confirmation email
+540|口座|Account holder (katakana or alphabet) *
+541|新品|New⟨①⟩{0}⟨/①⟩
+542|申込|Application no. ⟨①⟩⟨/①⟩
+543|全国|Sell in store at {0} locations
+544|全国|We buy from anywhere in Japan
+545|全国|Nationwide, same price as Tokyo
+546|着払|Free shipping campaign (cash on delivery)
+547|注文|Order no. ⟨①⟩⟨/①⟩
+548|店舗|Stores⟨①⟩▾⟨/①⟩
+549|電話|Phone number copied
+550|買取|Showing buying prices
+551|買取|We received your application
+552|買取|Choose how to sell
+553|売り|{0} ways to sell.
+554|販売|Showing selling prices
+555|未開|Sealed ◯/－ Blue
+556|未開|Sealed ◯/－ Gold
+557|－/|－/◯ {0}+ months warranty left
+558|{0|{0} What are cookies?
+559|■ |■ {0} Changes to this policy
+560|■ |■ {0} What we don't use
+561|■ |■ {0} Sharing with third parties
+562|■ |■ {0} Customers under 18
+563|Co|About cookies
+564|iP|iPad ({0}th generation)
+565|La|=
+566|La|Lavender (◯/－)
+567|LI|Send via LINE, email, etc.
+568|Ma|MacBook & laptops
+569|お客|To your details⟨①⟩⟨/①⟩
+570|お問|Contact us⟨①⟩⟨/①⟩
+571|ゲー|PS{0} games
+572|ご購|Purchase total (tax incl., shipping extra)
+573|まだ|No news yet.
+574|まだ|No buyback applications yet.
+575|価格|Please ask us for a price
+576|画面|Take a selfie as shown on screen.
+577|高額|All payments in cash, however large
+578|実績|Our track record backs our prices.
+579|取り|Order lead time {0}–{1} weeks
+580|商品|Choose items and quantities, then apply.
+581|商品|Product photos (up to {0})
+582|専門|Fast appraisals by specialists
+583|相違|We contact you only if something differs.
+584|店頭|In store, by mail, for businesses — nationwide
+585|電話|Please enter your phone number
+586|買取|How it works⟨①⟩▾⟨/①⟩
+587|発送|Please choose a shipping date
+588|判定|Network －/◯ warranty remaining
+589|判定|Network －/◯ no warranty remaining
+590|付属|Accessories / when bought: {0}
+591|未開|Sealed ◯/－ Black
+592|未開|Sealed ◯/－ White
+593|未開|Sealed (〇/－) black/white/gold
+594|郵送|Do I pay for shipping?
+595|郵便|Please enter your postal code
+596|{0|{0} Use of cookies
+597|⟨①|⟨①⟩{0}⟨/①⟩How to sell
+598|■ |■ {0} Contact point
+599|■ |■ {0} Personal information we collect
+600|■ |■ {0} Changes to this policy
+601|eK|eKYC ID check now available
+602|Go|View on Google Maps ↗
+603|お客|Please enter your details
+604|ご来|Please choose your visit date
+605|スク|Scroll ⟨①⟩↓⟨/①⟩
+606|スマ|ID photo and face check on your phone.
+607|パソ|Computers › MacBook
+608|口座|Account name: ロイヤル ジャパン (Royal Japan)
+609|在庫|Out of stock · {0}–{1} weeks
+610|書類|ID photo + face check, as fast as the same day.
+611|商品|Please choose the product options.
+612|正し|Please use the correct format
+613|代金|When will I be paid?
+614|着払|Ship cash on delivery with the request form.
+615|着払|Just send it cash on delivery. Nationwide.
+616|店頭|Do I need a booking to sell in store?
+617|判定|Network ◯/－ black/blue
+618|未開|Sealed (network 〇/－) pink
+619|予約|No booking needed. Cash on the spot.
+620|例:|e.g. preferred pickup date, questions
+621|{0|Effective {1}/{2}/{0}
+622|⟨①|⟨①⟩{0}⟨/①⟩Your details
+623|■ |■ {0} What are cookies?
+624|① |① Phone repair {0}% OFF
+625|Pl|PlayStation consoles
+626|Ro|Royal Japan Ikebukuro
+627|Ro|Royal Japan Tsurumi
+628|TE|TEL: {0}-{1}-{2}
+629|スマ|Smartphones › SIM-free phones
+630|確認|Send code⟨①⟩⟨/①⟩
+631|株式|ROYAL JAPAN Co., Ltd.
+632|購入|Can I return an item I bought?
+633|高校|High school student campaign now on
+634|査定|How long is a quote valid?
+635|承認|Within {0} business days after approval.
+636|日本|Among the top buying prices in Japan
+637|買取|What do I need to sell?
+638|未開|Sealed (network 〇/－) black
+639|未開|Sealed (network 〇/－) white
+640|■ |■ {0} Use of cookies
+641|Co|You accepted cookies
+642|いま|Sell now with ⟨①⟩Kaitori Nihon⟨/①⟩.
+643|お探|Can't find what you're looking for?
+644|この|Send⟨①⟩⟨/①⟩
+645|一覧|Can you buy items that aren't listed?
+646|価格|Switch prices (sell / buy)
+647|確認|The confirmation email gives you our bank details
+648|口座|Please enter the account number in digits
+649|商品|Search by product name, model or RJP code
+650|追跡|We'll email you the tracking number
+651|必要|Using essential cookies only
+652|未掲|Quote for unlisted item: {0}
+653|例:|e.g. box and charger included, small scratch on the back
+654|{0|ordering in {0}–{1} weeks and
+655|{0|Please enter the {0}-digit number.
+656|【{|[{0} Quote for unlisted item]
+657|iP|Now buying iPad Pro (M{0})
+658|So|SoftBank/Y!mobile
+659|お振|Please check your bank account details
+660|カー|Move your cursor to check the price
+661|まず|Start with a ⟨①⟩free appraisal⟨/①⟩.
+662|確認|We'll email you once it's confirmed
+663|高価|Top prices · Cash on the spot · Mail-in from anywhere in Japan
+664|在庫|Quotes for stock and company devices in bulk.
+665|写真|Send photos for a quote⟨①⟩⟨/①⟩
+666|店頭|About the cash payment limit in store
+667|買取|Fill in the buyback form and show your ID.
+668|③ |③ Buy a phone: {0}% OFF
+669|Go|Google › SIM-free phones
+670|So|SoftBank network ◯, not for businesses
+671|お電|You can also call us: {0}
+672|ゲー|Games › Nintendo consoles
+673|ご注|I agree to pay within {0} days of ordering, and to the
+674|ご納|If you're happy, we pay you on the spot.
+675|運転|Driver's license, My Number card, etc.
+676|顔写|You need a photo ID.
+677|期限|Please come to the store you chose by the deadline
+678|検品|We pay the business day after inspection.
+679|口座|Please enter the account holder in katakana or the alphabet
+680|商品|Please bring the items and your ID.
+681|同意|Please tick the boxes to agree.
+682|買取|Filled in automatically when you apply to sell.
+683|{0|{0} Requests to disclose, correct or stop using your data
+684|※ご|*A student ID is required.
+685|Ro|Royal Japan Shinjuku {0}
+686|Sa|Samsung › SIM-free phones
+687|メー|Please enter a valid email address
+688|メー|If sending by email, please attach photos.
+689|ゆう|Japan Post Bank (bank code {0})
+690|写真|Send with photos (LINE, email, etc.)
+691|商品|Product, model and quantity (if your cart is empty)
+692|判定|Network ◯/－ pink/green/yellow
+693|予約|Walk in without booking (priced on the day)
+694|{0|{0} Cookies used on this site
+695|{0|Please come to the store you chose within {0} days
+696|\n|=
+697|ご購|Purchase total (tax incl.⟨①⟩, shipping extra⟨/①⟩)
+698|メー|Please enter a valid email address.
+699|ログ|Sign in to fill in your details automatically
+700|営業|Open {0}:{1}–{2}:{3}
+701|古物|Secondhand dealer license: Tokyo Metropolitan Public Safety Commission No. {0}
+702|査定|Appraising⟨①⟩Appraising⟨/①⟩
+703|最新|Latest buying prices and arrivals on social media
+704|郵送|Where do I send items by mail?
+705|■ |■ {0} Requests to disclose, correct or stop using your data
+706|ご連|Contact (email, phone or LINE ID) *
+707|タブ|Tablets & watches › iPad & accessories
+708|営業|Hours ({0}:{1}–{2}:{3})
+709|共有|Couldn't share, so we copied the details
+710|現金|Cash, credit card, QR code payment, etc.
+711|受け|Received. Please check your confirmation email
+712|専門|Our specialists price it at the day's market rate.
+713|東京|1-2-3 Chiyoda-ku, Tokyo {0}-{1}-{2}
+714|年末|Mail-in booking approvals over the New Year holidays
+715|■ |■ {0} Cookies used on this site
+716|への|use.
+717|更新|Updated ⟨①⟩{0}/{1}/{2}⟨/①⟩
+718|店名|Branch: 〇一八 (Zero-Ichi-Hachi), branch no. {0}
+719|内容|We'll check your details and send a booking approval email.
+720|本日|Today's market — ⟨①⟩{0}:{1}⟨/①⟩
+721|② |② Sell a phone: buying price +{0}% UP
+722|お振|We'll send our bank details in your order confirmation email.
+723|お申|We'll email you your application and the shipping address.
+724|メー|Check the message in your email app and send it.
+725|確認|That code is wrong. Please check it again.
+726|掲載|For other questions, feel free to contact us.
+727|最新|From the latest models to older ones, quotes are up now.
+728|折り|Now buying the foldable "iPhone Duo"
+729|登記|We need your company's certificate of registration and the contact person's ID.
+730|・振|· Bank name, branch, account number and account holder for payment
+731|・買|· Receiving buyback applications, appraising, inspecting and paying
+732|ご納|If you're happy with the quote, we hand you the cash on the spot.
+733|商品|Search by product name, model or RJP code (e.g. {0})
+734|当店|We use the personal information we collect for the following purposes:
+735|入荷|We'll contact you when it arrives ({0}–{1} weeks)
+736|例:|e.g. The screen has a small scratch. Can you still buy it?
+737|例:|e.g. box and charger included, bought in {0}, SIM-free
+738|「来|Items marked "In-store+" get an extra bonus when brought to a store.
+739|ご来|You're welcome to call us before visiting.
+740|メー|Attach the photos in your email app, then send.
+741|通信|Couldn't connect. Please try again later.
+742|・お|· Replying to applications and inquiries, and sending mail-in kits
+743|スマ|ID photo + face check on your phone. ID check done as fast as the same day.
+744|店舗|Bring items to a store or our office and get paid in cash on the spot
+745|入荷|We'll contact you when it arrives. Please come after we contact you
+746|例:|e.g. Galaxy S{0} Ultra {1}GB
+747|・当|· Browsing history on this site, device information and identifiers such as cookies
+748|Ma|Top prices for MacBook Air / Pro (M{0})
+749|お振|Transfer by: ⟨①⟩⟨/①⟩ Amount due: ⟨②⟩⟨/②⟩
+750|ただ|We're busy right now. Please try again later.
+751|在庫|Bulk quotes for new appliances in stock and replaced company phones.
+752|店舗|If I bring items to a store or office, do I get cash right away?
+753|文字|Click text to edit → click outside the box to confirm
+754|コピ|Couldn't copy. Please select the text and copy it
+755|到着|We inspect on arrival and contact you only if it differs from your application.
+756|・お|· Items applied for, appraisal and buyback details and history, and inquiry details
+757|近く|No store nearby? Ship it to us and get the same price as in Tokyo.
+758|商品|Returns may incur a fee, depending on the item.
+759|店舗|At our stores and office, we pay cash on the spot right after appraisal.
+760|・公|· Where especially necessary to improve public health or promote the healthy upbringing of children
+761|・不|· Preventing fraudulent transactions and responding to legal inquiries from the police and others
+762|「来|Amounts marked "In-store+" are added only when you bring items to a store.
+763|※ゆ|*Transfers from a Japan Post Bank account: symbol {0}, number {1}
+764|iP|Top prices for iPhone {0} Pro / Pro Max
+765|ジャ|Specialists for each category price items quickly in line with the market.
+766|スタ|Our staff check how it works and its condition, then give you the final buying price.
+767|ヤマ|Ship cash on delivery with Yamato Transport or Sagawa Express — shipping and appraisal are both ¥{0}.
+768|銀行|Bank transfer. We ship once payment is confirmed. We'll tell you the shipping fee separately.
+769|表示|Prices shown are today's maximum buying prices and change daily with the market.
+770|：◯|: ◯/－ means no restrictions; △ means installments are still being paid (balance remaining).
+771|{0|We carefully appraise even {0} item. Feel free to drop by.
+772|Ro|Open Royal Japan Ikebukuro in Google Maps
+773|Ro|Open Royal Japan Tsurumi in Google Maps
+774|ログ|Your sign-in has expired. Please sign in again.
+775|送信|Couldn't send. Please send it using one of the options below.
+776|本体|We recommend photos of the front, back, any scratches and the accessories.
+777|例:|e.g. iPhone{0} Pro {1}GB sealed ×{2}
+778|・法|· Where required by law (including police inquiries under the Secondhand Articles Dealer Act)
+779|買取|Used to pay you for your items. Please enter an account in your own name.
+780|・国|· Where we need to cooperate with national or local government bodies carrying out duties set by law
+781|スマ|Top prices at Tokyo market rates for phones, games, cameras, trading cards and whisky.
+782|個人|Individuals and businesses welcome. We also buy new appliances from stock.
+783|・お|· Name, name reading, date of birth, gender, address, phone number and email address
+784|{0|I am {0} or older (under {1}s and high school students need a parent's consent form)
+785|はい|Yes. Tell us the product name and condition and we'll give you a quote.
+786|確認|The code has expired. Please send a new code.
+787|査定|We pay within {0} business days after you approve the appraisal (excluding weekends and holidays).
+788|実施|Participating store: 〒{0}-{1} 東京都豊島区西池袋{2}-{3}-{4}
+789|付属|The price may be reduced for missing accessories, warranty marks or scratches on the device.
+790|⟨①|⟨①⟩Hold until: ⟨/①⟩⟨②⟩⟨/②⟩ Amount due: ⟨③⟩⟨/③⟩
+791|Ro|Open Royal Japan Shinjuku {0} in Google Maps
+792|お支|Please tick the boxes for the payment deadline and the privacy policy.
+793|受付|Reference no. {0}. Our staff will check your request and contact you.
+794|少し|Please wait a little and try again (up to {1} times per {0} minutes).
+795|送信|Finish sending in the app you chose. We'll reply in order.
+796|予約|No booking needed. For large quantities, contact us first for a faster appraisal.
+797|Ga|Now buying Galaxy Z Fold{0} / Fold{1} Ultra
+798|国内|With sales channels in Japan and overseas, we can always offer high buying prices.
+799|当店|We do not share personal information with third parties without your consent, except in the following cases.
+800|：S|: S = like new, A = light signs of use, B = visible scratches, C = scratches or faults.
+801|Ga|Now buying Galaxy S{0} Ultra / S{1}+ / S{2} at higher prices
+802|LI|Paste the copied text into the LINE chat and send it with your photos.
+803|学生|High school students who show a student ID get {0} special offers.
+804|・必|· Essential: your cookie consent choice and temporary data needed to show the page
+805|予約|Ship on the day you receive the booking approval email. We inspect on arrival and pay you the next business day.
+806|・サ|· Improving our services and producing statistics (processed so that no individual can be identified)
+807|送信|Once sent, our staff receive your photos and details and send the quote to the contact you entered.
+808|・キ|· Information on campaigns and new services (you can stop this at any time)
+809|キャ|During the campaign, shipping and appraisal are free when you ship cash on delivery with Yamato Transport or Sagawa Express.
+810|ゆう|For Japan Post Bank, enter the branch name and account number used for transfers from other banks.
+811|掲載|We buy items that aren't listed too. Send photos and whatever details you know.
+812|・人|· Where necessary to protect someone's life, health or property and it is difficult to get your consent
+813|お支|Pay in store when you visit after the item arrives (cash, credit card, QR code payment, etc.).
+814|カー|Your cart is empty. Write the items in the box below, or add items from the price list.
+815|ただ|We're busy right now. Please send it using one of the options below, or try again later.
+816|【重|[Important] We now buy used Nintendo Switch {0} games
+817|在庫|Stock is shared across all stores. If an item sells out, we'll contact you before you visit or pay.
+818|店頭|In store, a quote is valid on the day only. By mail, the price is guaranteed for items shipped on the booking approval day.
+819|強化|Be the first to hear about top buys and campaigns. Follow us to stay updated.
+820|©|© {0} Kaitori Nihon. All rights reserved.
+821|Co|For questions about cookies, please contact any of the stores listed.
+822|掲載|We buy items that aren't listed too. Just send photos and details and we'll send you a quote.
+823|在庫|Your order includes out-of-stock items. They take {0}–{1} weeks to arrive.
+824|・古|· Checking your identity and creating and keeping transaction records under the Secondhand Articles Dealer Act and the Act on Prevention of Transfer of Criminal Proceeds
+825|⟨①|⟨①⟩Network status⟨/①⟩: ◯/－ means no restrictions; △ means installments are still being paid (balance remaining).
+826|※マ|*We do not collect My Number (individual number). Please do not send a copy of the back of the card.
+827|まだ|No items yet. Choose a condition and color/grade from "Details & buy" on a product to add it.
+828|査定|If you're happy with the quote, we pay you in cash right away. Please bring the items and your ID.
+829|送信|Couldn't send ({0}). Please try again later, or order by phone: {1}
+830|店頭|Store pickup: pay in store (cash, credit card, QR code payment, etc.). Delivery: bank transfer.
+831|⟨①|⟨①⟩Grade⟨/①⟩: S = like new, A = light signs of use, B = visible scratches, C = scratches or faults.
+832|iP|Sell iPhones, phones & game consoles for top prices | Kaitori Nihon (Royal Japan) in Ikebukuro, Shinjuku & Tsurumi
+833|商品|Bring the items and your ID to a store or our office. We inspect and appraise on the spot and pay you in cash right away.
+834|返品|We accept returns, but a return fee may apply depending on the item. Please ask the store for details.
+835|・本|· Details and copies of ID documents (driver's license, front of My Number card, health insurance card, passport, etc.)
+836|まだ|No items yet. Choose a condition and color/grade from "Details & add to cart" on a product to add it.
+837|運転|A photo ID showing your current address, such as a driver's license, My Number card, passport or residence card.
+838|承認|On the day you receive the approval email ({0}), pack the items with the buyback request form and ship them to the address below.
+839|振込|Please put your order number before your name when you transfer (e.g. S{0} ヤマダタロウ). We've also sent a confirmation email.
+840|選ん|Pay and pick up at the store you chose (cash, credit card, QR code payment, etc.). No shipping fee.
+841|お支|Payment is by bank transfer (Japan Post Bank, within {0} days of ordering). We'll email you at each step.
+842|買取|Kaitori Nihon ("we") sets out below how we use cookies and similar technologies on this site.
+843|メー|Sign up with just a code sent to your email. No password needed. You can also order without signing in.
+844|会員|As a member, your name and address are filled in automatically when you apply, and you can check your applications at any time. Your sign-in is kept for your next visit only if you accept
+845|送信|Couldn't send ({0}). Please try again later, or apply by phone: {1}
+846|当サ|This site does not use cookies for advertising, behavioral targeting or external analytics services.
+847|お売|Please bring the items you're selling and a photo ID. Mail-in buyback requires an eKYC identity check.
+848|本ポ|We may change this policy as needed. Changes take effect when posted on this site.
+849|メー|Sign in with a code sent to your email address. No password needed. If you're new, you're signed up automatically.
+850|メー|Sign up with just a code sent to your email. No password needed. You can also apply without signing in.
+851|お支|Pay in store when you visit (cash, credit card, QR code payment, etc.). We hold your order for {0} days.
+852|LI|LINE opens our official account. Your details are copied automatically — paste them into the chat and send them with your photos.
+853|・機|· Functional (only if you agree): favorites, switching between buying and selling prices, and keeping you signed in
+854|個人|For questions or requests about how we handle personal information, please contact any store listed or our official LINE account.
+855|iP|iPhones and high-end Samsung models are in stock. Other items are out of stock and arrive {0}–{1} weeks after you order.
+856|毎朝|Priced at the Tokyo market rate, updated every morning. Bring items to a store or our office for cash on the spot, or send them by mail from anywhere in Japan for the same price.
+857|現金|You can pay by cash, credit card, QR code payment and more. Please tell us your order number when you visit. We've also sent a confirmation email.
+858|在庫|In stock. You can order online. Store pickup: pay in store (cash, credit card, QR code payment, etc.). Delivery: bank transfer.
+859|{0|Customers under {0} can trade with us only with a parent's consent form. High school students need a parent's consent even if they are {1} or older.
+860|最新|We buy the latest iPad Pro (M{0}) {1}-inch and {2}-inch in all capacities. Top buying price for new: {3}. Prices are updated every morning.
+861|当店|We may change this policy when laws or our services change. Changes take effect when posted on this site.
+862|在庫|Stock is shared across all stores. If an item sells out, we'll contact you before you visit or pay.⏎Returns may incur a fee, depending on the item.
+863|最新|We're paying top prices for the latest foldable Galaxy Z Fold{0} and Fold{1} Ultra. Top buying price for new: {2}. Prices are updated every morning.
+864|話題|We've started buying the much-talked-about foldable iPhone, iPhone Duo ({0}GB–{1}TB). Top buying price for new: {2}. Prices are updated every morning.
+865|はい|Yes. Bring items to a store or our office and, once you're happy with the quote, we pay you in cash on the spot. Please bring the items and a photo ID.
+866|当サ|This site uses cookies and similar browser storage to remember your favorites, display settings and sign-in. We don't use them for advertising or external analytics.
+867|SI|We're paying higher prices for the Galaxy S{0} series — SIM-free, au, docomo and SoftBank models. Top buying price for new: {1}. Prices are updated every morning.
+868|送り|Send to Royal Japan (〒{0}-{1} 東京都豊島区西池袋{2}-{3}-{4} 日高ビル{5}). Please pack the items with the buyback request form.
+869|当店|We may outsource work such as delivery, payments and transfers, and system operation. We choose contractors that handle personal information properly and supervise them as needed.
+870|当店|To prevent unauthorized access, loss, damage, alteration or leaks of personal information, we take necessary and appropriate security measures, such as access control, encrypted communication and staff training.
+871|Co|Cookies and the browser's local storage are ways a website saves small pieces of data on your device. On this site we call them all "cookies".
+872|現在|Currently out of stock. If you order, it arrives in {0}–{1} weeks. Store pickup: pay in store (cash, credit card, QR code payment, etc.). Delivery: bank transfer.
+873|予約|On the day you receive the booking approval email, ship the items with the buyback request form and your ID (first time only: e.g. a copy of your residence certificate). We inspect on arrival and, if all is well, pay you the next business day.
+874|個人|For questions or requests about how we handle personal information, please contact any store listed or our official LINE account. Kaitori Nihon, Secondhand dealer license: Tokyo Metropolitan Public Safety Commission No. {0}
+875|ご本|If you ask us to tell you the purpose of use of your personal information, or to disclose, correct, add to, delete, stop using or stop sharing it, we will confirm your identity and respond promptly as required by law.
+876|ご来|When you visit, please bring the items and a photo ID (driver's license, My Number card, residence card, passport, etc.). Prices shown are maximums; we give you the final price after inspecting in store.
+877|最新|We're buying the latest iPhone {0} Pro and {1} Pro Max in every capacity and color — sealed, opened or used. Top buying price for new: {2}. Prices are updated every morning.
+878|買取|Kaitori Nihon ("we") handles the personal information of customers using our buyback service properly, in line with the Act on the Protection of Personal Information and other relevant laws, as set out below.
+879|・必|· Essential: your cookie consent choice and temporary data needed to show the page · Functional (only if you agree): favorites, switching between buying and selling prices, and keeping you signed in
+880|送り|Send to: Royal Japan 〒{0}-{1} 東京都豊島区西池袋{2}-{3}-{4} 日高ビル{5}. Booking approvals {6}:{7}–{8}:{9} (Mon–Sat). Items shipped on other days are not covered by the price guarantee.
+881|当サ|This site may use cookies to make it easier to use and to understand how it's visited. You can turn off cookies in your browser settings, but some features may then not work.
+882|M{|We're buying MacBook Air and MacBook Pro with the M{0} chip. See the new "MacBook & laptops" tab. Top buying price for new: {1}. Prices are updated every morning.
+883|本人|We keep identity and transaction records for {0} years from the transaction date, as required by the Secondhand Articles Dealer Act and other laws (or longer where the law requires). After that, we delete them so they cannot be recovered.
+884|買取|For buyback applications, unlisted item inquiries and member sign-in, we use Google (Google Apps Script) to process what you send. See our privacy policy for how that information is handled.
+885|ペー|You can change your choice at any time from "Cookie settings" at the bottom of the page. If you choose "Essential only", favorites, display settings and sign-in aren't kept for your next visit. You can also delete or block cookies in your browser settings.
+886|学生|High school students who show a student ID get {0} special offers. ① Phone repair {1}% OFF ② Sell a phone: buying price +{2}% UP ③ Buy a phone: {3}% OFF *A student ID is required. Participating store:
+887|学生|High school students who show a student ID get {0} special offers. ① Phone repair {1}% OFF ② Sell a phone: buying price +{2}% UP ③ Buy a phone: {3}% OFF *A student ID is required. Participating store: 〒{4}-{5} 東京都豊島区西池袋{6}-{7}-{8} TEL: {9}-{10}-{11}
+888|学生|High school students who show a student ID get {0} special offers. ① Phone repair {1}% OFF ② Sell a phone: buying price +{2}% UP ③ Buy a phone: {3}% OFF *A student ID is required. Participating store: ⟨①⟩〒{4}-{5} 東京都豊島区西池袋{6}-{7}-{8}⟨/①⟩ TEL: {9}-{10}-{11}
+889|当店|We do not share personal information with third parties without your consent, except in the following cases. · Where required by law (including police inquiries under the Secondhand Articles Dealer Act) · Where necessary to protect someone's life, health or property and it is difficult to get your consent · Where especially necessary to improve public health or promote the healthy upbringing of children · Where we need to cooperate with national or local government bodies carrying out duties set by law
+890|・お|· Name, name reading, date of birth, gender, address, phone number and email address · Details and copies of ID documents (driver's license, front of My Number card, health insurance card, passport, etc.) · Bank name, branch, account number and account holder for payment · Items applied for, appraisal and buyback details and history, and inquiry details · Browsing history on this site, device information and identifiers such as cookies *We do not collect My Number (individual number). Please do not send a copy of the back of the card.
+891|当店|We use the personal information we collect for the following purposes: · Receiving buyback applications, appraising, inspecting and paying · Checking your identity and creating and keeping transaction records under the Secondhand Articles Dealer Act and the Act on Prevention of Transfer of Criminal Proceeds · Replying to applications and inquiries, and sending mail-in kits · Information on campaigns and new services (you can stop this at any time) · Improving our services and producing statistics (processed so that no individual can be identified) · Preventing fraudulent transactions and responding to legal inquiries from the police and others
+892|新品|New, standard

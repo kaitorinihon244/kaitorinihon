@@ -173,3 +173,19 @@ Every product on the site has an RJP code (RJP-000001…). The JAN stays in the 
 - Google Search Console: Domain property kaitorinihon.jp, verified 19 Nov 2026 by DNS TXT record (google-site-verification=…, do not delete it
   in Cloudflare DNS). Sitemap submitted (21 pages). Account: kaitorinihon777@gmail.com.
 - Still to do by the owner: a Google Business Profile per store.
+
+## Languages (21 Nov 2026)
+
+- The site is written in Japanese; the 🌐 button in the header switches to English, 繁體中文, 한국어, বাংলা, සිංහල or नेपाली
+  (`?lang=en|zh-Hant|ko|bn|si|ne`). The page swaps the text in the browser from `data/i18n/<code>.json`; forms, orders,
+  Telegram and staff data stay Japanese. Product names stay as they are; postal addresses stay in Japanese.
+- Translations live in `work/i18n/tr/<code>.tsv` (one numbered line per text in `work/i18n/keys.json`).
+  After changing Japanese text on the site:
+  1. `node work/i18n-extract.js <root>` (texts in the page and site.json) and, with the local server running, open the page with
+     `?lang=en`, click through, then `fetch('/__harvest',{method:'POST',body:JSON.stringify(I18N.missing())})` in the console.
+  2. `node work/i18n-keys.js <root>` adds the new texts to the end of keys.json (existing numbers never move).
+  3. Add a line for each new number to every .tsv, then `node work/i18n-build.js <root> en zh-hant ko bn si ne` — it checks
+     every line ({0} placeholders, bold/link marks, nothing left in Japanese) and writes the .json files.
+  4. Rebuild with `work/build-site.ps1` and upload.
+- News and campaign posts written later in Japanese show in Japanese until they are added this way.
+- Each language page names itself as canonical (`?lang=xx`) and the Japanese page lists all of them with hreflang.

@@ -6,6 +6,8 @@ work/*
 !work/*.ps1
 !work/site.json
 !work/seo-build.js
+!work/i18n-*.js
+!work/i18n/
 
 # local Claude Code settings
 .claude/settings.local.json
