@@ -1,6 +1,6 @@
 // SEO extras for the Cloudflare build (run by build-site.ps1 after site/index.html is written).
 //  - adds title, canonical, social-preview tags, icons and structured data (stores, FAQ) to site/index.html
-//  - writes one static price page per category under /kaitori/, plus robots.txt, sitemap.xml, 404.html, favicon.svg
+//  - writes one static price page per category under /kaitori/, plus robots.txt, sitemap.xml and 404.html
 // The static pages are plain HTML (no scripts) so search engines read them without running JavaScript.
 // Usage: node seo-build.js <project root>
 'use strict';
@@ -11,7 +11,17 @@ const SITE = 'https://kaitorinihon.jp';
 const d = JSON.parse(fs.readFileSync(path.join(root, 'work', 'site.json'), 'utf8'));
 const T = d.texts || {};
 const brand = T.brand || '買取日本';
-const now = new Date(Date.now() + 9 * 3600e3);   // Japan time
+// Category pages use the relay's current buying prices and that update's date. Without the feed they keep
+// site.json's prices and the date that file last changed, so a rebuild never makes old prices look new.
+let priced = fs.statSync(path.join(root, 'work', 'site.json')).mtimeMs;
+try {
+  const feed = JSON.parse(require('child_process').execFileSync(process.execPath, ['-e', "fetch(process.argv[1],{signal:AbortSignal.timeout(40000)}).then(r=>r.text()).then(t=>process.stdout.write(t)).catch(()=>process.exit(1))", T.relayUrl + '?prices=1'], { maxBuffer: 1e7 }).toString());
+  if (!feed.ok || Object.keys(feed.items).length < 50) throw new Error('feed not usable');
+  (d.products || []).forEach(p => { const x = feed.items[p.rjp]; if (x) { p.new = x[0]; if (x[1] != null) p.used = x[1]; } });
+  priced = Date.parse(feed.updated.replace(/\//g, '-').replace(' ', 'T') + ':00+09:00');
+  console.log('seo: prices of ' + feed.updated + ' for ' + Object.keys(feed.items).length + ' products');
+} catch (e) { console.log('seo: price feed not available, using site.json prices'); }
+const now = new Date(priced + 9 * 3600e3);   // Japan time
 const ymd = now.toISOString().slice(0, 10);
 const jpDate = `${now.getUTCFullYear()}年${now.getUTCMonth() + 1}月${now.getUTCDate()}日`;
 
@@ -21,7 +31,8 @@ const json = o => JSON.stringify(o).replace(/</g, '\\u003c');
 
 const TITLE = T.seoTitle || 'iPhone・スマホ・ゲーム機の高価買取｜池袋・新宿・鶴見の買取日本（Royal Japan）';
 const DESC = T.seoDescription || 'iPhone・Galaxy・Pixel・iPad・ゲーム機・MacBookを東京相場で高価買取。池袋・新宿・鶴見の店舗やオフィスへのお持ち込みは現金即払い、郵送買取は全国対応。買取価格は毎日更新。';
-const OG_IMG = SITE + '/hero-products-hd.jpg';
+const OG_IMG = SITE + '/share.png', STORE_IMG = SITE + '/hero-products-hd.jpg';
+const LOGO = `<path fill="#3E8EE0" d="M6 9a3 3 0 0 1 3-3h16.2a4 4 0 0 1 2.83 1.17l14.8 14.8a4 4 0 0 1 0 5.66L29.63 40.83a4 4 0 0 1-5.66 0L7.17 24.03A4 4 0 0 1 6 21.2Z"/><circle fill="#E0475F" cx="15.6" cy="15.6" r="3.9"/><path fill="#fff" transform="translate(22.095 34.949) scale(0.021163)" d="M216,0L216,-166 41,-166 41,-250 216,-250 216,-311 41,-311 41,-396 177,-396 12,-726 195,-726 249,-580C258.333312988281,-555.333312988281 267.5,-530.333312988281 276.5,-505 285.5,-479.666656494141 295,-454.666656494141 305,-430L309,-430C318.333312988281,-455.333312988281 327.666656494141,-480.499969482422 337,-505.5 346.333312988281,-530.5 355.666656494141,-555.333312988281 365,-580L418,-726 597,-726 431,-396 568,-396 568,-311 393,-311 393,-250 568,-250 568,-166 393,-166 393,0z"/>`;
 
 // ---------- category pages ----------
 const SLUG = {
@@ -38,7 +49,7 @@ const slugOf = c => SLUG[c] || 'c' + (cats.indexOf(c) + 1);
 const stores = (d.stores || []).filter(s => s && s.name);
 const css = `*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Hiragino Sans','Yu Gothic','Meiryo',sans-serif;color:#1E2A3B;background:#F6F9FD;line-height:1.7}
 a{color:#2C74C4}header,main,footer{max-width:960px;margin:0 auto;padding:16px}header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.logo{font-weight:900;font-size:20px;color:#16233A;text-decoration:none}.cta{background:#2C74C4;color:#fff;padding:10px 18px;border-radius:999px;text-decoration:none;font-weight:700}
+.logo{font-weight:900;font-size:20px;color:#16233A;text-decoration:none;display:flex;align-items:center;gap:8px}.cta{background:#2C74C4;color:#fff;padding:10px 18px;border-radius:999px;text-decoration:none;font-weight:700}
 nav.bc{font-size:13px;color:#6B7890;margin:8px 0}h1{font-size:26px;margin:8px 0 6px;color:#16233A}h2{font-size:19px;margin:28px 0 10px;color:#16233A}
 p{margin:6px 0}.note{font-size:13px;color:#6B7890}table{width:100%;border-collapse:collapse;background:#fff;margin:12px 0;font-size:14px}
 th,td{border-bottom:1px solid #E1E8F2;padding:9px 8px;text-align:left;vertical-align:middle}th{background:#EAF2FB;font-size:13px}td.p{text-align:right;font-weight:700;color:#E0475F;white-space:nowrap}
@@ -55,10 +66,10 @@ function page({ title, desc, canonical, h1, crumbs, body, ld }) {
   return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(title)}</title><meta name="description" content="${esc(desc)}"><link rel="canonical" href="${canonical}">
 <meta property="og:type" content="website"><meta property="og:site_name" content="${esc(brand)}"><meta property="og:title" content="${esc(title)}">
-<meta property="og:description" content="${esc(desc)}"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${OG_IMG}"><meta property="og:locale" content="ja_JP">
-<meta name="twitter:card" content="summary_large_image"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:description" content="${esc(desc)}"><meta property="og:url" content="${canonical}"><meta property="og:image" content="${OG_IMG}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image"><link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#16233A"><style>${css}</style>${(ld || []).map(o => `<script type="application/ld+json">${json(o)}</script>`).join('')}</head><body>
-<header><a class="logo" href="/">${esc(brand)} <small style="font-weight:500;font-size:12px;color:#6B7890">KAITORI</small></a><a class="cta" href="/">無料で査定する</a></header>
+<header><a class="logo" href="/"><svg viewBox="5 5 40 38" width="34" height="32" aria-hidden="true">${LOGO}</svg>${esc(brand)} <small style="font-weight:500;font-size:12px;color:#6B7890">KAITORI</small></a><a class="cta" href="/">無料で査定する</a></header>
 <main><nav class="bc">${crumbs.map(c => c.url ? `<a href="${c.url}">${esc(c.name)}</a>` : esc(c.name)).join(' › ')}</nav><h1>${esc(h1)}</h1>${body}</main>
 <footer><p><a href="/">トップページ</a> ・ <a href="/kaitori/">買取価格一覧</a></p><p>${esc(T.copyright || '© 2026 買取日本 Kaitorinihon. All rights reserved.')}</p>${T.license ? `<p>${esc(T.legalName ? T.legalName + '　' : '')}${esc(T.license)}</p>` : ''}</footer></body></html>`;
 }
@@ -115,14 +126,13 @@ write('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`)
 const urls = ['/', '/kaitori/', ...cats.map(c => `/kaitori/${slugOf(c)}/`)];
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u =>
   `  <url><loc>${SITE}${u}</loc><lastmod>${ymd}</lastmod><changefreq>daily</changefreq><priority>${u === '/' ? '1.0' : u === '/kaitori/' ? '0.9' : '0.8'}</priority></url>`).join('\n')}\n</urlset>\n`);
-write('favicon.svg', `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#16233A"/><text x="32" y="45" font-family="Hiragino Sans,Yu Gothic,Meiryo,sans-serif" font-size="38" font-weight="900" fill="#fff" text-anchor="middle">買</text></svg>`);
 
 // ---------- home page head ----------
 const idx = path.join(out, 'index.html');
 let html = fs.readFileSync(idx, 'utf8');
 const org = {
   '@context': 'https://schema.org', '@type': 'Organization', '@id': SITE + '/#org', name: brand, legalName: T.legalName || undefined, alternateName: ['KAITORI', 'Kaitorinihon', 'Royal Japan'],
-  url: SITE + '/', logo: SITE + '/apple-touch-icon.png',
+  url: SITE + '/', logo: SITE + '/app-icon-512.png',
   sameAs: [T.instagramUrl, T.tiktokUrl, T.xUrl, T.youtubeUrl, T.lineUrl].filter(Boolean)
 };
 const site = { '@context': 'https://schema.org', '@type': 'WebSite', '@id': SITE + '/#site', name: brand, url: SITE + '/', inLanguage: 'ja', publisher: { '@id': SITE + '/#org' } };
@@ -132,7 +142,7 @@ const addr = a => {
            : { '@type': 'PostalAddress', streetAddress: a, addressCountry: 'JP' };
 };
 const shops = stores.map((s, i) => ({
-  '@context': 'https://schema.org', '@type': 'Store', '@id': SITE + '/#store' + (i + 1), name: s.name, url: SITE + '/', image: OG_IMG,
+  '@context': 'https://schema.org', '@type': 'Store', '@id': SITE + '/#store' + (i + 1), name: s.name, url: SITE + '/', image: STORE_IMG,
   telephone: s.tel || undefined, address: addr(s.addr), parentOrganization: { '@id': SITE + '/#org' },
   description: '中古スマホ・ゲーム機・タブレットの買取店。お持ち込みは現金即払い。'
 }));
@@ -145,8 +155,8 @@ const LANGS = [['ja', ''], ['en', 'en'], ['zh-Hant', 'zh-Hant'], ['ko', 'ko'], [
 const hreflang = LANGS.map(([h, q]) => `<link rel="alternate" hreflang="${h}" href="${SITE}/${q ? '?lang=' + q : ''}">`).join('') + `<link rel="alternate" hreflang="x-default" href="${SITE}/">`;
 const head = `<title>${esc(TITLE)}</title><meta name="description" content="${esc(DESC)}"><link rel="canonical" href="${SITE}/">
 <meta property="og:type" content="website"><meta property="og:site_name" content="${esc(brand)}"><meta property="og:title" content="${esc(TITLE)}"><meta property="og:description" content="${esc(DESC)}">
-<meta property="og:url" content="${SITE}/"><meta property="og:image" content="${OG_IMG}"><meta property="og:locale" content="ja_JP"><meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:url" content="${SITE}/"><meta property="og:image" content="${OG_IMG}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="ja_JP"><meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
 ${hreflang}
 ${[org, site, ...shops, faq].filter(Boolean).map(o => `<script type="application/ld+json">${json(o)}</script>`).join('\n')}`;
 // the page body carries its own short <title> and description; the build's versions replace them

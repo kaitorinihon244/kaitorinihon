@@ -189,3 +189,9 @@ Every product on the site has an RJP code (RJP-000001…). The JAN stays in the 
   4. Rebuild with `work/build-site.ps1` and upload.
 - News and campaign posts written later in Japanese show in Japanese until they are added this way.
 - Each language page names itself as canonical (`?lang=xx`) and the Japanese page lists all of them with hreflang.
+
+## Logo (25 Nov 2026)
+
+- Logo A (price tag): the mark is drawn in the page (`.ltag` in uridoki.html) and turns white on dark backgrounds. The four ideas and every
+  platform size are in `logos/` (see logos/README.txt); icons and the share image the site serves are in `brand/` and the build copies them.
+- Category price pages take their prices and date from the relay's price feed when built (site.json if the feed is down).

@@ -20,17 +20,8 @@ Copy-Item (Join-Path $Root 'hero-products-hd.jpg') $out
 & node (Join-Path $Root 'work\seo-build.js') $Root
 if($LASTEXITCODE){ throw 'seo-build.js failed' }
 $html = [IO.File]::ReadAllText((Join-Path $out 'index.html'), $utf8)
-# PNG icons (phones and older browsers do not use the SVG one)
-Add-Type -AssemblyName System.Drawing
-foreach($ic in @(@('apple-touch-icon.png',180,0), @('favicon-32.png',32,6))){
-  $n = $ic[1]; $bmp = New-Object Drawing.Bitmap $n, $n; $g = [Drawing.Graphics]::FromImage($bmp)
-  $g.SmoothingMode = 'AntiAlias'; $g.TextRenderingHint = 'AntiAliasGridFit'
-  $g.Clear([Drawing.Color]::FromArgb(22,35,58))
-  $font = New-Object Drawing.Font 'Yu Gothic', ([single]($n * 0.56)), ([Drawing.FontStyle]::Bold), ([Drawing.GraphicsUnit]::Pixel)
-  $fmt = New-Object Drawing.StringFormat; $fmt.Alignment = 'Center'; $fmt.LineAlignment = 'Center'
-  $g.DrawString('買', $font, [Drawing.Brushes]::White, (New-Object Drawing.RectangleF 0, ([single]($n * 0.03)), $n, $n), $fmt)
-  $bmp.Save((Join-Path $out $ic[0]), [Drawing.Imaging.ImageFormat]::Png); $g.Dispose(); $bmp.Dispose()
-}
+# icons and share image made from the logo (see logos/README.txt)
+Copy-Item (Join-Path $Root 'brand\*') $out
 
 $sha = [Security.Cryptography.SHA256]::Create()
 $hashes = foreach($m in [regex]::Matches($html, '<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)</script>')){
