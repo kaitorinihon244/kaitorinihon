@@ -493,7 +493,9 @@ function saleShip_(arg) {
 /* ---------- protection ---------- */
 const PRICE_NOTE = '\n\n※金額はお客様の画面から送信された値です。商品の価格と合っているか確認してから、入金確認・発送をしてください。';
 // Spreadsheet cells: text that starts with = + - @ would run as a formula, so it is stored as plain text.
-function cellSafe_(v) { return typeof v === 'string' && /^[=+\-@\t\r]/.test(v) ? "'" + v : v; }
+// A leading ' makes Sheets keep the text as typed: no formulas, and numbers that start with 0
+// (phone 080…, account 0012…, postcode 060-…) keep their 0 instead of becoming 80…
+function cellSafe_(v) { return typeof v === 'string' && (/^[=+\-@\t\r]/.test(v) || /^0[\d\s()-]*$/.test(v)) ? "'" + v : v; }
 function safeRow_(row) { return row.map(cellSafe_); }
 // Counter in the script cache: true while the key is under max hits in the window (max 6 hours).
 function limit_(key, max, seconds) {
