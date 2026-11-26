@@ -204,3 +204,10 @@ Every product on the site has an RJP code (RJP-000001…). The JAN stays in the 
   The script finds it by name (and remembers its id in the property `APPLICATION_PDF_ID`).
 - To change the form: upload the new PDF to Drive with the same name and move the old one to the bin.
 - If the file cannot be found, the email still goes out without it (and without the paragraph about it) and Telegram shows a ⚠️.
+
+## ID photos for mail-in sellers (26 Nov 2026, deployment version 16)
+- Mail-in applications (郵送買取) carry 2 photos of one ID document (運転免許証 / パスポート / 在留カード / マイナンバーカード front only; photo 2 = the customer holding the front next to their face). Store applications are unchanged.
+- The site shrinks each photo and sends it inside the order. The relay checks the document type, that both files are really JPEG/PNG/WebP (magic bytes) and the size, then saves them to a **private Drive folder** "買取日本 本人確認書類（非公開・共有しないでください）" (id kept in script property `ID_FOLDER_ID`; the script resets its sharing to private on every save). One sub-folder per order number, files `KT-…-1.jpg` / `-2.jpg` (no customer name in file names).
+- 注文 sheet: 3 new columns on the right – 本人確認書類 / 本人確認写真 (2枚) / 写真フォルダ（非公開）(link). Photos are **never** attached to emails or sent to Telegram; the owner mail/Telegram only say the type, "写真2枚" and the folder link; the customer email confirms the document type.
+- Switch: script property `ID_PHOTO_REQUIRED` = `on` makes the photos mandatory for mail-in orders (server side). Leave it unset until the site that sends photos is live (old cached pages would otherwise be refused); if photos arrive they are always validated.
+- Keep photos only as long as needed (privacy policy says 3 years); turn on 2-step verification for the shop Google account and do not share the folder.

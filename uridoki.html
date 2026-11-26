@@ -815,6 +815,20 @@ button.cimg{cursor:pointer;width:auto}
 .bank-h b{display:block;font-size:.9375rem;font-weight:900}
 .bank-h span{display:block;margin-top:.125rem;font-size:.75rem;color:var(--muted)}
 .bank-note{margin-top:.375rem;font-size:.6875rem;line-height:1.5;color:var(--muted)}
+/* ID photos (mail-in applications): two slots, each a preview and a pick button */
+.id-guide{margin:.25rem 0 .625rem;padding:.625rem .75rem;border-radius:var(--r-sm);background:var(--brand-tint);font-size:.75rem;line-height:1.6;color:var(--foreground)}
+.id-slots{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.id-slot{display:flex;flex-direction:column;gap:.5rem;min-width:0}
+.id-t{font-size:.75rem;font-weight:800;line-height:1.4}
+.id-pv{aspect-ratio:4/3;border-radius:var(--r-sm);border:1.5px dashed var(--subtle);background:#fff center/cover no-repeat;display:grid;place-items:center;color:var(--subtle);font-size:1.5rem}
+.id-pv::before{content:"＋"}
+.id-slot.has .id-pv{border-style:solid;border-color:var(--brand);color:transparent}
+.id-slot.has .id-pv::before{content:""}
+.id-pick{display:flex;width:100%;min-width:0;justify-content:center;cursor:pointer;font-size:.75rem;line-height:1.3;padding:.625rem .5rem;text-align:center;white-space:normal}
+.id-pick:focus-within{outline:2px solid var(--brand);outline-offset:2px}
+.id-del{align-self:flex-start;font-size:.6875rem;color:var(--muted);text-decoration:underline;padding:.125rem 0}
+.id-err{display:block;margin-top:.375rem}
+@media (max-width:420px){.id-slots{gap:.5rem}}
 .mail-to{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-top:.625rem;padding:.75rem 1rem;border-radius:.875rem;background:#fff;border:1.5px solid var(--brand);text-align:left}
 .mail-to[hidden]{display:none}
 .mail-to b{display:block;font-size:.75rem;font-weight:800;color:var(--brand-strong)}
@@ -1790,6 +1804,15 @@ html[data-mode="sell"] .pmode-note{display:flex}
           </div>
           <label class="fld"><span>口座名義（カタカナ） *</span><input class="ctl" id="fHolder" placeholder="例: ヤマダ タロウ" autocomplete="off"><small class="err" hidden></small></label>
           <p class="bank-note">ゆうちょ銀行の方は、他行からの振込用の店名（支店名）と口座番号をご入力ください。</p>
+          <div class="bank-h id-h"><b>本人確認書類の写真（2枚）</b><span>古物営業法にもとづく本人確認のため、書類の写真を2枚お送りください。確認以外には使いません。</span></div>
+          <label class="fld"><span>書類の種類 *</span><select class="ctl" id="fIdType"><option value="">選んでください</option><option value="運転免許証">運転免許証</option><option value="パスポート">パスポート</option><option value="在留カード">在留カード</option><option value="マイナンバーカード">マイナンバーカード</option></select><small class="err" hidden></small></label>
+          <p class="id-guide" id="idGuide" hidden></p>
+          <div class="id-slots" id="idSlots" hidden>
+            <div class="id-slot" data-idslot="0"><b class="id-t"></b><div class="id-pv" aria-hidden="true"></div><label class="pill outline id-pick"><span class="id-btn">写真を選ぶ・撮影する</span><input type="file" accept="image/*" class="sr-only" data-idfile="0"></label><button type="button" class="id-del" data-iddel="0" hidden>削除</button></div>
+            <div class="id-slot" data-idslot="1"><b class="id-t"></b><div class="id-pv" aria-hidden="true"></div><label class="pill outline id-pick"><span class="id-btn">写真を選ぶ・撮影する</span><input type="file" accept="image/*" class="sr-only" data-idfile="1"></label><button type="button" class="id-del" data-iddel="1" hidden>削除</button></div>
+          </div>
+          <small class="err id-err" id="idErr" hidden></small>
+          <p class="bank-note">写真は本人確認のために保管し、それ以外には使いません。マイナンバーカードの裏面（個人番号の面）は撮影しないでください。</p>
         </div>
         <label class="fld"><span>備考（付属品・傷など）</span><textarea class="ctl" id="fNote" rows="2" style="resize:none" placeholder="例: 箱・充電器あり、背面に小傷"></textarea></label>
         <div class="apnav"><button class="pill outline" type="button" data-next="1"><span>‹ 戻る</span></button><button class="pill brand arrow" type="button" data-next="3" data-arrow="right"><span>確認へ<i class="ab"></i></span></button></div>
@@ -2533,7 +2556,7 @@ async function relaySend(payload,prefix){ const r=rqRelay(); if(!r) throw new Er
   const body=JSON.stringify({...payload,cid}), opt={method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body};
   for(let i=0;i<2;i++){ try{ const res=await fetch(r,opt); return await res.json(); }catch(e){ console.warn('relay',e); if(!i) await new Promise(s=>setTimeout(s,1200)); } }
   await fetch(r,{...opt,mode:'no-cors'}); return {ok:true,id:cid,unconfirmed:true}; }
-const relayErr=e=>({busy:'混雑',missing:'入力不足',bank:'お振込先の入力内容をご確認ください',empty:'商品なし',norelay:'未設定'})[e&&e.message]||(e&&e.message==='Failed to fetch'?'通信エラー':(e&&e.message)||'不明');
+const relayErr=e=>({busy:'混雑',missing:'入力不足',bank:'お振込先の入力内容をご確認ください',id:'本人確認書類の写真をご確認ください',photo:'写真を保存できませんでした',empty:'商品なし',norelay:'未設定'})[e&&e.message]||(e&&e.message==='Failed to fetch'?'通信エラー':(e&&e.message)||'不明');
 async function relayPost(payload){ const r=rqRelay(); if(!r) throw new Error('norelay'); const res=await fetch(r,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)}); return res.json(); }
 function syncLoginBtn(){ $('#loginLbl').textContent=member?(member.name?member.name+' 様':'マイページ'):'会員登録・ログイン'; $('#loginShort').textContent=member?'マイページ':'ログイン'; $$('[data-signin]').forEach(el=>el.hidden=!!member); }
 const AC_ERR={email:'メールアドレスの形式で入力してください。',wait:'少し時間をおいてからもう一度お試しください（1分に1回まで）。',code:'確認コードが違います。もう一度ご確認ください。',expired:'確認コードの有効期限が切れました。もう一度コードを送信してください。',auth:'ログインの有効期限が切れました。もう一度ログインしてください。',busy:'ただいま混み合っています。時間をおいてお試しください。',norelay:'会員機能は準備中です。',failed:'通信できませんでした。時間をおいてお試しください。'};
@@ -2946,21 +2969,42 @@ function setStep(n){ apStep=n; $$('#mForm [data-step]').forEach(s=>s.hidden=+s.d
   if(n===2){ const m=way(); $$('[data-for]').forEach(el=>el.hidden=el.dataset.for!==m); const t=new Date(); t.setDate(t.getDate()+1); ['#fVisit','#fShip'].forEach(s=>{ const el=$(s); el.min=ymd(new Date()); if(!el.value) el.value=ymd(t); }); }
   if(n===3) drawConfirm();
   $('#panel').scrollTop=0; setTimeout(()=>$(`#mForm [data-step="${n}"] input:not([type=radio]), #mForm [data-step="${n}"] button, #mDone button`)?.focus({preventScroll:true}),60); }
+/* ID photos for mail-in applications: two photos of one document. They are shrunk here, kept only in memory and sent
+   with the application; nothing is stored on the visitor's device. */
+const ID_GUIDE={'運転免許証':['表面と裏面を、文字が読めるように明るい場所で撮影してください。',['1枚目：表面','2枚目：裏面']],
+  'パスポート':['顔写真のページと、住所が記載されたページ（所持人記入欄）を撮影してください。',['1枚目：写真のページ','2枚目：住所記載のページ（所持人記入欄）']],
+  '在留カード':['表面と裏面を、文字が読めるように明るい場所で撮影してください。',['1枚目：表面','2枚目：裏面']],
+  'マイナンバーカード':['1枚目はカードの表面（顔写真の面）だけです。裏面（個人番号の面）は撮影しないでください。2枚目は、カードの表面を顔の横に持った自撮り写真です。',['1枚目：マイナンバーカードの表面','2枚目：表面を顔の横に持った自撮り']]};
+let idPhotos=[null,null];
+const idShrink=file=>new Promise((res,rej)=>{ const u=URL.createObjectURL(file), img=new Image();
+  img.onerror=()=>{ URL.revokeObjectURL(u); rej(new Error('img')); };
+  img.onload=()=>{ URL.revokeObjectURL(u); let out=''; for(const [mx,q] of [[1600,.86],[1600,.72],[1280,.72],[1024,.7]]){ const s=Math.min(1,mx/Math.max(img.width,img.height)), c=document.createElement('canvas'); c.width=Math.max(1,Math.round(img.width*s)); c.height=Math.max(1,Math.round(img.height*s)); const g=c.getContext('2d'); g.fillStyle='#fff'; g.fillRect(0,0,c.width,c.height); g.drawImage(img,0,0,c.width,c.height); out=c.toDataURL('image/jpeg',q); if(out.length<1600000) break; } res(out); };
+  img.src=u; });
+function idDraw(){ const g=ID_GUIDE[$('#fIdType').value]; $('#idGuide').hidden=!g; $('#idSlots').hidden=!g; if(g){ $('#idGuide').textContent=g[0]; $$('#idSlots .id-t').forEach((b,i)=>b.textContent=g[1][i]); }
+  $$('#idSlots .id-slot').forEach((s,i)=>{ const p=idPhotos[i]; s.classList.toggle('has',!!p); $('.id-pv',s).style.backgroundImage=p?`url("${p}")`:''; $('.id-btn',s).textContent=p?'撮り直す':'写真を選ぶ・撮影する'; $('.id-del',s).hidden=!p; }); }
+function idReset(){ idPhotos=[null,null]; $$('#idSlots input[type=file]').forEach(f=>f.value=''); $('#fIdType').value=''; $('#idErr').hidden=true; idDraw(); }
+function idCheck(){ const sel=$('#fIdType'), fld=sel.closest('.fld'), er=$('.err',fld), err=$('#idErr'); let ok=true;
+  const noType=!sel.value; fld.classList.toggle('bad',noType); er.hidden=!noType; er.textContent=noType?'書類の種類を選んでください':''; if(noType) ok=false;
+  const miss=!noType&&idPhotos.some(p=>!p); err.hidden=!miss; err.textContent=miss?'2枚の写真をすべて選んでください':''; if(miss) ok=false; return ok; }
+$('#idSlots').addEventListener('change',async e=>{ const f=e.target.closest('[data-idfile]'); if(!f) return; const i=+f.dataset.idfile, file=f.files&&f.files[0], err=$('#idErr'); f.value=''; if(!file) return;
+  try{ idPhotos[i]=await idShrink(file); err.hidden=true; }catch(_){ err.hidden=false; err.textContent='この画像は読み込めませんでした。別の写真をお試しください。'; } idDraw(); });
+$('#idSlots').addEventListener('click',e=>{ const d=e.target.closest('[data-iddel]'); if(!d) return; idPhotos[+d.dataset.iddel]=null; idDraw(); });
+$('#fIdType').addEventListener('change',()=>{ const fld=$('#fIdType').closest('.fld'); fld.classList.remove('bad'); $('.err',fld).hidden=true; $('#idErr').hidden=true; idPhotos=[null,null]; idDraw(); });
 function fieldsFor(n){ const m=way(); if(n===1) return cart.length?[]:[['#fItem','商品名をご記入ください']];
   if(n===2) return [['#fName'],['#fKana'],['#fEmail','メールアドレスの形式で入力してください'],['#fTel','電話番号を入力してください'],...(m==='shop'?[['#fVisit','ご来店予定日を選んでください']]:[['#fZip','郵便番号を入力してください'],['#fShip','発送予定日を選んでください'],['#fAddr','ご住所を入力してください'],['#fBank'],['#fBranch'],['#fAcct','口座番号を数字で入力してください'],['#fHolder','口座名義をカタカナで入力してください']])];
   return []; }
 function validate(n){ let ok=true; fieldsFor(n).forEach(([s,msg])=>{ const el=$(s), fld=el.closest('.fld'), er=$('.err',fld); const v=el.value.trim(); let bad=!v; if(!bad&&el.type==='email') bad=!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); if(!bad&&s==='#fTel') bad=!/^[0-9０-９+\-()\s]{9,}$/.test(v); if(!bad&&s==='#fZip') bad=!/^\d{3}-?\d{4}$/.test(v); if(!bad&&s==='#fAcct') bad=!/^\d{4,14}$/.test(v.normalize('NFKC').replace(/[\s-]/g,'')); if(!bad&&s==='#fHolder') bad=!/^[ァ-ヶーｦ-ﾟ･・\s()（）.．A-Za-z0-9]+$/.test(v);
-  fld.classList.toggle('bad',bad); er.hidden=!bad; er.textContent=bad?(v?(msg||'正しく入力してください'):'入力してください'):''; if(bad){ ok=false; el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); } }); if(!ok) $(`#mForm [data-step="${n}"] .fld.bad .ctl`)?.focus(); return ok; }
+  fld.classList.toggle('bad',bad); er.hidden=!bad; er.textContent=bad?(v?(msg||'正しく入力してください'):'入力してください'):''; if(bad){ ok=false; el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); } }); if(n===2&&way()==='mail'&&!idCheck()) ok=false; if(!ok) $(`#mForm [data-step="${n}"] .fld.bad .ctl`)?.focus(); return ok; }
 function drawConfirm(){ const m=way(); $('#apItems2').innerHTML=itemsHTML()||`<li><span>${esc($('#fItem').value)}</span></li>`;
   const rows=[['買取方法',m==='shop'?'店頭買取':'郵送買取'],['お名前',`${$('#fName').value}（${$('#fKana').value}）`],['メール',$('#fEmail').value],['電話番号',$('#fTel').value],
-   ...(m==='shop'?[['ご来店予定',`${$('#fVisit').value} ${$('#fVisitTime').value}`]]:[['ご住所',`〒${$('#fZip').value} ${$('#fAddr').value}`],['発送予定日',$('#fShip').value],['お振込先',`${$('#fBank').value} ${$('#fBranch').value} ${$('#fAcctType').value} ${$('#fAcct').value} ${$('#fHolder').value}`]]),['備考',$('#fNote').value||'—']];
+   ...(m==='shop'?[['ご来店予定',`${$('#fVisit').value} ${$('#fVisitTime').value}`]]:[['ご住所',`〒${$('#fZip').value} ${$('#fAddr').value}`],['発送予定日',$('#fShip').value],['お振込先',`${$('#fBank').value} ${$('#fBranch').value} ${$('#fAcctType').value} ${$('#fAcct').value} ${$('#fHolder').value}`],['本人確認書類',`${$('#fIdType').value}（写真2枚）`]]),['備考',$('#fNote').value||'—']];
   $('#apConf').innerHTML=rows.map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('');
   $('#apMethodNote').textContent=m==='shop'?'ご来店時は商品と本人確認書類（運転免許証・マイナンバーカード・在留カード・パスポートなど顔写真付きのもの）をお持ちください。表示価格は上限で、店頭での検品後に正式な金額をご提示します。':'予約承認メールの受信日当日に、商品・買取依頼書・本人確認書類（初回のみ住民票の写しなど）を同封して発送してください。到着後に検品し、問題がなければ翌営業日にお振込みします。'; drawMailTo(); }
 function drawMailTo(){ $$('[data-mail-to]').forEach(b=>{ b.hidden=way()!=='mail'; b.querySelector('.mt-text').textContent=MAIL_TO.join('\n'); }); }
 document.addEventListener('click',async e=>{ if(!e.target.closest('[data-mail-copy]')) return; toast(await rqCopy(MAIL_TO.join('\n'))?'送り先をコピーしました':'コピーできませんでした'); });
 function openModal(){ if(modalOpen) return; fillFromMember(); modalOpen=true; lastFocus=document.activeElement; stopScroll(); modal.classList.remove('closing'); showOverlay(modal); setStep(1); }
 function closeModal(){ if(!modalOpen) return; modalOpen=false; modal.classList.add('closing'); hideOverlay(modal,null,450); startScroll(); if(apStep===4) setTimeout(resetForm,750); lastFocus?.focus?.(); }
-function resetForm(){ $$('#mForm input:not([type=radio]):not([type=checkbox]), #mForm textarea').forEach(el=>el.value=''); $$('#mForm input[type=checkbox]').forEach(el=>el.checked=false); $('#apShop').checked=true; $$('#mForm .fld').forEach(f=>{ f.classList.remove('bad'); const er=$('.err',f); if(er) er.hidden=true; }); $('#mSubmit .lbl').textContent='この内容で申し込む'; $('#mSubmit').disabled=false; apStep=1; }
+function resetForm(){ $$('#mForm input:not([type=radio]):not([type=checkbox]), #mForm textarea').forEach(el=>el.value=''); $$('#mForm input[type=checkbox]').forEach(el=>el.checked=false); $('#apShop').checked=true; idReset(); $$('#mForm .fld').forEach(f=>{ f.classList.remove('bad'); const er=$('.err',f); if(er) er.hidden=true; }); $('#mSubmit .lbl').textContent='この内容で申し込む'; $('#mSubmit').disabled=false; apStep=1; }
 modal.addEventListener('click',e=>{ if(e.target===modal){ closeModal(); return; } const b=e.target.closest('[data-next]'); if(!b) return; const n=+b.dataset.next; if(n>apStep&&!validate(apStep)) return; setStep(n); });
 $('#mClose').onclick=closeModal; $('#mDoneClose').onclick=closeModal;
 modal.addEventListener('keydown',e=>trap(modal,e));
@@ -2970,7 +3014,7 @@ $('#mSubmit').onclick=()=>{ const ok=$('#fAgree1').checked&&$('#fAgree2').checke
     const steps=way()==='shop'?[['予約承認メール','内容を確認し、予約承認メールをお送りします。'],['ご来店',`${$('#fVisit').value} ${$('#fVisitTime').value}に、商品と本人確認書類をお持ちください。`],['検品・査定','スタッフが動作・状態を確認し、正式な買取価格をご提示します。'],['現金でお支払い','ご納得いただければ、その場で現金をお渡しします。']]
       :[['受付メール','お申し込み内容と送り先をメールでお送りします。'],['予約承認メール','内容を確認し、予約承認メールをお送りします。'],['発送',`承認メールの受信日当日（${$('#fShip').value}予定）に、商品と買取依頼書を同封して、下記の送り先へ発送してください。`],['検品・査定','到着後に検品します。申込内容と違う場合のみご連絡します。'],['お振込み','検品完了の翌営業日にお振込みします。']];
     $('#apNext').innerHTML=steps.map((s,i)=>`<li><i>${i+1}</i><span><b>${esc(s[0])}</b><small>${esc(s[1])}</small></span></li>`).join('');
-    ['#fBank','#fBranch','#fAcct','#fHolder'].forEach(s=>$(s).value='');
+    ['#fBank','#fBranch','#fAcct','#fHolder'].forEach(s=>$(s).value=''); idReset();
     drawMailTo(); cart=[]; drawCart(); setStep(4); };
   const relay=rqRelay();
   if(!relay){ setTimeout(()=>{ const d=new Date(); finish(`KT-${String(d.getFullYear()).slice(2)}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}-${Math.floor(1000+Math.random()*9000)}`); },900); return; }
@@ -2979,6 +3023,7 @@ $('#mSubmit').onclick=()=>{ const ok=$('#fAgree1').checked&&$('#fAgree2').checke
   const payload={kind:'order',way:m,name:v('#fName'),kana:v('#fKana'),email:v('#fEmail'),tel:v('#fTel'),
     when:m==='shop'?`${v('#fVisit')} ${v('#fVisitTime')}`:v('#fShip'),addr:m==='mail'?`〒${v('#fZip')} ${v('#fAddr')}`:'',note:v('#fNote'),
     bank:m==='mail'?{name:v('#fBank'),branch:v('#fBranch'),type:v('#fAcctType'),no:v('#fAcct'),holder:v('#fHolder')}:null,
+    idDoc:m==='mail'?{type:v('#fIdType'),photos:idPhotos.slice()}:null,
     items:cart.map(c=>({rjp:findP(c.id)?.rjp||'',name:findP(c.id)?.n||'',label:lineLabel(c),qty:c.qty,unit:unitOf(c)})),freeText:cart.length?'':v('#fItem')};
   relaySend(payload,'KT')
     .then(out=>{ if(!out||!out.ok) throw new Error(out&&out.error||'failed'); finish(out.id); })

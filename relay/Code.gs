@@ -57,7 +57,8 @@ function doPost(e) {
     const raw = (e && e.postData && e.postData.contents) || '{}';
     if (raw.length > 12000000) return json_({ ok: false, error: 'too_large' });   // photos are shrunk on the site first
     const body = JSON.parse(raw);
-    if (body.kind && body.kind !== 'master' && raw.length > 60000) return json_({ ok: false, error: 'too_large' });   // orders and sign-in carry no photos
+    // sign-in and the like carry no photos; a mail-in order carries its 2 ID photos (shrunk on the site, about 1–3 MB together)
+    if (body.kind && body.kind !== 'master' && raw.length > (body.kind === 'order' ? 6000000 : 60000)) return json_({ ok: false, error: 'too_large' });
     if (body.hp) return json_({ ok: true });                       // bot filled the hidden field
     if (!rateOk_()) return json_({ ok: false, error: 'busy' });
     if (body.kind === 'order') return json_(handleOrder_(body));   // site 買取申込 → Bot.gs

@@ -31,10 +31,48 @@ function tab_(name, header) {
   return sh;
 }
 const ORDER_BANK_HEAD = ['金融機関名', '支店名', '口座種別', '口座番号', '口座名義'];
+const ORDER_ID_HEAD = ['本人確認書類', '本人確認写真', '写真フォルダ（非公開）'];
 function ordersTab_() {
-  const sh = tab_('注文', ['注文番号', '受付日時', '買取方法', 'お名前', 'フリガナ', 'メール', '電話', '来店・発送予定', '住所', '商品', '点数', '買取予定合計', '備考', '状態', '更新日時'].concat(ORDER_BANK_HEAD));
-  if (sh.getLastColumn() < 20) sh.getRange(1, 16, 1, 5).setValues([ORDER_BANK_HEAD]);
+  const sh = tab_('注文', ['注文番号', '受付日時', '買取方法', 'お名前', 'フリガナ', 'メール', '電話', '来店・発送予定', '住所', '商品', '点数', '買取予定合計', '備考', '状態', '更新日時'].concat(ORDER_BANK_HEAD, ORDER_ID_HEAD));
+  if (sh.getLastColumn() < 23) sh.getRange(1, 16, 1, 8).setValues([ORDER_BANK_HEAD.concat(ORDER_ID_HEAD)]);
   return sh;
+}
+
+/* ---------- ID photos of mail-in sellers (古物営業法 本人確認) ----------
+   Two photos of one document arrive with the application. They go to a private Drive folder (never shared, never attached
+   to an email, never sent to Telegram); the sheet only keeps the document type and the folder link. */
+const ID_TYPES = ['運転免許証', 'パスポート', '在留カード', 'マイナンバーカード'];
+const ID_MAX_BYTES = 2.5 * 1024 * 1024;   // per photo; the site sends about 0.3–1 MB
+function idDocIn_(x) {
+  if (!x || ID_TYPES.indexOf(x.type) < 0 || !Array.isArray(x.photos) || x.photos.length !== 2) return null;
+  const files = [];
+  for (let i = 0; i < 2; i++) {
+    const m = String(x.photos[i] || '').match(/^data:image\/(?:jpeg|png|webp);base64,([A-Za-z0-9+\/=]+)$/);
+    if (!m) return null;
+    let bytes; try { bytes = Utilities.base64Decode(m[1]); } catch (e) { return null; }
+    if (bytes.length < 2000 || bytes.length > ID_MAX_BYTES) return null;
+    const u = function (k) { return bytes[k] & 255; };   // Apps Script bytes are signed
+    let ext = '', mime = '';
+    if (u(0) === 0xFF && u(1) === 0xD8 && u(2) === 0xFF) { ext = 'jpg'; mime = 'image/jpeg'; }
+    else if (u(0) === 0x89 && u(1) === 0x50 && u(2) === 0x4E && u(3) === 0x47) { ext = 'png'; mime = 'image/png'; }
+    else if (u(0) === 0x52 && u(1) === 0x49 && u(2) === 0x46 && u(3) === 0x46 && u(8) === 0x57 && u(9) === 0x45 && u(10) === 0x42 && u(11) === 0x50) { ext = 'webp'; mime = 'image/webp'; }
+    else return null;   // not really an image
+    files.push({ bytes: bytes, ext: ext, mime: mime });
+  }
+  return { type: x.type, files: files };
+}
+function idFolder_() {
+  let f = null; const id = prop_('ID_FOLDER_ID');
+  if (id) { try { f = DriveApp.getFolderById(id); if (f.isTrashed()) f = null; } catch (e) { f = null; } }
+  if (!f) { f = DriveApp.createFolder('買取日本 本人確認書類（非公開・共有しないでください）'); props_().setProperty('ID_FOLDER_ID', f.getId()); }
+  if (f.getSharingAccess() !== DriveApp.Access.PRIVATE) f.setSharing(DriveApp.Access.PRIVATE, DriveApp.Permission.NONE);
+  return f;
+}
+function saveIdPhotos_(id, doc) {
+  const root = idFolder_(), it = root.getFoldersByName(id), dir = it.hasNext() ? it.next() : root.createFolder(id);
+  const old = dir.getFiles(); while (old.hasNext()) old.next().setTrashed(true);   // a resent order replaces its own photos
+  doc.files.forEach(function (f, i) { dir.createFile(Utilities.newBlob(f.bytes, f.mime, id + '-' + (i + 1) + '.' + f.ext)); });
+  return dir.getUrl();
 }
 function stockTab_() { return tab_('在庫', ['在庫ID', '入荷日', '商品名', '状態', '買取価格', '販売価格', 'メモ', 'ステータス', '販売日', '販売実績', '保管場所', 'RJPコード']); }
 function now_() { return Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy/MM/dd HH:mm'); }
@@ -55,6 +93,13 @@ function handleOrder_(b) {
   if (!o.name || !(o.email || o.tel)) return { ok: false, error: 'missing' };
   o.bank = o.way === '郵送買取' ? bankIn_(b.bank) : null;
   if (o.way === '郵送買取' && !o.bank) return { ok: false, error: 'bank' };
+  // ID photos: required once the property ID_PHOTO_REQUIRED is 'on' (switched on after the site that sends them is live);
+  // if photos arrive they must always be valid
+  o.idDoc = null;
+  if (o.way === '郵送買取' && (b.idDoc || prop_('ID_PHOTO_REQUIRED') === 'on')) {
+    o.idDoc = idDocIn_(b.idDoc);
+    if (!o.idDoc) return { ok: false, error: 'id' };
+  }
   const items = (Array.isArray(b.items) ? b.items : []).slice(0, 50).map(function (it) {
     return { name: s(it.name, 160), label: s(it.label, 80), qty: Math.max(1, Math.min(99, num_(it.qty) || 1)), unit: num_(it.unit), rjp: /^RJP-\d{6}$/.test(it.rjp) ? it.rjp : '' };
   }).filter(function (it) { return it.name; });
@@ -65,11 +110,14 @@ function handleOrder_(b) {
   if (findById_(id)) return { ok: true, id: id };   // the site resent an order it already sent
   if (!limit_('o:' + idKey_(o.email || o.tel), 5, 3600)) return { ok: false, error: 'busy' };
   const itemText = items.map(function (it) { return (it.rjp ? '[' + it.rjp + '] ' : '') + it.name + (it.label ? '（' + it.label + '）' : '') + ' ×' + it.qty + (it.unit ? ' ' + yen_(it.unit) : ''); }).join('\n');
-  ordersTab_().appendRow(safeRow_([id, now_(), o.way, o.name, o.kana, o.email, o.tel, o.when, o.addr, itemText, count, total, o.note, '受付', now_()].concat(o.bank ? [o.bank.name, o.bank.branch, o.bank.type, "'" + o.bank.no, o.bank.holder] : [])));
+  o.idUrl = '';
+  if (o.idDoc) { try { o.idUrl = saveIdPhotos_(id, o.idDoc); } catch (err) { console.error('id photos', err); return { ok: false, error: 'photo' }; } }   // photos first: a saved order always has its photos
+  ordersTab_().appendRow(safeRow_([id, now_(), o.way, o.name, o.kana, o.email, o.tel, o.when, o.addr, itemText, count, total, o.note, '受付', now_()].concat(o.bank ? [o.bank.name, o.bank.branch, o.bank.type, "'" + o.bank.no, o.bank.holder] : [], o.idDoc ? [o.idDoc.type, o.idDoc.files.length + '枚', o.idUrl] : [])));
 
   const lines = ['注文番号: ' + id, '買取方法: ' + o.way, 'お名前: ' + o.name + (o.kana ? '（' + o.kana + '）' : ''), 'メール: ' + o.email, '電話: ' + o.tel,
     o.way === '店頭買取' ? 'ご来店予定: ' + o.when : '発送予定: ' + o.when, o.addr ? 'ご住所: ' + o.addr : '', '', '【商品】', itemText,
-    '合計（上限）: ' + yen_(total) + '　' + count + '点', o.bank ? '振込先: ' + bankMask_(o.bank) + '（全桁はシートの注文タブ）' : '', o.note ? '備考: ' + o.note : ''].filter(function (x) { return x !== ''; });
+    '合計（上限）: ' + yen_(total) + '　' + count + '点', o.bank ? '振込先: ' + bankMask_(o.bank) + '（全桁はシートの注文タブ）' : '',
+    o.idDoc ? '本人確認書類: ' + o.idDoc.type + '　写真' + o.idDoc.files.length + '枚（Driveの非公開フォルダ。写真はメール・Telegramには載せません）\n' + o.idUrl : '', o.note ? '備考: ' + o.note : ''].filter(function (x) { return x !== ''; });
   try {
     const to = prop_('NOTIFY_EMAIL'); const shop = prop_('SHOP_NAME', '買取日本');
     if (to) GmailApp.sendEmail(to, '【' + shop + '】買取申込 ' + id + ' / ' + o.name + ' / ' + yen_(total), lines.join('\n'), { name: shop + ' 受付' });
@@ -116,11 +164,12 @@ function orderMail_(o, id, itemText, total, count) {
     const formText = form ? '【買取申込書（PDF）を添付しています】\n印刷して、お振込先の口座情報と、端末の情報（仕様・IMEI・状態など）を、わかる範囲でご記入ください。\n記入した申込書は、商品と一緒に同封してお送りください。\n' : '';
     const body = [noLinks_(o.name) + ' 様', '', 'このたびは' + shop + 'をご利用いただき、ありがとうございます。', '以下の内容で郵送買取のお申し込みを受け付けました。', '',
       '申込番号: ' + id, '発送予定日: ' + noLinks_(o.when), '', '【商品】', noLinks_(itemText), '合計（上限）: ' + yen_(total) + '　' + count + '点', '※表示金額は上限です。検品後に正式な金額をご連絡します。', '',
-      '【お振込先（ご入力内容）】', noLinks_(bankMask_(o.bank)), '※誤りがある場合は、このメールにご返信ください。', '',
+      '【お振込先（ご入力内容）】', noLinks_(bankMask_(o.bank)), '※誤りがある場合は、このメールにご返信ください。', '']
+      .concat(o.idDoc ? ['【本人確認書類】', o.idDoc.type + 'の写真（' + o.idDoc.files.length + '枚）を受け付けました。', ''] : [], [
       formText,
       '【商品の送り先】', MAIL_TO[0], MAIL_TO[1], '',
       '【今後の流れ】', '1. 内容を確認し、予約承認メールをお送りします', '2. 承認メールの受信日当日に、商品・記入済みの買取申込書・本人確認書類（初回のみ住民票の写しなど）を同封し、上記の送り先へ着払いで発送してください', '3. 到着後に検品します', '4. 問題がなければ翌営業日にお振込みします', '',
-      'まだ発送せず、予約承認メールをお待ちください。', 'ご不明な点は、このメールにご返信ください。', '', shop].join('\n');
+      'まだ発送せず、予約承認メールをお待ちください。', 'ご不明な点は、このメールにご返信ください。', '', shop]).join('\n');
     GmailApp.sendEmail(o.email, '【' + shop + '】郵送買取のお申し込みを受け付けました（' + id + '）', body, opt);
     return true;
   } catch (err) { console.error('order customer mail', err); return false; }

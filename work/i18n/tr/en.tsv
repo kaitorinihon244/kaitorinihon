@@ -892,3 +892,32 @@
 890|・お|· Name, name reading, date of birth, gender, address, phone number and email address · Details and copies of ID documents (driver's license, front of My Number card, health insurance card, passport, etc.) · Bank name, branch, account number and account holder for payment · Items applied for, appraisal and buyback details and history, and inquiry details · Browsing history on this site, device information and identifiers such as cookies *We do not collect My Number (individual number). Please do not send a copy of the back of the card.
 891|当店|We use the personal information we collect for the following purposes: · Receiving buyback applications, appraising, inspecting and paying · Checking your identity and creating and keeping transaction records under the Secondhand Articles Dealer Act and the Act on Prevention of Transfer of Criminal Proceeds · Replying to applications and inquiries, and sending mail-in kits · Information on campaigns and new services (you can stop this at any time) · Improving our services and producing statistics (processed so that no individual can be identified) · Preventing fraudulent transactions and responding to legal inquiries from the police and others
 892|新品|New, standard
+893|撮り|Retake
+894|パス|Passport
+895|運転|Driver's license
+896|在留|Residence card
+897|本人|ID document
+898|書類|Document type *
+899|選ん|Please choose
+900|{0|Photo {0}: front
+901|{0|Photo {0}: back
+902|マイ|My Number card
+903|{0|Photo {0}: photo page
+904|パス|Passport ({0} photos)
+905|運転|Driver's license ({0} photos)
+906|在留|Residence card ({0} photos)
+907|写真|Couldn't save the photos
+908|書類|Please choose the document type
+909|本人|ID document photos ({0})
+910|マイ|My Number card ({0} photos)
+911|本人|Please check your ID document photos
+912|{0|Please choose all {0} photos.
+913|{0|Photo {0}: front of the My Number card
+914|{0|Photo {0}: selfie holding the front of the card next to your face
+915|{0|Photo {0}: the page with your address (holder's notes page)
+916|この|We couldn't read this image. Please try a different photo.
+917|表面|Photograph the front and back in a bright place so the text is easy to read.
+918|顔写|Photograph the photo page and the page with your address (holder's notes page).
+919|古物|To verify your identity as required by the Secondhand Articles Dealer Act, please send {0} photos of your document. We use them only for that.
+920|写真|We keep the photos to verify your identity and use them for nothing else. Do not photograph the back of your My Number card (the side with the number).
+921|{0|Photo {0} is the front of the card (the side with your face photo) only. Do not photograph the back (the side with the number). Photo {1} is a selfie holding the front of the card next to your face.

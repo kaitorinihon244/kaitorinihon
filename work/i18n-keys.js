@@ -19,7 +19,7 @@ function norm(s) {
 const keep = s => {
   if (!s || !J.test(s)) return false;
   if (names.has(s) || names.has(s.replace(/の詳細$/, ''))) return false;   // product names stay as they are
-  if (/^〒/.test(s)) return false;                                          // postal addresses stay in Japanese
+  if (/〒/.test(s) || /^Royal Japan|^Test|^Bank /.test(s)) return false;    // postal addresses and test data stay out
   if (/[`;=]|^[:'"}{)\]]|['"]\s*\}|\$\{/.test(s)) return false;             // pieces of code
   if (s.length === 1 && !/^[＋－・]$/.test(s)) return false;                // single letters of split headings
   return true;
