@@ -195,3 +195,12 @@ Every product on the site has an RJP code (RJP-000001…). The JAN stays in the 
 - Logo A (price tag): the mark is drawn in the page (`.ltag` in uridoki.html) and turns white on dark backgrounds. The four ideas and every
   platform size are in `logos/` (see logos/README.txt); icons and the share image the site serves are in `brand/` and the build copies them.
 - Category price pages take their prices and date from the relay's price feed when built (site.json if the feed is down).
+
+## Application form attached to the mail-in confirmation (26 Nov 2026)
+
+- Every 郵送買取 confirmation email now carries `買取日本_買取申込書.pdf` and asks the customer to print it, fill in the bank
+  account and the device details (spec, IMEI, condition) as far as they know them, and put it in the parcel.
+- The PDF is a file in the shop Google Drive (kaitorinihon777@gmail.com), named exactly `買取日本_買取申込書.pdf`; a copy is in `relay/`.
+  The script finds it by name (and remembers its id in the property `APPLICATION_PDF_ID`).
+- To change the form: upload the new PDF to Drive with the same name and move the old one to the bin.
+- If the file cannot be found, the email still goes out without it (and without the paragraph about it) and Telegram shows a ⚠️.

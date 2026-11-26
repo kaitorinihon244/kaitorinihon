@@ -88,6 +88,21 @@ function bankIn_(x) {
   return b.name && b.branch && ['普通', '当座', '貯蓄'].indexOf(b.type) >= 0 && /^\d{4,14}$/.test(b.no) && b.holder ? b : null;
 }
 function bankMask_(b) { return b.name + ' ' + b.branch + ' ' + b.type + ' ****' + b.no.slice(-4) + ' ' + b.holder; }
+// The blank 買取申込書 (PDF) attached to the mail-in confirmation: a file called 買取日本_買取申込書.pdf in your own Drive.
+// To change the form, upload the new PDF with that name and move the old one to the bin; nothing else needs touching.
+const FORM_NAME = '買取日本_買取申込書.pdf';
+function applicationForm_() {
+  try {
+    const c = props_(); let id = c.getProperty('APPLICATION_PDF_ID'), f = null;
+    if (id) { try { f = DriveApp.getFileById(id); if (f.isTrashed()) f = null; } catch (e) { f = null; } }
+    if (!f) {
+      const it = DriveApp.searchFiles("title = '" + FORM_NAME + "' and 'me' in owners and trashed = false");
+      if (it.hasNext()) { f = it.next(); c.setProperty('APPLICATION_PDF_ID', f.getId()); }
+    }
+    if (!f) { console.error('application form not found in Drive'); try { tgSend_('⚠️ 買取申込書PDFがDriveに見つからないため、添付なしで受付メールを送りました（ファイル名: ' + FORM_NAME + '）'); } catch (e) {} return null; }
+    return f.getBlob().setName(FORM_NAME);
+  } catch (err) { console.error('application form', err); return null; }
+}
 // mail-in orders: the customer gets the order details and where to send the items
 const MAIL_TO = ['Royal Japan', '〒171-0021 東京都豊島区西池袋1-10-2 日高ビル503'];
 function orderMail_(o, id, itemText, total, count) {
@@ -96,11 +111,15 @@ function orderMail_(o, id, itemText, total, count) {
   try {
     const shop = prop_('SHOP_NAME', '買取日本'); const opt = { name: shop };
     if (prop_('NOTIFY_EMAIL')) opt.replyTo = prop_('NOTIFY_EMAIL');
+    // the blank 買取申込書 goes with every mail-in confirmation; without the file the mail still goes out, without this paragraph
+    const form = applicationForm_(); if (form) opt.attachments = [form];
+    const formText = form ? '【買取申込書（PDF）を添付しています】\n印刷して、お振込先の口座情報と、端末の情報（仕様・IMEI・状態など）を、わかる範囲でご記入ください。\n記入した申込書は、商品と一緒に同封してお送りください。\n' : '';
     const body = [noLinks_(o.name) + ' 様', '', 'このたびは' + shop + 'をご利用いただき、ありがとうございます。', '以下の内容で郵送買取のお申し込みを受け付けました。', '',
       '申込番号: ' + id, '発送予定日: ' + noLinks_(o.when), '', '【商品】', noLinks_(itemText), '合計（上限）: ' + yen_(total) + '　' + count + '点', '※表示金額は上限です。検品後に正式な金額をご連絡します。', '',
       '【お振込先（ご入力内容）】', noLinks_(bankMask_(o.bank)), '※誤りがある場合は、このメールにご返信ください。', '',
+      formText,
       '【商品の送り先】', MAIL_TO[0], MAIL_TO[1], '',
-      '【今後の流れ】', '1. 内容を確認し、予約承認メールをお送りします', '2. 承認メールの受信日当日に、商品・買取依頼書・本人確認書類（初回のみ住民票の写しなど）を同封し、上記の送り先へ着払いで発送してください', '3. 到着後に検品します', '4. 問題がなければ翌営業日にお振込みします', '',
+      '【今後の流れ】', '1. 内容を確認し、予約承認メールをお送りします', '2. 承認メールの受信日当日に、商品・記入済みの買取申込書・本人確認書類（初回のみ住民票の写しなど）を同封し、上記の送り先へ着払いで発送してください', '3. 到着後に検品します', '4. 問題がなければ翌営業日にお振込みします', '',
       'まだ発送せず、予約承認メールをお待ちください。', 'ご不明な点は、このメールにご返信ください。', '', shop].join('\n');
     GmailApp.sendEmail(o.email, '【' + shop + '】郵送買取のお申し込みを受け付けました（' + id + '）', body, opt);
     return true;
