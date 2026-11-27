@@ -143,7 +143,7 @@ const addr = a => {
 };
 const shops = stores.map((s, i) => ({
   '@context': 'https://schema.org', '@type': 'Store', '@id': SITE + '/#store' + (i + 1), name: s.name, url: SITE + '/', image: STORE_IMG,
-  telephone: s.tel || undefined, address: addr(s.addr), openingHoursSpecification: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], opens: '10:00', closes: '17:00' }, parentOrganization: { '@id': SITE + '/#org' },
+  telephone: s.tel || undefined, address: addr(s.addr), openingHoursSpecification: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], opens: '10:00', closes: '17:00' }, parentOrganization: { '@id': SITE + '/#org' }, hasMap: s.map || undefined, sameAs: s.map ? [s.map] : undefined,
   description: '中古スマホ・ゲーム機・タブレットの買取店。お持ち込みは現金即払い。'
 }));
 const faq = (d.faq || []).length ? {
