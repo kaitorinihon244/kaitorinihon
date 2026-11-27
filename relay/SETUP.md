@@ -212,3 +212,7 @@ Every product on the site has an RJP code (RJP-000001…). The JAN stays in the 
 - Switch: script property `ID_PHOTO_REQUIRED` = `on` makes the photos mandatory for mail-in orders (server side). Leave it unset until the site that sends photos is live (old cached pages would otherwise be refused); if photos arrive they are always validated.
 - Keep photos only as long as needed (privacy policy says 3 years); turn on 2-step verification for the shop Google account and do not share the folder.
 - 27 Nov 2026: site with the ID-photo step uploaded to Cloudflare Pages; `ID_PHOTO_REQUIRED` set to `on` (photos are now mandatory for mail-in orders). To switch off, delete that property in Project Settings → Script properties.
+
+## Stock from Supabase (27 Nov 2026)
+- The 販売 mode stock badges ("在庫あり N点") now read the Supabase view `public.web_products_for_sale` (project vqfreyiveytlolsaaypy) with the publishable key, sent in the `apikey` header. If Supabase fails, the site falls back to the old `?stock=1` list of the relay. CSP `connect-src` allows the Supabase host (work/build-site.ps1).
+- Phones appear when in stock and "show on website" is on; sold phones drop out by themselves.

@@ -2810,6 +2810,11 @@ const shownP=(v,p)=>SELL()&&+v>0?(fixedSell(p,'new')||sellOf(+v,p)):+v;
 /* spec with prices in the current mode — for display only */
 function specView(p){ const sp=specOf(p); return SELL()?sp.map(c=>{ const fx=fixedSell(p,c.type); return {...c,options:c.options.map(o=>({...o,price:+o.price>0?(fx||sellOf(+o.price,p)):o.price}))}; }):sp; }
 /* in-stock items from the shop's stock sheet (via the relay); shown only in 販売 mode */
+/* phones in stock, read from the stock system (Supabase view web_products_for_sale; the publishable key is public by design and only the view is readable) */
+const SB_URL='https://vqfreyiveytlolsaaypy.supabase.co', SB_KEY='sb_publishable_yqJcfi5QUeOzV7f8eucjFA_A9cVHAvH';
+function sbStock(){ return fetch(SB_URL+'/rest/v1/web_products_for_sale?select=id,product_code,brand,model,storage,color,condition,battery_health,selling_price,shop&order=created_at.desc&limit=1000',{headers:{apikey:SB_KEY}})
+  .then(r=>{ if(!r.ok) throw new Error('stock '+r.status); return r.json(); })
+  .then(rows=>{ if(!Array.isArray(rows)) throw new Error('stock'); return rows.map(r=>({id:r.product_code||r.id,name:[r.model,r.storage].filter(Boolean).join(' '),cond:r.condition||'',price:Number(r.selling_price)||0,color:r.color||'',shop:r.shop||'',battery:r.battery_health||''})); }); }
 let stockItems=null, stockLoading=false;
 const stockKey=s=>String(s||'').toLowerCase().replace(/[\s　()（）\[\]【】・\-_/]/g,'');
 function stockFor(p){ if(!stockItems||!stockItems.length) return []; const k=stockKey(p.n); return stockItems.filter(it=>{ const s=stockKey(it.name); return s&&k&&(s.includes(k)||k.includes(s)); }); }
@@ -2831,7 +2836,7 @@ function loadPrices(){ const relay=rqRelay(); if(!relay||pricesLoaded) return; p
   fetch(relay+'?prices=1').then(r=>r.json()).then(out=>{ if(!out||!out.ok||!out.items) return;
     if(/^\d{4}\/\d\d\/\d\d \d\d:\d\d$/.test(out.updated||'')){ (site.texts=site.texts||{}).updated=out.updated; $$('[data-t="texts.updated"]').forEach(el=>el.textContent=out.updated); }   // the time of the last automatic price update
     if(applyAutoPrices(out.items)){ render(false); heroCard.refresh(); drawCart(); if(pdOpen) drawPD(); } }).catch(()=>{}); }function loadStock(){ const relay=rqRelay(); if(!relay||stockItems||stockLoading) return; stockLoading=true;
-  fetch(relay+'?stock=1').then(r=>r.json()).then(out=>{ stockItems=out&&out.ok&&Array.isArray(out.items)?out.items:[]; }).catch(()=>{ stockItems=[]; })
+  sbStock().catch(()=>fetch(relay+'?stock=1').then(r=>r.json()).then(out=>out&&out.ok&&Array.isArray(out.items)?out.items:[])).then(list=>{ stockItems=list; }).catch(()=>{ stockItems=[]; })
     .finally(()=>{ stockLoading=false; if(SELL()) render(false); }); }
 function syncModeUI(){ document.documentElement.dataset.mode=priceMode; document.querySelector('meta[name="theme-color"]')?.setAttribute('content',SELL()?'#0A101C':'#16233A'); $('#pmode').setAttribute('aria-checked',SELL()); if(SELL()) loadStock();
   $('#pmodeNote').textContent=(site.sell&&site.sell.note)||'iPhoneと上位モデルのSamsungは在庫あり。その他の商品は在庫切れで、ご注文後1〜2週間でお取り寄せします。'; }

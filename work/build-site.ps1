@@ -34,7 +34,7 @@ $csp = @(
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' data: blob: https:",
-  "connect-src 'self' https://script.google.com https://script.googleusercontent.com",
+  "connect-src 'self' https://script.google.com https://script.googleusercontent.com https://vqfreyiveytlolsaaypy.supabase.co",
   "frame-ancestors 'none'", "base-uri 'none'", "form-action 'none'", "object-src 'none'", "upgrade-insecure-requests"
 ) -join '; '
 $headers = @"
