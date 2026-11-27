@@ -924,3 +924,23 @@
 922|ご来|Store to visit *
 923|ご来|Please choose the store you'll visit
 924|ご来|Store to visit
+925|{0|Delivered within {0} days
+926|お届|We'll contact you as soon as your order is ready (within {0} days)
+927|お届|We'll contact you as soon as your order is ready. Please visit after you hear from us.
+928|{0|delivery within {0} days, and
+929|お届|Delivery period:
+930|{0|within {0} days
+931|在庫|Your order includes items that are not in stock. We'll have them ready for delivery within {0} days.
+932|在庫|Items in stock are ready right away. Items not in stock are delivered within {0} days of your order.
+933|この|This item is delivered within {0} days. For store pickup, pay at the store (cash, credit card, barcode payment, etc.); for delivery, pay by bank transfer.
+934|この|This item is already in your cart
+935|新品|New / unused
+936|中古|Used A (excellent)
+937|中古|Used B
+938|中古|Used C
+939|バッ|Battery
+940|在庫|In stock at
+941|商品|Item no.
+942|税込|tax incl.
+943|販売|Selling price (in stock)
+944|在庫|In stock
