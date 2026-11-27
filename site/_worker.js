@@ -291,7 +291,7 @@ async function shopPage(env, slug) {
     parentOrganization: { '@id': SITE + '/#org' }, ...(s.map ? { sameAs: [s.map], hasMap: s.map } : {}) };
   const embed = `https://www.google.com/maps?q=${encodeURIComponent(addr)}&output=embed&hl=ja`;
   return frame(cat, { title: `${s.area}のiPhone・スマホ買取｜${s.name}｜${BRAND}`, desc: `${s.area}でiPhone・スマホ・ゲーム機を高価買取。${s.name}は${s.station ? s.station.name + 'から徒歩約' + s.station.walk + '分、' : ''}${cat.texts.openFrom}〜${cat.texts.openTo}年中無休、店頭は現金即払い。`,
-    canon: `/shops/${s.slug}/`, h1: `${s.area}のiPhone・スマホ買取・修理｜${SHORT} ${s.name}`, bc: [TOP, { name: '店舗一覧', url: '/shops/' }, { name: s.name, url: `/shops/${s.slug}/` }], ld: [ld],
+    canon: `/shops/${s.slug}/`, h1: `${s.area}のiPhone・スマホ買取｜${SHORT} ${s.name}`, bc: [TOP, { name: '店舗一覧', url: '/shops/' }, { name: s.name, url: `/shops/${s.slug}/` }], ld: [ld],
     body: `<p class="lead">${esc(s.name)}は、${esc(s.area)}エリアでスマホ・ゲーム機・タブレットの買取を行っています。店頭買取は予約不要・現金即払いです。</p>
 <h2>店舗情報</h2><dl class="f"><dt>店名</dt><dd>${esc(s.name)}</dd><dt>住所</dt><dd>${esc(s.addr)}</dd><dt>電話番号</dt><dd><a href="${telHref(s.tel)}">${esc(s.tel)}</a></dd><dt>営業時間</dt><dd>${esc(cat.texts.openFrom)}〜${esc(cat.texts.openTo)}（年中無休）</dd>${s.rating ? `<dt>Googleマップの評価</dt><dd>★${esc(s.rating)}（${esc(s.reviews)}件、Googleマップ）</dd>` : ''}</dl>
 <h2>${esc(s.area)}店への行き方</h2><p>${s.station ? `${esc(s.station.name)}から徒歩約${s.station.walk}分です（直線距離からの目安）。` : ''}お越しの際はGoogleマップでご確認ください。${s.map ? `<a href="${esc(s.map)}" rel="noopener">Googleマップで開く</a>` : ''}</p>
