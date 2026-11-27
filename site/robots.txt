@@ -1,5 +1,10 @@
 User-agent: *
 Allow: /
+Disallow: /cart
+Disallow: /login
+Disallow: /api/
+Disallow: /*?
+Allow: /*?lang=
 
 Sitemap: https://kaitorinihon.jp/sitemap.xml
 Sitemap: https://kaitorinihon.jp/sitemap-shop.xml

@@ -6,8 +6,9 @@ Buyback and sales website for 株式会社ROYAL JAPAN. Live at https://kaitorini
 - `uridoki.html` — the whole single-page site (HTML, CSS, JS). Source of truth.
 - `work/site.json` — all site content (texts, products, news, campaigns, stores, FAQ). Served as `/data/site.json`.
 - `work/i18n/` — translations for en, zh-hant, ko, bn, si, ne. `keys.json` is append-only; `tr/<code>.tsv` lines are `index|first 2 chars|translation`; digits become `{0}`,`{1}`… Validate with `node work/i18n-build.js <root> en zh-hant ko bn si ne`.
-- `work/seo-build.js` — head tags, structured data, `/kaitori/<category>/` pages, sitemap, robots, 404 (run by the build).
-- `work/_worker.js` — Cloudflare Pages worker for `/shop/` and `/shop/<product no.>` pages and `/sitemap-shop.xml`, built live from Supabase.
+- `work/seo-build.js` — home page head, structured data, server-HTML blocks (today's prices, footer facts), robots.txt, 404, and `data/catalog.json` (run by the build). `work/catalog-build.js` makes the catalogue (models, slugs, stores, FAQ, texts).
+- `work/_worker.js` — Cloudflare Pages worker that makes, on request and cached for minutes: the home page's live prices, `/kaitori/`, `/kaitori/<category>/`, `/kaitori/<category>/<model>/`, `/shops/…`, `/company/`, `/faq/`, `/contact/`, `/terms/`, `/privacy/`, `/cookie/`, `/kaitori/flow/`, `/kaitori/notes/`, `/shop/…` and `/sitemap.xml`. Prices come from Supabase `web_buyback_prices` when it has rows, else the relay feed. Stock comes only from `web_products_for_sale`. Paths the worker serves are listed in `_routes.json` (written by `build-site.ps1`).
+- `work/make-webp.js` — makes `img/*.webp` and `img/meta.json` (needs the sharp package; run only when images change).
 - `work/build-site.ps1` — builds `site/` and `kaitori-site.zip`.
 - `relay/*.gs` — Google Apps Script relay (orders, Telegram, emails, prices). `relay/SETUP.md` explains it.
 - `site/` — build output (committed). `kaitori-site.zip` is not committed.

@@ -25,8 +25,7 @@ Copy-Item (Join-Path $Root 'brand\*') $out
 
 # /shop/<product no.> pages are made on request from the stock system by a Pages worker (only these paths run it)
 Copy-Item (Join-Path $Root 'work\_worker.js') (Join-Path $out '_worker.js')
-[IO.File]::WriteAllText((Join-Path $out '_routes.json'), '{"version":1,"include":["/shop","/shop/*","/sitemap-shop.xml"],"exclude":[]}', $utf8)
-Add-Content -Path (Join-Path $out 'robots.txt') -Value "Sitemap: https://kaitorinihon.jp/sitemap-shop.xml" -Encoding utf8
+[IO.File]::WriteAllText((Join-Path $out '_routes.json'), '{"version":1,"include":["/","/index.html","/kaitori","/kaitori/*","/shops","/shops/*","/company","/company/*","/faq","/faq/*","/contact","/contact/*","/terms","/terms/*","/privacy","/privacy/*","/cookie","/cookie/*","/shop","/shop/*","/sitemap.xml","/sitemap-shop.xml"],"exclude":[]}', $utf8)
 
 $sha = [Security.Cryptography.SHA256]::Create()
 $hashes = foreach($m in [regex]::Matches($html, '<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)</script>')){
