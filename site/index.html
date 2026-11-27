@@ -1393,6 +1393,35 @@ html[data-mode="sell"] .pmode-note{display:flex}
   body:has(#ckBar.on) .sticta{display:none}
   html[data-mode="sell"] .sticta{background:var(--sell);color:#06281b}
 }
+
+/* お知らせ slider */
+.nslide-sec{padding-block:1.25rem .25rem}
+.ns-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.625rem}
+.ns-lbl{font-size:.8125rem;font-weight:800;color:var(--brand-strong);background:var(--brand-soft);border-radius:9999px;padding:.1875rem .875rem}
+.ns-all{font-size:.8125rem;font-weight:700;color:var(--brand-strong);cursor:pointer}
+.nsl{position:relative}
+.ns-track{position:relative;display:flex;gap:1rem;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:2px}
+.ns-track::-webkit-scrollbar{display:none}
+.ns-slide{flex:0 0 calc(100% - 4px);scroll-snap-align:start;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);background:#fff;border:1px solid rgba(15,23,42,.06);border-radius:1.5rem;overflow:hidden;box-shadow:0 1px 2px rgba(15,23,42,.06),0 14px 30px -18px rgba(15,23,42,.3);cursor:pointer;text-align:left}
+.ns-slide:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+.ns-slide .nimg{aspect-ratio:auto;height:100%;min-height:16rem}
+.ns-body{display:flex;flex-direction:column;justify-content:center;gap:.5rem;padding:1.75rem 2.25rem}
+.ns-body .nmeta{font-size:.8125rem}
+.ns-body h3{font-size:1.625rem;font-weight:800;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.ns-body p{font-size:.9375rem;color:var(--muted);line-height:1.7;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;white-space:pre-line}
+.ns-body .nlink{margin-top:.25rem;font-size:.875rem;font-weight:700;color:var(--brand-strong)}
+.ns-arr{position:absolute;top:50%;transform:translateY(-50%);width:2.5rem;height:2.5rem;border-radius:50%;background:#fff;box-shadow:0 2px 10px rgba(30,60,110,.18);font-size:1.5rem;line-height:1;z-index:2;display:grid;place-items:center;color:var(--ink)}
+.ns-arr.prev{left:-.75rem}.ns-arr.next{right:-.75rem}
+.ns-dots{display:flex;justify-content:center;gap:.375rem;margin-top:.75rem}
+.ns-dots button{width:.5rem;height:.5rem;border-radius:9999px;background:#C9D6E6;transition:width .25s,background .25s}
+.ns-dots button.on{width:1.375rem;background:var(--brand)}
+html[data-mode="sell"] .ns-slide{background:var(--glass,#121c2e);border-color:rgba(255,255,255,.08)}
+@media (max-width:767px){
+  .ns-slide{grid-template-columns:1fr}
+  .ns-slide .nimg{aspect-ratio:16/10;height:auto;min-height:0}
+  .ns-body{padding:1rem 1.125rem 1.25rem}.ns-body h3{font-size:1.125rem}
+  .ns-arr{display:none}
+}
 </style>
 
 <script>document.documentElement.classList.add('js')</script>
@@ -1624,6 +1653,19 @@ html[data-mode="sell"] .pmode-note{display:flex}
     <span data-t="texts.license" data-hide-empty></span>
     <span class="mid" data-t="texts.status1">店頭・郵送・法人 全国対応</span>
     <span class="scroll">スクロール <span class="bob">↓</span></span>
+  </div>
+</section>
+
+<!-- ============ NEWS SLIDER (auto) ============ -->
+<section class="nslide-sec" id="nSlideSec" aria-label="お知らせ" hidden>
+  <div class="shell">
+    <div class="ns-head"><span class="ns-lbl">お知らせ</span><button type="button" class="ns-all" data-go="news">すべて見る ›</button></div>
+    <div class="nsl" id="nsl" role="group" aria-roledescription="carousel" aria-label="お知らせ">
+      <div class="ns-track" id="nsTrack"></div>
+      <button type="button" class="ns-arr prev" id="nsPrev" aria-label="前へ">‹</button>
+      <button type="button" class="ns-arr next" id="nsNext" aria-label="次へ">›</button>
+    </div>
+    <div class="ns-dots" id="nsDots"></div>
   </div>
 </section>
 
@@ -2777,7 +2819,23 @@ ndm.addEventListener('click',e=>{ if(e.target===ndm) closeND(); });
 ndm.addEventListener('keydown',e=>{ trap(ndm,e); if(e.key==='Escape') closeND(); });
 $('#ngrid').addEventListener('click',e=>{ const c=e.target.closest('[data-ni]'); if(c) openND(+c.dataset.ni); });
 $('#ngrid').addEventListener('keydown',e=>{ if((e.key==='Enter'||e.key===' ')&&e.target.matches('[data-ni]')){ e.preventDefault(); openND(+e.target.dataset.ni); } });
-function renderNews(){ renderNewsGrid(); }
+/* お知らせ slider above 人気カテゴリー: slides on its own, pauses on touch/hover, swipeable */
+let nsIdx=0, nsPause=0, nsHover=false, nsTimer;
+function nsGo(k,user){ const tr=$('#nsTrack'), sl=tr.children; if(!sl.length) return; nsIdx=(k+sl.length)%sl.length; if(user) nsPause=Date.now()+9000; tr.scrollTo({left:sl[nsIdx].offsetLeft,behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'}); nsDots(); }
+function nsDots(){ $$('#nsDots button').forEach((b,i)=>b.classList.toggle('on',i===nsIdx)); }
+function renderNewsSlide(){ const sec=$('#nSlideSec'), tr=$('#nsTrack'); const list=newsSorted().slice(0,8);
+  if(!list.length){ sec.hidden=true; return; } sec.hidden=false;
+  tr.innerHTML=list.map(({n,i})=>`<article class="ns-slide" tabindex="0" role="button" data-ni="${i}" aria-label="${esc(nTitle(n))}">${nThumb(n)}<div class="ns-body"><div class="nmeta"><time>${esc(n.date||'')}</time><span>${esc(nLabel(n))}</span></div><h3>${esc(nTitle(n))}</h3>${nBody(n)?`<p>${esc(nBody(n))}</p>`:''}<span class="nlink">続きを読む ›</span></div></article>`).join('');
+  $('#nsDots').innerHTML=list.map((_,k)=>`<button type="button" aria-label="${k+1}"></button>`).join(''); nsIdx=0; nsDots();
+  $('#nsDots').onclick=e=>{ const b=e.target.closest('button'); if(b) nsGo([...b.parentNode.children].indexOf(b),true); };
+  $('#nsPrev').onclick=()=>nsGo(nsIdx-1,true); $('#nsNext').onclick=()=>nsGo(nsIdx+1,true);
+  tr.onclick=e=>{ const c=e.target.closest('[data-ni]'); if(c) openND(+c.dataset.ni); };
+  tr.onkeydown=e=>{ if((e.key==='Enter'||e.key===' ')&&e.target.matches('[data-ni]')){ e.preventDefault(); openND(+e.target.dataset.ni); } };
+  let st; tr.onscroll=()=>{ clearTimeout(st); st=setTimeout(()=>{ const w=tr.firstElementChild?tr.firstElementChild.offsetWidth+16:1; const k=Math.round(tr.scrollLeft/w); if(k!==nsIdx){ nsIdx=Math.min(k,tr.children.length-1); nsDots(); } },120); };
+  ['pointerdown','wheel','touchstart'].forEach(ev=>tr.addEventListener(ev,()=>{ nsPause=Date.now()+9000; },{passive:true}));
+  $('#nsl').onmouseenter=()=>{ nsHover=true; }; $('#nsl').onmouseleave=()=>{ nsHover=false; }; $('#nsl').addEventListener('focusin',()=>{ nsPause=Date.now()+9000; });
+  clearInterval(nsTimer); if(list.length>1&&!matchMedia('(prefers-reduced-motion:reduce)').matches) nsTimer=setInterval(()=>{ if(document.hidden||nsHover||Date.now()<nsPause||ndOpen) return; nsGo(nsIdx+1,false); },5000); }
+function renderNews(){ renderNewsGrid(); renderNewsSlide(); }
 /* phones: a floating 無料で査定する button once the hero buttons are out of view */
 { const cta=$('#stiCta'), tgt=document.querySelector('.hero .ctas'); if(cta&&tgt&&'IntersectionObserver' in window){ cta.hidden=false; new IntersectionObserver(es=>{ const e=es[0]; cta.classList.toggle('on',!e.isIntersecting&&e.boundingClientRect.top<0); }).observe(tgt); } }
 
