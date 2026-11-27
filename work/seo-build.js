@@ -153,7 +153,7 @@ const faq = (d.faq || []).length ? {
 // the same page in other languages (?lang=…, translated in the browser from data/i18n)
 const LANGS = [['ja', ''], ['en', 'en'], ['zh-Hant', 'zh-Hant'], ['ko', 'ko'], ['bn', 'bn'], ['si', 'si'], ['ne', 'ne']];
 const hreflang = LANGS.map(([h, q]) => `<link rel="alternate" hreflang="${h}" href="${SITE}/${q ? '?lang=' + q : ''}">`).join('') + `<link rel="alternate" hreflang="x-default" href="${SITE}/">`;
-const head = `<title>${esc(TITLE)}</title><meta name="description" content="${esc(DESC)}"><link rel="canonical" href="${SITE}/">
+const head = `<title>${esc(TITLE)}</title><meta name="description" content="${esc(DESC)}"><link rel="canonical" href="${SITE}/"><meta name="msvalidate.01" content="D41010EF5C317680DB3C359F8CB92613">
 <meta property="og:type" content="website"><meta property="og:site_name" content="${esc(brand)}"><meta property="og:title" content="${esc(TITLE)}"><meta property="og:description" content="${esc(DESC)}">
 <meta property="og:url" content="${SITE}/"><meta property="og:image" content="${OG_IMG}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="ja_JP"><meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png">
