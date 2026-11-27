@@ -517,6 +517,11 @@ html[data-mode="sell"] .signin-opt button{background:var(--sell);color:#06281b}
 .store .maplink small{display:block;margin-top:.125rem;font-size:.6875rem;font-weight:700;color:var(--brand-strong)}
 .store .maplink:hover span{text-decoration:underline;text-underline-offset:2px}
 .store .maplink:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.store .grate{position:relative;z-index:3;display:flex;flex-wrap:wrap;align-items:center;gap:.25rem .5rem;margin:.5rem 0 .25rem;color:var(--foreground);text-decoration:none;font-size:.8125rem}
+.store .grate .gr-s{color:#F5A623;font-size:1rem;line-height:1}.store .grate b{font-size:.9375rem}
+.store .grate small{flex-basis:100%;font-size:.6875rem;font-weight:700;color:var(--brand-strong)}
+.store .grate:hover small{text-decoration:underline;text-underline-offset:2px}
+html[data-mode="sell"] .store .grate small{color:var(--sell)}
 html[data-mode="sell"] .store .maplink svg,html[data-mode="sell"] .store .maplink small{color:var(--sell)}
 .nd-text .alink{color:var(--brand-strong);text-decoration:underline;text-underline-offset:2px}
 html[data-mode="sell"] .nd-text .alink{color:var(--sell)}
@@ -2018,7 +2023,7 @@ html[data-mode="sell"] .pmode-note{display:flex}
 
 <!-- ============ COOKIE CONSENT ============ -->
 <div class="ck-bar" id="ckBar" role="region" aria-label="Cookieの使用について" hidden>
-  <p><b>Cookieの使用について</b>当サイトでは、お気に入り・表示設定・ログイン状態の保存のためにCookie等（ブラウザの保存機能）を使用します。広告や外部の分析サービスには使用しません。<button type="button" class="pv-link" data-cookie-policy>Cookieポリシー</button></p>
+  <p><b>Cookieの使用について</b>当サイトでは、お気に入り・表示設定・ログイン状態の保存のためにCookie等（ブラウザの保存機能）を使用します。「同意する」を選ぶと、アクセス解析（Googleアナリティクス）にも使用します。広告には使用しません。<button type="button" class="pv-link" data-cookie-policy>Cookieポリシー</button></p>
   <div class="ck-btns"><button type="button" class="pill outline" id="ckMin"><span>必要なもののみ</span></button><button type="button" class="pill brand" id="ckAll"><span>同意する</span></button></div>
 </div>
 
@@ -3152,7 +3157,7 @@ function renderReasons(){ $('#reasons').innerHTML=site.reasons.map((r,i)=>`<div 
 function renderStats(){ $('#sgrid').innerHTML=site.stats.map((s,i)=>`<li data-reveal data-y="20" data-d="${i*90}" data-count="${+s.v||0}"><div class="sv num"><span class="cv">0</span><small>${esc(s.s)}</small></div><p class="sl">${esc(s.l)}</p></li>`).join(''); observe($('#sgrid')); scrollWork(); }
 function renderFaq(){ $('#faqList').innerHTML=site.faq.map((f,i)=>`<div class="qa${i===0?' open':''}" data-reveal data-y="16" data-d="${i*50}"><button class="qa-q" aria-expanded="${i===0}"><span>${esc(f.q)}</span><span class="pm">＋</span></button><div class="collapse qa-a"><div><p>${esc(f.a)}</p></div></div></div>`).join(''); observe($('#faqList')); }
 $('#faqList').addEventListener('click',e=>{ const b=e.target.closest('.qa-q'); if(!b) return; const qa=b.parentElement; const o=qa.classList.toggle('open'); b.setAttribute('aria-expanded',o); });
-function renderStores(){ $('#storeList').innerHTML=site.stores.map((s,i)=>`<article class="store${s.main?' store-main':''}" data-reveal data-y="24" data-d="${i*80}">${s.main?'<span class="main-chip">本店・オフィス</span>':''}<div class="st"><h3>${esc(s.name)}</h3><span class="open-chip" data-open>営業時間外</span></div><a class="maplink" href="${esc(mapUrl(s.addr))}" target="_blank" rel="noopener noreferrer" aria-label="${esc(s.name)}の場所をGoogleマップで開く"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>${esc(s.addr)}<small>Googleマップで見る ↗</small></span></a><div class="tel num">TEL：<span class="tn">${esc(s.tel)}</span><button data-copy="${esc(s.tel)}">コピー</button></div><p>営業時間 ${esc(site.texts.openFrom)}〜${esc(site.texts.openTo)}</p></article>`).join(''); observe($('#storeList')); clockTick(); }
+function renderStores(){ $('#storeList').innerHTML=site.stores.map((s,i)=>`<article class="store${s.main?' store-main':''}" data-reveal data-y="24" data-d="${i*80}">${s.main?'<span class="main-chip">本店・オフィス</span>':''}<div class="st"><h3>${esc(s.name)}</h3><span class="open-chip" data-open>営業時間外</span></div><a class="maplink" href="${esc(mapUrl(s.addr))}" target="_blank" rel="noopener noreferrer" aria-label="${esc(s.name)}の場所をGoogleマップで開く"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span>${esc(s.addr)}<small>Googleマップで見る ↗</small></span></a><div class="tel num">TEL：<span class="tn">${esc(s.tel)}</span><button data-copy="${esc(s.tel)}">コピー</button></div>${s.rating&&s.map?`<a class="grate" href="${esc(s.map)}" target="_blank" rel="noopener noreferrer"><span class="gr-s" aria-hidden="true">★</span><b class="num">${esc(s.rating)}</b><span>Googleクチコミ ${esc(s.reviews)}件</span><small>Googleでクチコミを見る・書く ↗</small></a>`:''}<p>営業時間 ${esc(site.texts.openFrom)}〜${esc(site.texts.openTo)}</p></article>`).join(''); observe($('#storeList')); clockTick(); }
 let curModel=0, mt;
 function drawModels(){ const m=site.models[curModel]||site.models[0]; $('#modelList').innerHTML=(m?.items||[]).map(x=>`<button data-q="${esc(x)}">${esc(x)}</button>`).join(''); }
 document.addEventListener('click',async e=>{ const c=e.target.closest('[data-copy]'); if(!c) return; const v=c.dataset.copy; try{ await navigator.clipboard.writeText(v); toast('電話番号をコピーしました'); }catch(err){ const tn=c.parentElement.querySelector('.tn'); const r=document.createRange(); r.selectNodeContents(tn); const s=getSelection(); s.removeAllRanges(); s.addRange(r); toast('電話番号を選択しました'); } });
