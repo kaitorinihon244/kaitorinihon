@@ -119,7 +119,7 @@ dl.f dt{font-weight:700;margin-top:12px}dl.f dd{margin:2px 0 0 0}.map{width:100%
 footer{font-size:13px;color:#4B5870;border-top:1px solid #E1E8F2;margin-top:36px}footer .cols{margin:10px 0}footer .lk{display:flex;gap:6px 16px;flex-wrap:wrap;margin:12px 0}footer .lk a{text-decoration:none}
 .prose h2{font-size:18px}.prose p,.prose li{font-size:15px}.prose ul{padding-left:1.3em}.steps{padding-left:1.4em}.steps li{margin:6px 0}`;
 const LOGO = '<path fill="#3E8EE0" d="M6 9a3 3 0 0 1 3-3h16.2a4 4 0 0 1 2.83 1.17l14.8 14.8a4 4 0 0 1 0 5.66L29.63 40.83a4 4 0 0 1-5.66 0L7.17 24.03A4 4 0 0 1 6 21.2Z"/><circle fill="#E0475F" cx="15.6" cy="15.6" r="3.9"/>';
-const FOOT_LINKS = [['会社概要', '/company/'], ['店舗一覧', '/shops/'], ['買取の流れ', '/kaitori/flow/'], ['よくある質問', '/faq/'], ['利用規約', '/terms/'], ['プライバシーポリシー', '/privacy/'], ['Cookieポリシー', '/cookie/'], ['買取時のご注意', '/kaitori/notes/'], ['お問い合わせ', '/contact/'], ['買取価格一覧', '/kaitori/'], ['在庫一覧', '/shop/']];
+const FOOT_LINKS = [['会社概要', '/company/'], ['店舗一覧', '/shops/'], ['買取の流れ', '/kaitori/flow/'], ['よくある質問', '/faq/'], ['利用規約', '/terms/'], ['プライバシーポリシー', '/privacy/'], ['Cookieポリシー', '/cookie/'], ['買取時のご注意', '/kaitori/notes/'], ['お問い合わせ', '/contact/'], ['買取価格一覧', '/kaitori/'], ['iPhone買取相場', '/kaitori/soba/'], ['郵送買取', '/kaitori/mail/'], ['故障・ジャンク買取', '/kaitori/junk/'], ['売る前にやること', '/kaitori/guide/uru-mae/'], ['在庫一覧', '/shop/']];
 const orgLd = cat => ({ '@context': 'https://schema.org', '@type': 'Organization', '@id': SITE + '/#org', name: SHORT, legalName: cat.texts.legal, alternateName: ['Kaitori Nihon', 'KAITORI', 'Kaitorinihon', 'kaitorinihon.jp', 'Royal Japan'], url: SITE + '/', logo: SITE + '/app-icon-512.png',
   sameAs: [cat.texts.x || 'https://x.com/KaitoriNihon', cat.texts.instagram, cat.texts.line, cat.texts.tiktok, cat.texts.youtube, cat.texts.facebook].filter(Boolean) });
 const crumbLd = list => ({ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: list.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: SITE + c.url })) });
@@ -176,7 +176,7 @@ async function kaitoriIndex(env) {
   const rows = cat.cats.map(c => { const ms = cat.models.filter(m => m.c === c.slug); const max = Math.max(0, ...ms.map(m => modelMax(modelRows(m, px)))); return `<tr><td><a href="/kaitori/${c.slug}/">${esc(c.label)}</a></td><td>${ms.length}機種</td><td class="p">${max ? yen(max) : '—'}</td></tr>`; }).join('');
   return frame(cat, { title: `買取価格一覧（スマホ・iPad・ゲーム機・MacBook）【${ja(px.at)}更新】｜${BRAND}`, desc: `iPhone・Android・iPad・Apple Watch・ゲーム機・MacBookの買取価格を機種別に毎日更新。池袋・新宿・新大久保・鶴見の店舗は現金即払い、郵送は全国対応。`,
     canon: '/kaitori/', h1: '買取価格一覧', bc: [{ name: 'トップ', url: '/' }, { name: '買取価格一覧', url: '/kaitori/' }],
-    body: `<p class="lead">カテゴリーを選ぶと、機種ごとの買取価格をご覧いただけます。価格は${ja(px.at)} ${jaTime(px.at)}時点（日本時間）です。</p><div class="tw"><table><thead><tr><th>カテゴリー</th><th>掲載数</th><th>最高買取額</th></tr></thead><tbody>${rows}</tbody></table></div>${shopCols(cat)}` });
+    body: `<p class="lead">カテゴリーを選ぶと、機種ごとの買取価格をご覧いただけます。価格は${ja(px.at)} ${jaTime(px.at)}時点（日本時間）です。</p><div class="tw"><table><thead><tr><th>カテゴリー</th><th>掲載数</th><th>最高買取額</th></tr></thead><tbody>${rows}</tbody></table></div>${moreLinks('')}${shopCols(cat)}` });
 }
 const shopCols = cat => `<h2>店頭買取は現金即払い（4店舗）</h2><div class="cols">${cat.stores.map(s => `<div class="box"><b><a href="/shops/${s.slug}/">${esc(s.name)}</a></b>${esc(s.addr)}<br>TEL <a href="${telHref(s.tel)}">${esc(s.tel)}</a></div>`).join('')}</div>`;
 async function categoryPage(env, slug) {
@@ -192,7 +192,7 @@ async function categoryPage(env, slug) {
   return frame(cat, { title: `${c.label}の買取価格一覧【${ja(px.at)}更新】｜池袋・新宿・鶴見・郵送OK｜${BRAND}`, desc: `${c.label}の買取価格を${ms.length}機種掲載。${top ? top + 'など、' : ''}毎日更新。店頭なら即日現金、郵送買取は全国対応。`,
     canon: `/kaitori/${slug}/`, h1: `${c.label} 買取価格一覧`, bc: [{ name: 'トップ', url: '/' }, { name: '買取価格一覧', url: '/kaitori/' }, { name: c.label, url: `/kaitori/${slug}/` }],
     body: `<p class="lead">${esc(c.label)}の買取価格です（${ms.length}機種）。機種名を選ぶと、容量別・状態別の価格をご覧いただけます。${ja(px.at)} ${jaTime(px.at)}時点（日本時間）の上限価格です。</p><p class="note">※上限価格。状態・付属品により変動します。</p>${body}
-<p><a class="cta" href="/?apply=1">査定を申し込む</a></p><h2>ほかのカテゴリー</h2><ul class="cats">${cat.cats.map(x => x.slug === slug ? `<li><b>${esc(x.label)}</b></li>` : `<li><a href="/kaitori/${x.slug}/">${esc(x.label)}</a></li>`).join('')}</ul>${shopCols(cat)}` });
+<p><a class="cta" href="/?apply=1">査定を申し込む</a></p>${moreLinks('')}<h2>ほかのカテゴリー</h2><ul class="cats">${cat.cats.map(x => x.slug === slug ? `<li><b>${esc(x.label)}</b></li>` : `<li><a href="/kaitori/${x.slug}/">${esc(x.label)}</a></li>`).join('')}</ul>${shopCols(cat)}` });
 }
 function modelFaq(m, c, rows, px) {
   const nn = Math.max(0, ...rows.map(r => r.new || 0)), uu = Math.max(0, ...rows.map(r => r.used || 0));
@@ -202,7 +202,9 @@ function modelFaq(m, c, rows, px) {
     { q: `${m.n}の買取に必要なものは？`, a: 'お売りいただく商品と、顔写真付きの本人確認書類をお持ちください。郵送買取はeKYC（スマホでの本人確認）が必要です。' },
     { q: `店頭ですぐに現金をもらえますか？`, a: `はい。店舗・オフィスにお持ち込みいただければ、査定金額にご納得いただいた後、その場で現金をお支払いします。予約は不要です。` },
     { q: `${m.n}は郵送でも買取してもらえますか？`, a: `はい。郵送買取は全国対応です。予約承認日の当日に発送された商品が価格保証の対象となります。代金は査定承認の翌日から3営業日以内（土日祝を除く）にお振込みします。` },
-    { q: `査定金額はいつまで有効ですか？`, a: '店頭は査定当日限りです。郵送は予約承認日の当日に発送された商品が価格保証の対象です。' }
+    { q: `査定金額はいつまで有効ですか？`, a: '店頭は査定当日限りです。郵送は予約承認日の当日に発送された商品が価格保証の対象です。' },
+    { q: `画面割れや故障した${m.n}も買取できますか？`, a: '画面割れ・バッテリー劣化・電源が入らないなどの故障品も査定します。状態に応じて個別にお見積りします。' },
+    { q: `${m.n}を売る前にやることは？`, a: 'データのバックアップ、「探す」機能（アクティベーションロック）のオフ、アカウントのサインアウト、初期化、SIMカードの取り外しを行ってください。' }
   ];
 }
 async function modelPage(env, cslug, mslug) {
@@ -218,8 +220,8 @@ async function modelPage(env, cslug, mslug) {
     const items = (await stock(env)).filter(p => sameModel(m.n, p.model));
     if (items.length) stockBlock = `<h2>${esc(m.n)}の中古在庫</h2><p>${esc(m.n)}の中古スマホは現在${items.length}台の在庫があります。</p><ul class="grid">${items.slice(0, 12).map(p => `<li><a href="/shop/${esc(p.product_code)}">${esc(itemName(p))}</a><br><span class="tag">在庫あり</span> <b style="color:#E0475F">${yen(p.selling_price)}</b></li>`).join('')}</ul><p><a href="/shop/${slugify(m.n)}/">${esc(m.n)}の在庫をすべて見る</a></p>`;
   } catch (e) { /* stock unavailable: block stays hidden */ }
-  const title = `${m.n} 買取価格【${ja(px.at)}更新】上限${yen(max)}｜池袋・新宿・鶴見・郵送OK｜${SHORT}`;
-  return frame(cat, { title, desc: `${m.n}の買取価格を容量別・状態別に毎日更新。店頭なら即日現金、郵送買取は全国対応。`, canon: `/kaitori/${cslug}/${mslug}/`, h1: `${m.n} 買取価格`,
+  const title = `${m.n} 買取価格・相場【${ja(px.at)}更新】上限${yen(max)}｜池袋・新宿・鶴見・郵送OK｜${SHORT}`;
+  return frame(cat, { title, desc: `${m.n}の買取価格・相場を容量別・状態別に毎日更新（${ja(px.at)}時点の上限${yen(max)}）。未使用・中古・画面割れなどの故障品も査定。店頭なら即日現金、郵送買取は全国対応。`, canon: `/kaitori/${cslug}/${mslug}/`, h1: `${m.n} 買取価格`,
     bc: [{ name: 'トップ', url: '/' }, { name: '買取価格一覧', url: '/kaitori/' }, { name: c.label, url: `/kaitori/${cslug}/` }, { name: m.n, url: `/kaitori/${cslug}/${mslug}/` }], apply: `/?sell=${rows[0].rjp}`,
     ld: [{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) }],
     body: `<p class="lead">${esc(m.n)}の買取価格です。${ja(px.at)} ${jaTime(px.at)}時点（日本時間）。価格は毎日更新しています。</p>
@@ -227,7 +229,7 @@ ${m.i ? `<p><img src="/${esc(m.i)}" alt="${esc(m.n)}" width="${m.iw}" height="${
 <div class="tw"><table><thead><tr>${th}</tr></thead><tbody>${tr}</tbody></table></div><p class="note">※上限価格。状態・付属品により変動します。</p>
 <p><a class="cta" href="/?sell=${esc(rows[0].rjp)}">査定を申し込む</a></p>${stockBlock}
 <h2>${esc(m.n)}の買取についてよくある質問</h2>${faq.map(f => `<h3>${esc(f.q)}</h3><p>${esc(f.a)}</p>`).join('')}
-<h2>${esc(m.n)}を売れる店舗</h2>${shopCols(cat)}<p><a href="/kaitori/${cslug}/">${esc(c.label)}の買取価格一覧に戻る</a></p>` });
+${moreLinks('')}<h2>${esc(m.n)}を売れる店舗</h2>${shopCols(cat)}<p><a href="/kaitori/${cslug}/">${esc(c.label)}の買取価格一覧に戻る</a></p>` });
 }
 
 /* ---------- content pages ---------- */
@@ -273,6 +275,103 @@ const PAGES = {
 <p>詳しくは<a href="/terms/">利用規約</a>・<a href="/faq/">よくある質問</a>をご覧ください。</p></div>` })
 };
 
+/* ---------- keyword landing pages and guides (built from the live prices; no invented numbers) ---------- */
+const GUIDE_LINKS = [['iPhoneを売る前にやること', '/kaitori/guide/uru-mae/'], ['スマホ買取はどこがいい？選び方', '/kaitori/guide/dokoga-ii/'], ['下取りと買取の違い', '/kaitori/guide/shitadori/'], ['Androidを売る前にやること', '/kaitori/guide/android-uru-mae/']];
+const SELL_LINKS = [['iPhone買取相場・価格ランキング', '/kaitori/soba/'], ['未使用・新品iPhoneの買取', '/kaitori/unused/'], ['故障・画面割れ・ジャンクの買取', '/kaitori/junk/'], ['郵送買取（全国対応）', '/kaitori/mail/'], ['赤ロムの買取', '/kaitori/akarom/']];
+const linkList = (list, here) => `<ul class="cats">${list.filter(([, u]) => u !== here).map(([n, u]) => `<li><a href="${u}">${esc(n)}</a></li>`).join('')}</ul>`;
+const moreLinks = here => `<h2>売り方・状態から探す</h2>${linkList(SELL_LINKS, here)}<h2>売る前に読むガイド</h2>${linkList(GUIDE_LINKS, here)}`;
+const faqBlock = list => list.map(f => `<h3>${esc(f.q)}</h3><p>${esc(f.a)}</p>`).join('');
+const ranked = (cat, px, cats, pick) => cat.models.filter(m => cats.includes(m.c)).map(m => { const rows = modelRows(m, px); return { m, rows, v: pick(rows) }; }).filter(x => x.v > 0).sort((a, b) => b.v - a.v);
+const rankTable = (list, cols) => `<div class="tw"><table><thead><tr><th>順位</th><th>機種</th>${cols.map(c => `<th>${c[0]}</th>`).join('')}</tr></thead><tbody>${list.map((x, i) => `<tr><td>${i + 1}</td><td><a href="/kaitori/${x.m.c}/${x.m.s}/">${esc(x.m.n)}</a></td>${cols.map(c => { const v = c[1](x.rows); return `<td class="p${c[2] ? ' u' : ''}">${v ? yen(v) : '—'}</td>`; }).join('')}</tr>`).join('')}</tbody></table></div>`;
+const maxNew = rows => Math.max(0, ...rows.map(r => r.new || 0)), maxUsed = rows => Math.max(0, ...rows.map(r => r.used || 0));
+const SELL_PAGES = {
+  '/kaitori/soba/': async (cat, px) => {
+    const ip = ranked(cat, px, ['iphone'], maxNew).slice(0, 30), and = ranked(cat, px, ['simfree', 'docomo', 'au', 'softbank', 'rakuten', 'mvno'], rows => Math.max(maxNew(rows), maxUsed(rows))).filter(x => !/iphone/i.test(x.m.n)).slice(0, 15);
+    const faq = [
+      { q: 'iPhoneの買取相場はどうやって決まりますか？', a: '新品・中古の市場価格、在庫状況、モデルの新しさ、容量によって毎日変わります。当店では東京の相場をもとに価格を自動更新しています。' },
+      { q: '一番高く売れるiPhoneは？', a: `${ja(px.at)}時点では${ip[0] ? ip[0].m.n + '（新品・未使用 上限' + yen(maxNew(ip[0].rows)) + '）' : '最新モデル'}が最も高い買取価格です。` },
+      { q: '相場が下がる前に売るべきタイミングは？', a: '一般的に新モデルの発表・発売前後に旧モデルの相場は下がりやすくなります。使わなくなったら早めに売るのがおすすめです。' }];
+    return { title: `iPhone買取相場・買取価格ランキング【${ja(px.at)}更新】｜${BRAND}`, desc: `iPhoneの買取相場を毎日更新。${ip[0] ? ip[0].m.n + 'は最大' + yen(maxNew(ip[0].rows)) + '。' : ''}機種別の新品・中古の上限価格ランキング上位30。池袋・新宿・鶴見の店頭は現金即払い、郵送は全国対応。`,
+      h1: 'iPhone買取相場・買取価格ランキング', bc: [TOP, { name: '買取価格一覧', url: '/kaitori/' }, { name: 'iPhone買取相場', url: '/kaitori/soba/' }], ld: [faqLd(faq)],
+      body: `<p class="lead">${ja(px.at)} ${jaTime(px.at)}時点（日本時間）のiPhone買取相場です。新品・未使用と中古の上限価格を高い順に並べています。価格は2時間ごとに自動更新されます。</p>
+<h2>iPhone買取価格ランキング 上位30機種</h2>${rankTable(ip, [['新品・未使用 上限', maxNew], ['中古 上限', maxUsed, 1]])}<p class="note">※上限価格。状態・付属品・容量により変動します。容量別の価格は機種名からご覧ください。</p>
+${and.length ? `<h2>Android・SIMフリースマホの買取相場</h2>${rankTable(and, [['新品・未使用 上限', maxNew], ['中古 上限', maxUsed, 1]])}` : ''}
+<h2>iPhone買取相場についてよくある質問</h2>${faqBlock(faq)}<p><a class="cta" href="/?apply=1">無料で査定する</a></p>${moreLinks('/kaitori/soba/')}${shopCols(cat)}` };
+  },
+  '/kaitori/unused/': async (cat, px) => {
+    const ip = ranked(cat, px, ['iphone'], maxNew).slice(0, 40);
+    const faq = [
+      { q: '未開封・未使用のiPhoneはいくらで売れますか？', a: `機種と容量によります。${ja(px.at)}時点では${ip[0] ? ip[0].m.n + 'の新品・未使用が最大' + yen(maxNew(ip[0].rows)) : '最新モデルが最も高額'}です。下の一覧で機種ごとの上限価格をご確認ください。` },
+      { q: '開封済みでも未使用として売れますか？', a: '開封済みで使用していない商品は「開封未使用」として査定します。機種によっては開封未使用の価格を掲載しています。' },
+      { q: '未使用品を売るときに必要なものは？', a: '商品（箱・付属品を含む）と、顔写真付きの本人確認書類をお持ちください。郵送の場合はeKYCで本人確認を行います。' }];
+    return { title: `未使用・新品iPhone買取｜未開封の高価買取価格【${ja(px.at)}更新】｜${BRAND}`, desc: `未使用・未開封・新品のiPhoneを高価買取。${ip[0] ? ip[0].m.n + 'は最大' + yen(maxNew(ip[0].rows)) + '。' : ''}機種別の新品・未使用の上限価格を毎日更新。店頭は現金即払い、郵送は全国対応。`,
+      h1: '未使用・新品iPhoneの買取', bc: [TOP, { name: '買取価格一覧', url: '/kaitori/' }, { name: '未使用・新品iPhone買取', url: '/kaitori/unused/' }], ld: [faqLd(faq)],
+      body: `<p class="lead">未開封・未使用のiPhoneは、中古よりも高く買い取ります。${ja(px.at)} ${jaTime(px.at)}時点（日本時間）の新品・未使用の上限価格です。</p>
+<h2>未使用・新品iPhoneの買取価格 上位40機種</h2>${rankTable(ip, [['新品・未使用 上限', maxNew]])}<p class="note">※上限価格。箱・付属品の有無や容量により変動します。</p>
+<h2>未使用iPhoneの買取についてよくある質問</h2>${faqBlock(faq)}<p><a class="cta" href="/?apply=1">無料で査定する</a></p>${moreLinks('/kaitori/unused/')}${shopCols(cat)}` };
+  },
+  '/kaitori/junk/': async (cat, px) => {
+    const ip = ranked(cat, px, ['iphone'], maxUsed).slice(0, 20);
+    const faq = [
+      { q: '画面が割れたiPhoneでも買取できますか？', a: 'はい。画面割れ・背面割れのiPhoneも査定します。状態により減額となりますが、お値段をおつけできる場合が多くあります。まずはお気軽にご相談ください。' },
+      { q: '電源が入らない・水没したスマホも売れますか？', a: '故障・ジャンク品としてお見積りします。部品として価値がある場合もあるため、処分する前にご相談ください。' },
+      { q: 'ジャンク品の査定に必要なものは？', a: '商品と、顔写真付きの本人確認書類が必要です。アクティベーションロック（iPhoneを探す）は必ず解除してください。解除できない場合は買取できません。' },
+      { q: 'ネットワーク利用制限が「×」（赤ロム）のスマホは？', a: `赤ロムのスマホも買取しています。<a href="/kaitori/akarom/">赤ロムの買取価格</a>をご覧ください。` }];
+    return { title: `故障・画面割れ・ジャンクiPhone買取｜壊れたスマホも査定｜${BRAND}`, desc: '画面割れ・背面割れ・電源が入らない・水没など、故障したiPhoneやジャンクのスマホも買取査定します。池袋・新宿・新大久保・鶴見の店頭は現金即払い、郵送は全国対応。',
+      h1: '故障・画面割れ・ジャンクのiPhone買取', bc: [TOP, { name: '買取価格一覧', url: '/kaitori/' }, { name: '故障・ジャンク買取', url: '/kaitori/junk/' }], ld: [faqLd(faq.map(f => ({ q: f.q, a: f.a.replace(/<[^>]+>/g, '') })))],
+      body: `<p class="lead">画面割れ・背面割れ、電源が入らない、バッテリーが膨張した、水没したなど、壊れたiPhone・スマホも査定します。故障の内容により個別にお見積りします。</p>
+<h2>査定できる故障の例</h2><ul class="cats"><li>画面割れ・液晶不良</li><li>背面ガラス割れ</li><li>電源が入らない</li><li>水没・充電できない</li><li>カメラ・Face ID不良</li><li>バッテリー劣化・膨張</li></ul>
+<h2>故障・ジャンク品を売るときの注意</h2><ol class="steps"><li><b>アクティベーションロックを解除</b>　「iPhoneを探す」がオンのままだと買取できません。</li><li><b>データは消去できる範囲で消去</b>　画面が見えない場合は店頭でご相談ください。</li><li><b>本人確認書類を用意</b>　顔写真付きの書類が必要です。</li></ol>
+<h2>参考：iPhoneの中古買取 上限価格</h2><p>故障品はこの価格から状態に応じて減額となります。正常に動く中古品の上限価格の目安としてご覧ください。</p>${rankTable(ip, [['中古 上限（正常品）', maxUsed, 1]])}
+<h2>故障・ジャンク買取についてよくある質問</h2>${faq.map(f => `<h3>${esc(f.q)}</h3><p>${f.a.includes('<a ') ? f.a : esc(f.a)}</p>`).join('')}<p><a class="cta" href="/?apply=1">無料で査定する（故障・ジャンクを選択）</a></p>${moreLinks('/kaitori/junk/')}${shopCols(cat)}` };
+  },
+  '/kaitori/mail/': async cat => {
+    const steps = METHODS[1][2];
+    const faq = cat.faq.filter(f => /郵送|送料|振り込|送れば/.test(f.q));
+    return { title: `郵送買取（宅配買取）｜iPhone・スマホを全国から買取｜${BRAND}`, desc: 'iPhone・スマホ・ゲーム機の郵送買取（宅配買取）。全国どこからでも着払いで送るだけ。予約承認日に発送すれば価格保証、査定承認から3営業日以内にお振込み。梱包方法もご案内します。',
+      h1: '郵送買取（全国対応）', bc: [TOP, { name: '買取の流れ', url: '/kaitori/flow/' }, { name: '郵送買取', url: '/kaitori/mail/' }], ld: faq.length ? [faqLd(faq)] : [],
+      body: `<p class="lead">お近くに店舗がなくても、郵送で全国から買取できます。着払いで送るだけで、査定承認の翌日から3営業日以内（土日祝を除く）にお振込みします。</p>
+<h2>郵送買取の流れ</h2><ol class="steps">${steps.map(x => `<li><b>${esc(x[0])}</b>　${esc(x[1])}</li>`).join('')}</ol><p class="note">${esc(METHODS[1][3])}</p>
+<h2>iPhone・スマホの梱包方法</h2><ol class="steps"><li><b>初期化とロック解除</b>　「iPhoneを探す」をオフにして初期化します（<a href="/kaitori/guide/uru-mae/">手順はこちら</a>）。</li><li><b>SIMカードを抜く</b>　SIMカード・SDカードは取り外してください。</li><li><b>緩衝材で包む</b>　本体をプチプチなどで包み、箱の中で動かないようにします。</li><li><b>買取依頼書を同封</b>　依頼書を入れて封をし、着払いで発送します。</li></ol>
+${faq.length ? `<h2>郵送買取についてよくある質問</h2>${faqBlock(faq)}` : ''}<p><a class="cta" href="/?apply=1">郵送買取を申し込む</a></p>${moreLinks('/kaitori/mail/')}` };
+  },
+  '/kaitori/guide/': async cat => ({ title: `スマホを売る前に読むガイド｜${BRAND}`, desc: 'iPhone・Androidを売る前にやること、買取店の選び方、下取りと買取の違いなど、スマホを高く安全に売るためのガイドです。', h1: 'スマホ買取ガイド',
+    bc: [TOP, { name: 'ガイド', url: '/kaitori/guide/' }], body: `<p class="lead">スマホを高く、安全に売るための基本をまとめました。</p>${linkList(GUIDE_LINKS, '')}<h2>売り方・状態から探す</h2>${linkList(SELL_LINKS, '')}` }),
+  '/kaitori/guide/uru-mae/': async cat => {
+    const steps = [['バックアップを取る', '設定 → 自分の名前 → iCloud → iCloudバックアップ、またはパソコンでバックアップします。'], ['LINEなどアプリの引き継ぎ', 'LINEはトーク履歴のバックアップと引き継ぎ設定を先に行います。'], ['Apple Watchのペアリング解除', 'Apple Watchを使っている場合は、先にペアリングを解除します。'], ['「iPhoneを探す」をオフにする', '設定 → 自分の名前 → 探す → iPhoneを探す をオフ。Apple IDのパスワードが必要です。これがオンのままだと買取できません（アクティベーションロック）。'], ['Apple IDからサインアウト', '設定 → 自分の名前 → 一番下の「サインアウト」。'], ['iPhoneを初期化する', '設定 → 一般 → 転送またはiPhoneをリセット → すべてのコンテンツと設定を消去。'], ['SIMカード・eSIMの扱い', 'SIMカードは抜いておきます。eSIMは初期化時に削除するか、事前に通信会社で手続きします。'], ['ネットワーク利用制限を確認', 'キャリアの分割払いが残っていると「△」になる場合があります。赤ロム（×）でも買取できます。']];
+    const faq = [{ q: '初期化しないで売っても大丈夫ですか？', a: '店頭では、スタッフと一緒に初期化することもできます。ただし「iPhoneを探す」の解除にはApple IDのパスワードが必要なので、必ず確認してからお越しください。' }, { q: '分割払いが残っていても売れますか？', a: 'はい、売れます。ネットワーク利用制限が「△」の場合は買取価格が変わることがあります。' }, { q: '箱や付属品がなくても売れますか？', a: '本体のみでも買取できます。箱・付属品がそろっていると査定がプラスになる場合があります。' }];
+    return { title: `iPhoneを売る前にやること8つ｜初期化・iPhoneを探すの解除・SIM｜${BRAND}`, desc: 'iPhoneを売る前・下取りに出す前にやることを8ステップで解説。バックアップ、LINEの引き継ぎ、「iPhoneを探す」のオフ、Apple IDのサインアウト、初期化のやり方、SIMカードの扱いまで。',
+      h1: 'iPhoneを売る前にやること8つ（初期化のやり方）', bc: [TOP, { name: 'ガイド', url: '/kaitori/guide/' }, { name: 'iPhoneを売る前にやること', url: '/kaitori/guide/uru-mae/' }], ld: [faqLd(faq), { '@context': 'https://schema.org', '@type': 'HowTo', name: 'iPhoneを売る前にやること', step: steps.map((x, i) => ({ '@type': 'HowToStep', position: i + 1, name: x[0], text: x[1] })) }],
+      body: `<p class="lead">iPhoneを買取に出す前・下取りに出す前に、この順番で準備すれば安心です。特に「iPhoneを探す」のオフは必須です。</p><ol class="steps">${steps.map(x => `<li><b>${esc(x[0])}</b><br>${esc(x[1])}</li>`).join('')}</ol>
+<h2>よくある質問</h2>${faqBlock(faq)}<p><a class="cta" href="/kaitori/iphone/">iPhoneの買取価格を見る</a></p>${moreLinks('/kaitori/guide/uru-mae/')}` };
+  },
+  '/kaitori/guide/android-uru-mae/': async cat => {
+    const steps = [['データのバックアップ', 'Googleアカウントへのバックアップ、写真はGoogleフォトなどに保存します。'], ['LINEなどアプリの引き継ぎ', 'トーク履歴のバックアップと引き継ぎを先に行います。'], ['Googleアカウントを削除', '設定 → パスワードとアカウント → Googleアカウントを削除。残したまま初期化すると「Googleアカウントの確認（FRP）」でロックがかかります。'], ['Galaxyはサムスンアカウントも削除', 'Galaxyはサムスンアカウントも削除しておきます。'], ['初期化（工場出荷状態に戻す）', '設定 → システム → リセット → すべてのデータを消去（機種により名称が異なります）。'], ['SIMカード・SDカードを抜く', 'SIMカードとmicroSDカードを取り外します。']];
+    return { title: `Android・Galaxy・Pixel・Xperiaを売る前にやること｜初期化とGoogleアカウント削除｜${BRAND}`, desc: 'Androidスマホ（Galaxy・Pixel・Xperia・AQUOSなど）を売る前にやることを解説。バックアップ、Googleアカウントの削除、初期化、SIMカードの取り外しまで。',
+      h1: 'Androidスマホを売る前にやること', bc: [TOP, { name: 'ガイド', url: '/kaitori/guide/' }, { name: 'Androidを売る前にやること', url: '/kaitori/guide/android-uru-mae/' }],
+      ld: [{ '@context': 'https://schema.org', '@type': 'HowTo', name: 'Androidスマホを売る前にやること', step: steps.map((x, i) => ({ '@type': 'HowToStep', position: i + 1, name: x[0], text: x[1] })) }],
+      body: `<p class="lead">Galaxy・Pixel・Xperia・AQUOSなどのAndroidスマホは、Googleアカウントを削除してから初期化するのがポイントです。</p><ol class="steps">${steps.map(x => `<li><b>${esc(x[0])}</b><br>${esc(x[1])}</li>`).join('')}</ol>
+<p><a class="cta" href="/kaitori/simfree/">Android・SIMフリーの買取価格を見る</a></p>${moreLinks('/kaitori/guide/android-uru-mae/')}` };
+  },
+  '/kaitori/guide/dokoga-ii/': async cat => ({ title: `スマホ・iPhone買取はどこがいい？高く売る店の選び方5つ｜${BRAND}`, desc: 'iPhone・スマホを売るならどこがいい？買取店・郵送買取・キャリア下取り・フリマアプリの違いと、高く売るための買取店の選び方を5つのポイントで解説します。', h1: 'スマホ・iPhone買取はどこがいい？選び方',
+    bc: [TOP, { name: 'ガイド', url: '/kaitori/guide/' }, { name: 'スマホ買取はどこがいい？', url: '/kaitori/guide/dokoga-ii/' }],
+    body: `<p class="lead">スマホを売る方法は大きく4つあります。手間・スピード・金額のバランスで選びましょう。</p>
+<div class="tw"><table><thead><tr><th>売り方</th><th>現金化まで</th><th>手間</th><th>特徴</th></tr></thead><tbody><tr><td>買取店（店頭）</td><td>即日</td><td>少ない</td><td>その場で現金。査定額を見てから決められる</td></tr><tr><td>郵送買取</td><td>数日</td><td>少ない</td><td>全国から送るだけ。店に行けない人向け</td></tr><tr><td>キャリアの下取り</td><td>機種変更時</td><td>少ない</td><td>ポイントや割引で還元されることが多い</td></tr><tr><td>フリマアプリ</td><td>売れるまで</td><td>多い</td><td>出品・発送・やり取りが必要</td></tr></tbody></table></div>
+<h2>買取店を選ぶ5つのポイント</h2><ol class="steps"><li><b>買取価格を公開している</b>　機種別・容量別の価格がサイトに載っている店は比較しやすく安心です。</li><li><b>価格を毎日更新している</b>　相場は日々変わります。更新日が新しいかを確認しましょう。</li><li><b>古物商許可番号を表示している</b>　中古品の買取には古物商許可が必要です。</li><li><b>すぐに現金化できる</b>　店頭で即日現金払いか、振込までの日数を確認しましょう。</li><li><b>故障品・赤ロムにも対応</b>　壊れたスマホも査定してくれる店なら、まとめて売れます。</li></ol>
+<p>${esc(SHORT)}は、機種別の買取価格を毎日公開し（<a href="/kaitori/">買取価格一覧</a>）、池袋・新宿・新大久保・鶴見の店頭で現金即払い、郵送は全国対応しています。古物商許可 ${esc(cat.texts.license)}。</p>
+<p><a class="cta" href="/?apply=1">無料で査定する</a></p>${moreLinks('/kaitori/guide/dokoga-ii/')}${shopCols(cat)}` }),
+  '/kaitori/guide/shitadori/': async cat => ({ title: `iPhoneの下取りと買取の違い｜どっちが得？｜${BRAND}`, desc: 'iPhoneはキャリア・Appleの下取りと買取店の買取、どっちが得？還元方法・金額・手間の違いと、損しない選び方をわかりやすく解説します。', h1: 'iPhoneの下取りと買取、どっちが得？',
+    bc: [TOP, { name: 'ガイド', url: '/kaitori/guide/' }, { name: '下取りと買取の違い', url: '/kaitori/guide/shitadori/' }],
+    body: `<p class="lead">「下取り」は機種変更と同時に古い端末を引き取ってもらう方法、「買取」は端末だけを売って現金を受け取る方法です。</p>
+<div class="tw"><table><thead><tr><th></th><th>下取り（キャリア・Apple）</th><th>買取（買取店）</th></tr></thead><tbody><tr><th>受け取り方</th><td>ポイント・割引が中心</td><td>現金（店頭は即日）</td></tr><tr><th>タイミング</th><td>機種変更のときだけ</td><td>いつでも</td></tr><tr><th>故障品</th><td>対象外や減額が多い</td><td>状態により査定</td></tr><tr><th>手間</th><td>機種変更と同時で楽</td><td>店頭・郵送で手続き</td></tr></tbody></table></div>
+<h2>損しない選び方</h2><p>下取りの金額と、買取店の買取価格を比べてから決めるのがおすすめです。当店の価格は<a href="/kaitori/iphone/">iPhone買取価格一覧</a>で毎日公開しています。売る前の準備は<a href="/kaitori/guide/uru-mae/">iPhoneを売る前にやること</a>をご覧ください。</p>
+<p><a class="cta" href="/?apply=1">無料で査定する</a></p>${moreLinks('/kaitori/guide/shitadori/')}` })
+};
+async function sellPage(env, path) {
+  const cat = await catalog(env), px = await prices(cat), o = await SELL_PAGES[path](cat, px);
+  return frame(cat, { ...o, canon: path, ttl: 1800 });
+}
+
 /* ---------- shops ---------- */
 const hoursSpec = cat => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], opens: cat.texts.openFrom, closes: cat.texts.openTo });
 async function shopsIndex(env) {
@@ -280,6 +379,12 @@ async function shopsIndex(env) {
   return frame(cat, { title: `店舗一覧｜池袋・新宿・新大久保・鶴見のスマホ買取｜${BRAND}`, desc: `${BRAND}の4店舗（池袋店・新宿1号店・新大久保店・鶴見店）の住所・電話番号・営業時間・最寄り駅からの行き方。店頭買取は現金即払い、予約不要です。`, canon: '/shops/', h1: '店舗一覧',
     bc: [TOP, { name: '店舗一覧', url: '/shops/' }], body: `<p class="lead">店頭買取は予約不要・現金即払いです。営業時間は${esc(cat.texts.openFrom)}〜${esc(cat.texts.openTo)}（年中無休）です。</p><div class="cols">${cat.stores.map(s => `<div class="box"><b><a href="/shops/${s.slug}/">${esc(s.name)}</a></b>${esc(s.addr)}<br>TEL <a href="${telHref(s.tel)}">${esc(s.tel)}</a>${s.station ? `<br>${esc(s.station.name)}から徒歩約${s.station.walk}分` : ''}</div>`).join('')}</div>` });
 }
+const AREA = {   // extra local words people search for (from Google suggestions), per shop
+  ikebukuro: { words: '池袋駅西口・西池袋エリア', near: '池袋', also: ['池袋 iPhone買取', '池袋西口 スマホ買取', '池袋 中古スマホ'] },
+  'shinjuku-1': { words: '新宿区百人町（新大久保駅・大久保駅エリア）', near: '新宿・大久保', also: ['新宿 iPhone買取', '大久保 iPhone買取', '新宿 スマホ買取'] },
+  'shin-okubo': { words: '新宿区百人町（新大久保駅・大久保駅エリア）', near: '新大久保・大久保', also: ['新大久保 iPhone買取', '大久保 スマホ買取', '新宿 中古スマホ'] },
+  tsurumi: { words: '横浜市鶴見区・鶴見駅エリア', near: '鶴見・横浜', also: ['鶴見 スマホ買取', '横浜 iPhone買取', '鶴見 中古スマホ'] }
+};
 async function shopPage(env, slug) {
   const cat = await catalog(env), s = cat.stores.find(x => x.slug === slug); if (!s) return null;
   const px = await prices(cat);
@@ -297,7 +402,12 @@ async function shopPage(env, slug) {
 <h2>${esc(s.area)}店への行き方</h2><p>${s.station ? `${esc(s.station.name)}から徒歩約${s.station.walk}分です（直線距離からの目安）。` : ''}お越しの際はGoogleマップでご確認ください。${s.map ? `<a href="${esc(s.map)}" rel="noopener">Googleマップで開く</a>` : ''}</p>
 <iframe class="map" title="${esc(s.name)}の地図" src="${esc(embed)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 <h2>${esc(s.area)}店の本日の高価買取 上位10機種</h2><p class="note">${ja(px.at)} ${jaTime(px.at)}時点（日本時間）の上限価格です。</p><div class="tw"><table><thead><tr><th>機種</th><th>新品・未使用 上限</th></tr></thead><tbody>${top.map(x => `<tr><td><a href="/kaitori/${x.m.c}/${x.m.s}/">${esc(x.m.n)}</a></td><td class="p">${yen(x.max)}</td></tr>`).join('')}</tbody></table></div>
-<h2>買取価格を見る</h2><ul class="cats">${cat.cats.map(x => `<li><a href="/kaitori/${x.slug}/">${esc(x.label)}</a></li>`).join('')}</ul><p><a class="cta" href="/?apply=1">無料で査定する</a></p>` });
+${(() => { const a = AREA[s.slug]; if (!a) return ''; const f = [
+  { q: `${a.near}でiPhoneを売るならどこがいい？`, a: `${s.name}は${a.words}にあり、iPhone・Android・iPad・ゲーム機を買取しています。機種別の買取価格を毎日公開し、店頭では予約不要・その場で現金をお支払いします。` },
+  { q: `${a.near}で壊れたiPhone・画面割れのスマホも売れますか？`, a: '画面割れ・電源が入らないなどの故障品も査定します。状態に応じて個別にお見積りします。' },
+  { q: `${s.name}の営業時間は？`, a: `${cat.texts.openFrom}〜${cat.texts.openTo}、年中無休です。` }];
+  return `<h2>${esc(a.near)}でiPhone・スマホを売るなら</h2><p>${esc(s.name)}は${esc(a.words)}の買取店です。iPhoneの最新機種から古い機種、未使用品、画面割れなどの故障品まで査定します。</p><h2>よくある質問</h2>${f.map(x => `<h3>${esc(x.q)}</h3><p>${esc(x.a)}</p>`).join('')}<script type="application/ld+json">${json(faqLd(f))}</script>`; })()}
+<h2>買取価格を見る</h2><ul class="cats">${cat.cats.map(x => `<li><a href="/kaitori/${x.slug}/">${esc(x.label)}</a></li>`).join('')}</ul>${moreLinks('')}<p><a class="cta" href="/?apply=1">無料で査定する</a></p>` });
 }
 
 /* ---------- phones for sale ---------- */
@@ -349,6 +459,7 @@ async function sitemap(env, onlyShop) {
     cat.cats.forEach(c => add(`/kaitori/${c.slug}/`, last, '0.8'));
     cat.models.forEach(m => add(`/kaitori/${m.c}/${m.s}/`, last, '0.7'));
     ['/kaitori/flow/', '/kaitori/notes/', '/company/', '/faq/', '/contact/', '/terms/', '/privacy/', '/cookie/', '/shops/'].forEach(u => add(u, last, '0.5'));
+    Object.keys(SELL_PAGES).forEach(u => add(u, last, '0.8'));
     cat.stores.forEach(s => add(`/shops/${s.slug}/`, last, '0.7'));
   }
   add('/shop/', iso(new Date()), '0.8');
@@ -368,6 +479,7 @@ async function route(path, env) {
   if (path === '/shops/') return shopsIndex(env);
   if (path === '/shop' || path === '/shop/') return shopList(env);
   if (PAGES[path]) { const cat = await catalog(env); return frame(cat, { ...PAGES[path](cat), canon: path, ttl: 3600 }); }
+  if (SELL_PAGES[path]) return sellPage(env, path);
   if ((m = /^\/kaitori\/([a-z0-9-]+)\/$/.exec(path))) return categoryPage(env, m[1]);
   if ((m = /^\/kaitori\/([a-z0-9-]+)\/([a-z0-9-]+)\/$/.exec(path))) return modelPage(env, m[1], m[2]);
   if ((m = /^\/shops\/([a-z0-9-]+)\/$/.exec(path))) return shopPage(env, m[1]);
