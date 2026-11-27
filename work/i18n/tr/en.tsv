@@ -944,3 +944,21 @@
 942|税込|tax incl.
 943|販売|Selling price (in stock)
 944|在庫|In stock
+945|修理|Repair booking
+946|修理|Book a repair
+947|機種|Tell us your model, the problem, and your preferred store and date/time. We'll contact you to confirm.
+948|機種|Model *
+949|症状|Problem *
+950|画面|Cracked screen
+951|バッ|Battery replacement
+952|充電|Charging problem
+953|水没|Water damage
+954|その|Other
+955|症状|Details (optional)
+956|ご希|Preferred store *
+957|ご希|Preferred date and time *
+958|電話|Please enter either a phone number or an email address.
+959|メッ|Message (optional)
+960|この|Book with these details
+961|ご予|We've received your booking.
+962|担当|Our staff will contact you to confirm the date and time.

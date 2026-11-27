@@ -88,7 +88,8 @@ function handleOrder_(b) {
   const o = {
     way: b.way === 'mail' ? '郵送買取' : '店頭買取',
     name: s(b.name, 80), kana: s(b.kana, 80), email: s(b.email, 120), tel: s(b.tel, 40),
-    when: s(b.when, 80), addr: s(b.addr, 200), note: s(b.note, 800)
+    when: s(b.when, 80), addr: s(b.addr, 200), note: s(b.note, 800),
+    kr: s(b.kr, 160), sbFail: s(b.sbFail, 160)   // KR-xxxxx numbers from the stock system (Supabase), or why saving there failed
   };
   if (!o.name || !(o.email || o.tel)) return { ok: false, error: 'missing' };
   o.bank = o.way === '郵送買取' ? bankIn_(b.bank) : null;
@@ -117,13 +118,43 @@ function handleOrder_(b) {
   const lines = ['注文番号: ' + id, '買取方法: ' + o.way, 'お名前: ' + o.name + (o.kana ? '（' + o.kana + '）' : ''), 'メール: ' + o.email, '電話: ' + o.tel,
     o.way === '店頭買取' ? 'ご来店予定: ' + o.when : '発送予定: ' + o.when, o.addr ? (o.way === '店頭買取' ? 'ご来店店舗: ' : 'ご住所: ') + o.addr : '', '', '【商品】', itemText,
     '合計（上限）: ' + yen_(total) + '　' + count + '点', o.bank ? '振込先: ' + bankMask_(o.bank) + '（全桁はシートの注文タブ）' : '',
-    o.idDoc ? '本人確認書類: ' + o.idDoc.type + '　写真' + o.idDoc.files.length + '枚（Driveの非公開フォルダ。写真はメール・Telegramには載せません）\n' + o.idUrl : '', o.note ? '備考: ' + o.note : ''].filter(function (x) { return x !== ''; });
+    o.idDoc ? '本人確認書類: ' + o.idDoc.type + '　写真' + o.idDoc.files.length + '枚（Driveの非公開フォルダ。写真はメール・Telegramには載せません）\n' + o.idUrl : '',
+    o.kr ? '在庫システム受付番号: ' + o.kr : '', o.sbFail ? '⚠️ Supabase保存失敗: ' + o.sbFail : '', o.note ? '備考: ' + o.note : ''].filter(function (x) { return x !== ''; });
   try {
     const to = prop_('NOTIFY_EMAIL'); const shop = prop_('SHOP_NAME', '買取日本');
     if (to) GmailApp.sendEmail(to, '【' + shop + '】買取申込 ' + id + ' / ' + o.name + ' / ' + yen_(total), lines.join('\n'), { name: shop + ' 受付' });
   } catch (err) { console.error('order mail', err); }
   const mailNote = o.way === '郵送買取' ? '\n\nお客様への受付メール: ' + (orderMail_(o, id, itemText, total, count) ? '送信済み' : '⚠️ 未送信（お客様へ連絡してください）') : '';
   try { tgSend_('🛒 新しい買取申込\n' + lines.join('\n') + mailNote + '\n\n状態を変える: /status ' + id + ' 確認済'); } catch (err) { console.error('order tg', err); }
+  return { ok: true, id: id };
+}
+
+
+/* ---------- repair bookings from the site (修理予約) ----------
+   The site first saves the booking in the stock system (Supabase, RP-xxxxx) and then posts it here: sheet row, owner mail and Telegram,
+   and a confirmation mail to the customer when they gave an address. If Supabase failed, sbFail says why and the notice is marked. */
+function repairTab_() { return tab_('修理予約', ['受付ID', '受付日時', '予約番号(RP)', '機種', '症状', '希望店舗', '希望日時', 'お名前', '電話', 'メール', 'メッセージ', '在庫システム保存']); }
+function handleRepair_(b) {
+  const s = function (v, n) { return String(v == null ? '' : v).replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, n || 200); };
+  const r = { no: /^RP-\d{3,10}$/.test(String(b.no || '')) ? String(b.no) : '', model: s(b.model, 120), problem: s(b.problem, 160), store: s(b.store, 80), when: s(b.when, 60),
+    name: s(b.name, 80), tel: s(b.tel, 40), email: s(b.email, 120), msg: s(b.message, 800), fail: s(b.sbFail, 160) };
+  if (!r.model || !r.problem || !r.name || !(r.tel || r.email)) return { ok: false, error: 'missing' };
+  if (!limit_('rp:' + idKey_(r.tel || r.email), 5, 3600)) return { ok: false, error: 'busy' };
+  const id = clientId_(b.cid, 'RB') || 'RB-' + Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyMMdd') + '-' + Math.floor(1000 + Math.random() * 9000);
+  repairTab_().appendRow(safeRow_([id, now_(), r.no, r.model, r.problem, r.store, r.when, r.name, r.tel, r.email, r.msg, r.no ? '保存済み' : '失敗: ' + r.fail]));
+  const lines = ['修理予約: ' + (r.no || id), r.no ? '' : '⚠️ Supabase保存失敗: ' + r.fail, '機種: ' + r.model, '症状: ' + r.problem, '希望店舗: ' + r.store, '希望日時: ' + r.when,
+    'お名前: ' + r.name, '電話: ' + r.tel, 'メール: ' + r.email, r.msg ? 'メッセージ: ' + r.msg : ''].filter(function (x) { return x !== ''; });
+  try { const to = prop_('NOTIFY_EMAIL'), shop = prop_('SHOP_NAME', '買取日本'); if (to) GmailApp.sendEmail(to, '【' + shop + '】修理予約 ' + (r.no || id) + ' / ' + r.name, lines.join('\n'), { name: shop + ' 受付' }); } catch (err) { console.error('repair mail', err); }
+  try { tgSend_('🔧 新しい修理予約\n' + lines.join('\n')); } catch (err) { console.error('repair tg', err); }
+  if (r.email) {
+    try {
+      const shop = prop_('SHOP_NAME', '買取日本');
+      GmailApp.sendEmail(r.email, '【' + shop + '】修理のご予約を受け付けました（' + (r.no || id) + '）',
+        [noLinks_(r.name) + ' 様', '', 'この度は' + shop + 'に修理のご予約をいただき、ありがとうございます。下記の内容で承りました。', '',
+          '予約番号: ' + (r.no || id), '機種: ' + noLinks_(r.model), '症状: ' + noLinks_(r.problem), '希望店舗: ' + noLinks_(r.store), '希望日時: ' + noLinks_(r.when), '',
+          '担当者より、日時の確定などについて改めてご連絡いたします。', 'ご不明な点は、このメールにご返信ください。', '', shop].join('\n'), { name: shop });
+    } catch (err) { console.error('repair customer mail', err); }
+  }
   return { ok: true, id: id };
 }
 
