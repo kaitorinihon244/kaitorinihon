@@ -29,8 +29,8 @@ const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&a
 const yen = n => '¥' + Number(n).toLocaleString('ja-JP');
 const json = o => JSON.stringify(o).replace(/</g, '\\u003c');
 
-const TITLE = T.seoTitle || 'iPhone・スマホ・ゲーム機の高価買取｜池袋・新宿・鶴見の買取日本（Royal Japan）';
-const DESC = T.seoDescription || 'iPhone・Galaxy・Pixel・iPad・ゲーム機・MacBookを東京相場で高価買取。池袋・新宿・鶴見の店舗やオフィスへのお持ち込みは現金即払い、郵送買取は全国対応。買取価格は毎日更新。';
+const TITLE = T.seoTitle || '買取日本（Kaitori Nihon）｜iPhone・スマホ・ゲーム機の高価買取｜池袋・新宿・鶴見';
+const DESC = T.seoDescription || '買取日本（Kaitori Nihon / Royal Japan）はiPhone・Galaxy・Pixel・iPad・ゲーム機・MacBookを東京相場で高価買取。池袋・新宿・鶴見の店舗やオフィスへのお持ち込みは現金即払い、郵送買取は全国対応。買取価格は毎日更新。';
 const OG_IMG = SITE + '/share.png', STORE_IMG = SITE + '/hero-products-hd.jpg';
 const LOGO = `<path fill="#3E8EE0" d="M6 9a3 3 0 0 1 3-3h16.2a4 4 0 0 1 2.83 1.17l14.8 14.8a4 4 0 0 1 0 5.66L29.63 40.83a4 4 0 0 1-5.66 0L7.17 24.03A4 4 0 0 1 6 21.2Z"/><circle fill="#E0475F" cx="15.6" cy="15.6" r="3.9"/><path fill="#fff" transform="translate(22.095 34.949) scale(0.021163)" d="M216,0L216,-166 41,-166 41,-250 216,-250 216,-311 41,-311 41,-396 177,-396 12,-726 195,-726 249,-580C258.333312988281,-555.333312988281 267.5,-530.333312988281 276.5,-505 285.5,-479.666656494141 295,-454.666656494141 305,-430L309,-430C318.333312988281,-455.333312988281 327.666656494141,-480.499969482422 337,-505.5 346.333312988281,-530.5 355.666656494141,-555.333312988281 365,-580L418,-726 597,-726 431,-396 568,-396 568,-311 393,-311 393,-250 568,-250 568,-166 393,-166 393,0z"/>`;
 
@@ -131,11 +131,11 @@ write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="htt
 const idx = path.join(out, 'index.html');
 let html = fs.readFileSync(idx, 'utf8');
 const org = {
-  '@context': 'https://schema.org', '@type': 'Organization', '@id': SITE + '/#org', name: brand, legalName: T.legalName || undefined, alternateName: ['KAITORI', 'Kaitorinihon', 'Royal Japan'],
+  '@context': 'https://schema.org', '@type': 'Organization', '@id': SITE + '/#org', name: brand, legalName: T.legalName || undefined, alternateName: ['Kaitori Nihon', 'KAITORI', 'Kaitorinihon', 'kaitorinihon.jp', '買取日本', 'Royal Japan'],
   url: SITE + '/', logo: SITE + '/app-icon-512.png',
   sameAs: [T.instagramUrl, T.tiktokUrl, T.xUrl, T.youtubeUrl, T.lineUrl].filter(Boolean)
 };
-const site = { '@context': 'https://schema.org', '@type': 'WebSite', '@id': SITE + '/#site', name: brand, url: SITE + '/', inLanguage: 'ja', publisher: { '@id': SITE + '/#org' } };
+const site = { '@context': 'https://schema.org', '@type': 'WebSite', '@id': SITE + '/#site', name: brand, alternateName: ['Kaitori Nihon', 'Kaitorinihon', 'kaitorinihon.jp'], url: SITE + '/', inLanguage: 'ja', publisher: { '@id': SITE + '/#org' } };
 const addr = a => {
   const m = String(a).match(/〒?\s*(\d{3}-\d{4})\s*(東京都|北海道|(?:京都|大阪)府|.{2,3}県)(.+?[市区町村])(.*)$/);
   return m ? { '@type': 'PostalAddress', postalCode: m[1], addressRegion: m[2], addressLocality: m[3], streetAddress: m[4].trim(), addressCountry: 'JP' }
