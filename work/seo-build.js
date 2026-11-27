@@ -133,7 +133,7 @@ let html = fs.readFileSync(idx, 'utf8');
 const org = {
   '@context': 'https://schema.org', '@type': 'Organization', '@id': SITE + '/#org', name: brand, legalName: T.legalName || undefined, alternateName: ['Kaitori Nihon', 'KAITORI', 'Kaitorinihon', 'kaitorinihon.jp', '買取日本', 'Royal Japan'],
   url: SITE + '/', logo: SITE + '/app-icon-512.png',
-  sameAs: [T.instagramUrl, T.tiktokUrl, T.xUrl, T.youtubeUrl, T.lineUrl].filter(Boolean)
+  sameAs: [T.instagramUrl, T.tiktokUrl, T.xUrl, T.youtubeUrl, T.lineUrl, T.facebookUrl].filter(Boolean)
 };
 const site = { '@context': 'https://schema.org', '@type': 'WebSite', '@id': SITE + '/#site', name: brand, alternateName: ['Kaitori Nihon', 'Kaitorinihon', 'kaitorinihon.jp'], url: SITE + '/', inLanguage: 'ja', publisher: { '@id': SITE + '/#org' } };
 const addr = a => {
