@@ -23,6 +23,11 @@ $html = [IO.File]::ReadAllText((Join-Path $out 'index.html'), $utf8)
 # icons and share image made from the logo (see logos/README.txt)
 Copy-Item (Join-Path $Root 'brand\*') $out
 
+# /shop/<product no.> pages are made on request from the stock system by a Pages worker (only these paths run it)
+Copy-Item (Join-Path $Root 'work\_worker.js') (Join-Path $out '_worker.js')
+[IO.File]::WriteAllText((Join-Path $out '_routes.json'), '{"version":1,"include":["/shop","/shop/*","/sitemap-shop.xml"],"exclude":[]}', $utf8)
+Add-Content -Path (Join-Path $out 'robots.txt') -Value "Sitemap: https://kaitorinihon.jp/sitemap-shop.xml" -Encoding utf8
+
 $sha = [Security.Cryptography.SHA256]::Create()
 $hashes = foreach($m in [regex]::Matches($html, '<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)</script>')){
   "'sha256-" + [Convert]::ToBase64String($sha.ComputeHash($utf8.GetBytes($m.Groups[1].Value))) + "'"

@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://kaitorinihon.jp/sitemap.xml
+Sitemap: https://kaitorinihon.jp/sitemap-shop.xml

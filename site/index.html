@@ -2923,7 +2923,9 @@ function signPhotos(paths){ const need=paths.filter(x=>!photoUrls[x]); if(!need.
     .then(r=>{ if(!r.ok) throw new Error('sign '+r.status); return r.json(); })
     .then(a=>{ (Array.isArray(a)?a:[]).forEach((o,i)=>{ const u=o&&(o.signedURL||o.signedUrl); if(u) photoUrls[need[i]]=SB_URL+'/storage/v1'+(u.startsWith('/')?u:'/'+u); }); }); }
 const stockKey=s=>String(s||'').toLowerCase().replace(/[\s　()（）\[\]【】・\-_/]/g,'');
-function stockFor(p){ if(!stockItems||!stockItems.length) return []; const k=stockKey(p.n); return stockItems.filter(it=>{ const s=stockKey(it.name); return s&&k&&(s.includes(k)||k.includes(s)); }); }
+/* a product named "iPhone 11 64GB/128GB/256GB" covers each of those capacities: stock "iPhone 11 128GB" belongs to it */
+function stockNames(p){ const n=String(p.n||''), m=n.match(/^(.*?)\s*((?:\d+(?:GB|TB)\s*\/\s*)+\d+(?:GB|TB))\s*$/i); return m?m[2].split('/').map(x=>stockKey(m[1]+x.trim())):[stockKey(n)]; }
+function stockFor(p){ if(!stockItems||!stockItems.length) return []; const ks=stockNames(p); return stockItems.filter(it=>{ const s=stockKey(it.name); return s&&ks.some(k=>k&&(s.includes(k)||k.includes(s))); }); }
 /* buying prices kept current by the relay (from 1-chome.com, every 6 hours); the page keeps its own prices if this fails.
    Same rules as relay/Prices.gs and work/ichome-match.ps1: options scale with the new price, colours take 1-chome's difference. */
 const icNorm=t=>!t?'':String(t).normalize('NFKC').toLowerCase().replace(/[【\[（(][^】\]）)]*(新品|中古|国内版|simフリー|sim free|正規品)[^】\]）)]*[】\]）)]/g,'').replace(/simフリー|sim free|国内版|正規品|新品|未開封/g,'').replace(/[\s　・\-_/【】\[\]（）()「」"'◆★☆,.、。]/g,'');
@@ -2954,7 +2956,11 @@ function loadBuyback(){ fetch(SB_URL+'/rest/v1/web_buyback_prices?select=brand,m
 setInterval(()=>{ if(!document.hidden&&pricesLoaded) loadBuyback(); },600000);
 function loadStock(force){ const relay=rqRelay(); if(stockLoading||(stockItems&&!force)) return; stockLoading=true;
   sbStock().then(list=>{ stockItems=list; sbState='ok'; }).catch(()=>{ sbState='fail'; return (relay?fetch(relay+'?stock=1').then(r=>r.json()).then(out=>out&&out.ok&&Array.isArray(out.items)?out.items:[]):Promise.resolve([])).then(list=>{ stockItems=list; }).catch(()=>{ stockItems=[]; }); })
-    .finally(()=>{ stockLoading=false; stockAt=Date.now(); if(SELL()){ render(false); heroCard.refresh(); drawCart(); if(pdOpen) drawPD(); } }); }
+    .finally(()=>{ stockLoading=false; stockAt=Date.now(); if(SELL()){ render(false); heroCard.refresh(); drawCart(); if(pdOpen) drawPD(); openBuyLink(); } }); }
+/* a link from a /shop/<product no.> page (?buy=P12345678) opens the phone's detail in the selling mode */
+const BUY=(location.search.match(/[?&]buy=([\w-]+)/)||[])[1]||''; let buyDone=false;
+function openBuyLink(){ if(!BUY||buyDone||sbState!=='ok') return; buyDone=true; const it=(stockItems||[]).find(x=>x.id===BUY||x.uid===BUY); const p=it&&site.products.find(pp=>stockFor(pp).includes(it)); if(p) openPD(p.id); }
+if(BUY){ let tries=0; const go=()=>{ try{ if(!SELL()) setPriceMode('sell'); else loadStock(true); }catch(e){ if(++tries<25) setTimeout(go,200); } }; setTimeout(go,200); }
 /* the list follows the stock system: refetched when the tab is shown again and every 5 minutes while open */
 document.addEventListener('visibilitychange',()=>{ if(!document.hidden&&SELL()&&Date.now()-stockAt>60000) loadStock(true); });
 setInterval(()=>{ if(!document.hidden&&SELL()&&Date.now()-stockAt>300000) loadStock(true); },60000);
