@@ -1785,6 +1785,7 @@ html[data-mode="sell"] .pmode-note{display:flex}
           <label class="fld"><span>メールアドレス *</span><input class="ctl" id="fEmail" type="email" required placeholder="you@example.com" autocomplete="email"><small class="err" hidden></small></label>
           <label class="fld"><span>電話番号 *</span><input class="ctl" id="fTel" type="tel" required placeholder="090-0000-0000" autocomplete="tel"><small class="err" hidden></small></label>
         </div>
+        <label class="fld" data-for="shop"><span>ご来店店舗 *</span><select class="ctl" id="fStore"></select><small class="err" hidden></small></label>
         <div class="row2f" data-for="shop">
           <label class="fld"><span>ご来店予定日 *</span><input class="ctl" id="fVisit" type="date"><small class="err" hidden></small></label>
           <label class="fld"><span>ご来店時間帯</span><select class="ctl" id="fVisitTime"><option>11:00〜13:00</option><option>13:00〜15:00</option><option>15:00〜17:00</option><option>17:00〜19:30</option></select></label>
@@ -2992,20 +2993,21 @@ $('#idSlots').addEventListener('change',async e=>{ const f=e.target.closest('[da
 $('#idSlots').addEventListener('click',e=>{ const d=e.target.closest('[data-iddel]'); if(!d) return; idPhotos[+d.dataset.iddel]=null; idDraw(); });
 $('#fIdType').addEventListener('change',()=>{ const fld=$('#fIdType').closest('.fld'); fld.classList.remove('bad'); $('.err',fld).hidden=true; $('#idErr').hidden=true; idPhotos=[null,null]; idDraw(); });
 function fieldsFor(n){ const m=way(); if(n===1) return cart.length?[]:[['#fItem','商品名をご記入ください']];
-  if(n===2) return [['#fName'],['#fKana'],['#fEmail','メールアドレスの形式で入力してください'],['#fTel','電話番号を入力してください'],...(m==='shop'?[['#fVisit','ご来店予定日を選んでください']]:[['#fZip','郵便番号を入力してください'],['#fShip','発送予定日を選んでください'],['#fAddr','ご住所を入力してください'],['#fBank'],['#fBranch'],['#fAcct','口座番号を数字で入力してください'],['#fHolder','口座名義をカタカナで入力してください']])];
+  if(n===2) return [['#fName'],['#fKana'],['#fEmail','メールアドレスの形式で入力してください'],['#fTel','電話番号を入力してください'],...(m==='shop'?[['#fStore','ご来店店舗を選んでください'],['#fVisit','ご来店予定日を選んでください']]:[['#fZip','郵便番号を入力してください'],['#fShip','発送予定日を選んでください'],['#fAddr','ご住所を入力してください'],['#fBank'],['#fBranch'],['#fAcct','口座番号を数字で入力してください'],['#fHolder','口座名義をカタカナで入力してください']])];
   return []; }
 function validate(n){ let ok=true; fieldsFor(n).forEach(([s,msg])=>{ const el=$(s), fld=el.closest('.fld'), er=$('.err',fld); const v=el.value.trim(); let bad=!v; if(!bad&&el.type==='email') bad=!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); if(!bad&&s==='#fTel') bad=!/^[0-9０-９+\-()\s]{9,}$/.test(v); if(!bad&&s==='#fZip') bad=!/^\d{3}-?\d{4}$/.test(v); if(!bad&&s==='#fAcct') bad=!/^\d{4,14}$/.test(v.normalize('NFKC').replace(/[\s-]/g,'')); if(!bad&&s==='#fHolder') bad=!/^[ァ-ヶーｦ-ﾟ･・\s()（）.．A-Za-z0-9]+$/.test(v);
   fld.classList.toggle('bad',bad); er.hidden=!bad; er.textContent=bad?(v?(msg||'正しく入力してください'):'入力してください'):''; if(bad){ ok=false; el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); } }); if(n===2&&way()==='mail'&&!idCheck()) ok=false; if(!ok) $(`#mForm [data-step="${n}"] .fld.bad .ctl`)?.focus(); return ok; }
 function drawConfirm(){ const m=way(); $('#apItems2').innerHTML=itemsHTML()||`<li><span>${esc($('#fItem').value)}</span></li>`;
   const rows=[['買取方法',m==='shop'?'店頭買取':'郵送買取'],['お名前',`${$('#fName').value}（${$('#fKana').value}）`],['メール',$('#fEmail').value],['電話番号',$('#fTel').value],
-   ...(m==='shop'?[['ご来店予定',`${$('#fVisit').value} ${$('#fVisitTime').value}`]]:[['ご住所',`〒${$('#fZip').value} ${$('#fAddr').value}`],['発送予定日',$('#fShip').value],['お振込先',`${$('#fBank').value} ${$('#fBranch').value} ${$('#fAcctType').value} ${$('#fAcct').value} ${$('#fHolder').value}`],['本人確認書類',`${$('#fIdType').value}（写真2枚）`]]),['備考',$('#fNote').value||'—']];
+   ...(m==='shop'?[['ご来店店舗',$('#fStore').value],['ご来店予定',`${$('#fVisit').value} ${$('#fVisitTime').value}`]]:[['ご住所',`〒${$('#fZip').value} ${$('#fAddr').value}`],['発送予定日',$('#fShip').value],['お振込先',`${$('#fBank').value} ${$('#fBranch').value} ${$('#fAcctType').value} ${$('#fAcct').value} ${$('#fHolder').value}`],['本人確認書類',`${$('#fIdType').value}（写真2枚）`]]),['備考',$('#fNote').value||'—']];
   $('#apConf').innerHTML=rows.map(([k,v])=>`<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('');
   $('#apMethodNote').textContent=m==='shop'?'ご来店時は商品と本人確認書類（運転免許証・マイナンバーカード・在留カード・パスポートなど顔写真付きのもの）をお持ちください。表示価格は上限で、店頭での検品後に正式な金額をご提示します。':'予約承認メールの受信日当日に、商品・買取依頼書・本人確認書類（初回のみ住民票の写しなど）を同封して発送してください。到着後に検品し、問題がなければ翌営業日にお振込みします。'; drawMailTo(); }
 function drawMailTo(){ $$('[data-mail-to]').forEach(b=>{ b.hidden=way()!=='mail'; b.querySelector('.mt-text').textContent=MAIL_TO.join('\n'); }); }
 document.addEventListener('click',async e=>{ if(!e.target.closest('[data-mail-copy]')) return; toast(await rqCopy(MAIL_TO.join('\n'))?'送り先をコピーしました':'コピーできませんでした'); });
-function openModal(){ if(modalOpen) return; fillFromMember(); modalOpen=true; lastFocus=document.activeElement; stopScroll(); modal.classList.remove('closing'); showOverlay(modal); setStep(1); }
+function fillStoreSel(){ const el=$('#fStore'), cur=el.value; el.innerHTML='<option value="">選んでください</option>'+(site.stores||[]).map(x=>`<option value="${esc(x.name)}">${esc(x.name)}</option>`).join(''); el.value=cur; }
+function openModal(){ if(modalOpen) return; fillStoreSel(); fillFromMember(); modalOpen=true; lastFocus=document.activeElement; stopScroll(); modal.classList.remove('closing'); showOverlay(modal); setStep(1); }
 function closeModal(){ if(!modalOpen) return; modalOpen=false; modal.classList.add('closing'); hideOverlay(modal,null,450); startScroll(); if(apStep===4) setTimeout(resetForm,750); lastFocus?.focus?.(); }
-function resetForm(){ $$('#mForm input:not([type=radio]):not([type=checkbox]), #mForm textarea').forEach(el=>el.value=''); $$('#mForm input[type=checkbox]').forEach(el=>el.checked=false); $('#apShop').checked=true; idReset(); $$('#mForm .fld').forEach(f=>{ f.classList.remove('bad'); const er=$('.err',f); if(er) er.hidden=true; }); $('#mSubmit .lbl').textContent='この内容で申し込む'; $('#mSubmit').disabled=false; apStep=1; }
+function resetForm(){ $$('#mForm input:not([type=radio]):not([type=checkbox]), #mForm textarea').forEach(el=>el.value=''); $$('#mForm input[type=checkbox]').forEach(el=>el.checked=false); $('#apShop').checked=true; $('#fStore').value=''; idReset(); $$('#mForm .fld').forEach(f=>{ f.classList.remove('bad'); const er=$('.err',f); if(er) er.hidden=true; }); $('#mSubmit .lbl').textContent='この内容で申し込む'; $('#mSubmit').disabled=false; apStep=1; }
 modal.addEventListener('click',e=>{ if(e.target===modal){ closeModal(); return; } const b=e.target.closest('[data-next]'); if(!b) return; const n=+b.dataset.next; if(n>apStep&&!validate(apStep)) return; setStep(n); });
 $('#mClose').onclick=closeModal; $('#mDoneClose').onclick=closeModal;
 modal.addEventListener('keydown',e=>trap(modal,e));
@@ -3022,7 +3024,7 @@ $('#mSubmit').onclick=()=>{ const ok=$('#fAgree1').checked&&$('#fAgree2').checke
   /* send the application to the shop's relay (Gmail, 注文 sheet, Telegram) */
   const m=way(), v=s=>($(s).value||'').trim();
   const payload={kind:'order',way:m,name:v('#fName'),kana:v('#fKana'),email:v('#fEmail'),tel:v('#fTel'),
-    when:m==='shop'?`${v('#fVisit')} ${v('#fVisitTime')}`:v('#fShip'),addr:m==='mail'?`〒${v('#fZip')} ${v('#fAddr')}`:'',note:v('#fNote'),
+    when:m==='shop'?`${v('#fVisit')} ${v('#fVisitTime')}`:v('#fShip'),addr:m==='mail'?`〒${v('#fZip')} ${v('#fAddr')}`:v('#fStore'),note:v('#fNote'),
     bank:m==='mail'?{name:v('#fBank'),branch:v('#fBranch'),type:v('#fAcctType'),no:v('#fAcct'),holder:v('#fHolder')}:null,
     idDoc:m==='mail'?{type:v('#fIdType'),photos:idPhotos.slice()}:null,
     items:cart.map(c=>({rjp:findP(c.id)?.rjp||'',name:findP(c.id)?.n||'',label:lineLabel(c),qty:c.qty,unit:unitOf(c)})),freeText:cart.length?'':v('#fItem')};

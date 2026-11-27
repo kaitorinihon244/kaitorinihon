@@ -115,7 +115,7 @@ function handleOrder_(b) {
   ordersTab_().appendRow(safeRow_([id, now_(), o.way, o.name, o.kana, o.email, o.tel, o.when, o.addr, itemText, count, total, o.note, '受付', now_()].concat(o.bank ? [o.bank.name, o.bank.branch, o.bank.type, "'" + o.bank.no, o.bank.holder] : [], o.idDoc ? [o.idDoc.type, o.idDoc.files.length + '枚', o.idUrl] : [])));
 
   const lines = ['注文番号: ' + id, '買取方法: ' + o.way, 'お名前: ' + o.name + (o.kana ? '（' + o.kana + '）' : ''), 'メール: ' + o.email, '電話: ' + o.tel,
-    o.way === '店頭買取' ? 'ご来店予定: ' + o.when : '発送予定: ' + o.when, o.addr ? 'ご住所: ' + o.addr : '', '', '【商品】', itemText,
+    o.way === '店頭買取' ? 'ご来店予定: ' + o.when : '発送予定: ' + o.when, o.addr ? (o.way === '店頭買取' ? 'ご来店店舗: ' : 'ご住所: ') + o.addr : '', '', '【商品】', itemText,
     '合計（上限）: ' + yen_(total) + '　' + count + '点', o.bank ? '振込先: ' + bankMask_(o.bank) + '（全桁はシートの注文タブ）' : '',
     o.idDoc ? '本人確認書類: ' + o.idDoc.type + '　写真' + o.idDoc.files.length + '枚（Driveの非公開フォルダ。写真はメール・Telegramには載せません）\n' + o.idUrl : '', o.note ? '備考: ' + o.note : ''].filter(function (x) { return x !== ''; });
   try {
