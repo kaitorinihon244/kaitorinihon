@@ -19,7 +19,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File work/build-site.ps1 -Root "<
 Local preview: `.claude/launch.json`, server name `kaitori` (port 8766). The preview serves `uridoki.html` and `work/site.json`; translations and the `/shop` worker are not served locally.
 
 ## Deploying
-- **Site → Cloudflare Pages** (project `kaitorinihon`, Production): dash.cloudflare.com → Workers & Pages → kaitorinihon → Create deployment → upload `kaitori-site.zip` → Save and deploy. It includes `_worker.js` and `_routes.json`. Then check https://kaitorinihon.jp/ .
+- **Site → Cloudflare Pages** (project `kaitorinihon`, Production): automatic. After rebuilding, commit `site/` and push to `main`; the GitHub Action `.github/workflows/deploy.yml` uploads `site/` (it needs the repository secret `CLOUDFLARE_API_TOKEN`, created by the owner). Check the Actions tab and https://kaitorinihon.jp/ afterwards. Manual fallback: dash.cloudflare.com → Workers & Pages → kaitorinihon → Create deployment → upload `kaitori-site.zip` (includes `_worker.js` and `_routes.json`) → Save and deploy.
 - **Relay → Apps Script** (project 買取日本 受付リレー): edit `Code.gs`, `Untitled.gs` (= Bot.gs), `Member.gs`, `Prices.gs`; Deploy → Manage deployments → pencil → Version: New version → Deploy. Same web-app URL stays. Keep `relay/*.gs` in sync with what is deployed.
 - **Claude artifact** `36b4ef68-4bfc-46d3-b29d-724b03867a41` (public, https://claude.ai/artifact/7kpFiP6j2thVvCtGQrXHH2): published from files: `index.html` (= uridoki.html), `data/site.json`, `data/i18n/*.json`. Forms, stock and analytics cannot work inside the artifact sandbox.
 - GitHub: `kaitorinihon244/kaitorinihon`, branch `main`.
