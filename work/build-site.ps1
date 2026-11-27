@@ -32,14 +32,14 @@ $sha = [Security.Cryptography.SHA256]::Create()
 $hashes = foreach($m in [regex]::Matches($html, '<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)</script>')){
   "'sha256-" + [Convert]::ToBase64String($sha.ComputeHash($utf8.GetBytes($m.Groups[1].Value))) + "'"
 }
-$scriptSrc = "script-src 'self' https://unpkg.com " + (@($hashes) -join ' ')
+$scriptSrc = "script-src 'self' https://unpkg.com https://www.googletagmanager.com " + (@($hashes) -join ' ')
 $csp = @(
   "default-src 'self'",
   $scriptSrc,
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
   "img-src 'self' data: blob: https:",
-  "connect-src 'self' https://script.google.com https://script.googleusercontent.com https://vqfreyiveytlolsaaypy.supabase.co",
+  "connect-src 'self' https://script.google.com https://script.googleusercontent.com https://vqfreyiveytlolsaaypy.supabase.co https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com",
   "frame-ancestors 'none'", "base-uri 'none'", "form-action 'none'", "object-src 'none'", "upgrade-insecure-requests"
 ) -join '; '
 $headers = @"

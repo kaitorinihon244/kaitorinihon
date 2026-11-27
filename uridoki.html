@@ -2553,11 +2553,15 @@ document.addEventListener('click',e=>{ const b=e.target.closest('[data-privacy]'
 const CONSENT_KEY='kaitori-consent';
 const consent=()=>{ try{ return localStorage.getItem(CONSENT_KEY)||''; }catch(e){ return ''; } };
 const consentAll=()=>consent()==='all';
-function setConsent(v){ try{ localStorage.setItem(CONSENT_KEY,v); if(v!=='all'){ ['kaitori-favs','uridoki-favs','kaitori-mode'].forEach(k=>localStorage.removeItem(k)); } }catch(e){} $('#ckBar').classList.remove('on'); setTimeout(()=>{ $('#ckBar').hidden=true; },400); }
+/* Google Analytics 4 (measurement ID of the kaitorinihon.jp stream): loaded only after the visitor accepts all cookies */
+const GA_ID='G-GJCHT41QT0'; let gaOn=false;
+function loadGA(){ if(gaOn||!consentAll()) return; gaOn=true; window['ga-disable-'+GA_ID]=false; window.dataLayer=window.dataLayer||[]; window.gtag=function(){ window.dataLayer.push(arguments); }; gtag('js',new Date()); gtag('config',GA_ID,{anonymize_ip:true});
+  const s=document.createElement('script'); s.async=true; s.src='https://www.googletagmanager.com/gtag/js?id='+GA_ID; document.head.appendChild(s); }
+function setConsent(v){ try{ localStorage.setItem(CONSENT_KEY,v); if(v==='all') loadGA(); else window['ga-disable-'+GA_ID]=true; if(v!=='all'){ ['kaitori-favs','uridoki-favs','kaitori-mode'].forEach(k=>localStorage.removeItem(k)); } }catch(e){} $('#ckBar').classList.remove('on'); setTimeout(()=>{ $('#ckBar').hidden=true; },400); }
 function showConsent(force){ if(!force&&consent()) return; const bar=$('#ckBar'); bar.hidden=false; requestAnimationFrame(()=>bar.classList.add('on')); }
 $('#ckAll').onclick=()=>{ setConsent('all'); toast('Cookieの使用に同意しました'); };
 $('#ckMin').onclick=()=>{ setConsent('essential'); toast('必要なCookieのみ使用します'); };
-setTimeout(()=>showConsent(false),2600);
+setTimeout(()=>showConsent(false),2600); loadGA();
 
 /* members: password-free sign-in with an emailed 6-digit code, through the relay (Member.gs).
    The session token is kept for the visit, and across visits only with cookie consent. */
