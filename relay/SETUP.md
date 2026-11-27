@@ -216,3 +216,10 @@ Every product on the site has an RJP code (RJP-000001…). The JAN stays in the 
 ## Stock from Supabase (27 Nov 2026)
 - The 販売 mode stock badges ("在庫あり N点") now read the Supabase view `public.web_products_for_sale` (project vqfreyiveytlolsaaypy) with the publishable key, sent in the `apikey` header. If Supabase fails, the site falls back to the old `?stock=1` list of the relay. CSP `connect-src` allows the Supabase host (work/build-site.ps1).
 - Phones appear when in stock and "show on website" is on; sold phones drop out by themselves.
+
+## Google review request in customer emails (Version 21)
+
+The mail-in buyback confirmation, the sale order confirmation and the sale payment/shipping mails end with a short request to write a Google review, with a link to the store page on Google Maps (`reviewLines_` in Bot.gs).
+
+- Default link: the Ikebukuro store listing. To use another link (for example the direct review link from Google Business Profile > Get more reviews), add the Script property `REVIEW_URL` (Project Settings > Script properties).
+- To leave the request out, set `REVIEW_URL` to `off`.

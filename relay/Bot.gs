@@ -156,6 +156,13 @@ function applicationForm_() {
 }
 // mail-in orders: the customer gets the order details and where to send the items
 const MAIL_TO = ['Royal Japan', '〒171-0021 東京都豊島区西池袋1-10-2 日高ビル503'];
+// Google review request added to the customer emails. REVIEW_URL (Script property) overrides the link; set it to off to leave the request out.
+const REVIEW_URL_DEFAULT = 'https://share.google/lbV78r8SjxpckWg3B';
+function reviewLines_() {
+  const u = String(prop_('REVIEW_URL', REVIEW_URL_DEFAULT) || '').trim();
+  if (!u || u.toLowerCase() === 'off' || !/^https:\/\//.test(u)) return [];
+  return ['', '【Googleクチコミのお願い】', 'ご利用のご感想を、Googleマップのクチコミでお寄せいただけるとうれしいです。', '下のリンクから店舗のページを開き、「クチコミを書く」を選んでください。', u];
+}
 function orderMail_(o, id, itemText, total, count) {
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(o.email)) return false;
   if (!limit_('cm:' + idKey_(o.email), 3, 21600) || !limit_('cm:all', 60, 3600)) return false;
@@ -172,7 +179,7 @@ function orderMail_(o, id, itemText, total, count) {
       formText,
       '【商品の送り先】', MAIL_TO[0], MAIL_TO[1], '',
       '【今後の流れ】', '1. 内容を確認し、予約承認メールをお送りします', '2. 承認メールの受信日当日に、商品・記入済みの買取申込書・本人確認書類（初回のみ住民票の写しなど）を同封し、上記の送り先へ着払いで発送してください', '3. 到着後に検品します', '4. 問題がなければ翌営業日にお振込みします', '',
-      'まだ発送せず、予約承認メールをお待ちください。', 'ご不明な点は、このメールにご返信ください。', '', shop]).join('\n');
+      'まだ発送せず、予約承認メールをお待ちください。', 'ご不明な点は、このメールにご返信ください。']).concat(reviewLines_(), ['', shop]).join('\n');
     GmailApp.sendEmail(o.email, '【' + shop + '】郵送買取のお申し込みを受け付けました（' + id + '）', body, opt);
     return true;
   } catch (err) { console.error('order customer mail', err); return false; }
@@ -479,7 +486,7 @@ function handleSale_(b) {
         '振込人名の前に注文番号（' + id.replace(/-/g, '') + '）を入れてください。', '',
         '【今後の流れ】', '1. ご注文の受付（このメール）', '2. ご入金の確認 → 確認メールをお送りします', back ? '3. お取り寄せ（ご入金確認後1〜2週間）→ 発送時に追跡番号をメールでお知らせします' : '3. 発送 → 追跡番号をメールでお知らせします', '', '期限までにご入金が確認できない場合、ご注文はキャンセルとなります。'];
     const body = [noLinks_(o.name) + ' 様', '', 'このたびは' + shop + 'をご利用いただき、ありがとうございます。', '以下の内容でご注文を承りました。', '',
-      lines.map(noLinks_).join('\n'), ''].concat(next, ['', shop]).join('\n');
+      lines.map(noLinks_).join('\n'), ''].concat(next, reviewLines_(), ['', shop]).join('\n');
     const opt = { name: shop }; if (prop_('NOTIFY_EMAIL')) opt.replyTo = prop_('NOTIFY_EMAIL');
     if (limit_('cm:' + idKey_(o.email), 3, 21600) && limit_('cm:all', 60, 3600)) GmailApp.sendEmail(o.email, '【' + shop + '】ご注文ありがとうございます（' + id + '）', body, opt);
   } catch (err) { console.error('sale customer mail', err); }
@@ -507,7 +514,7 @@ function saleFind_(id) {
 function saleMail_(v, subject, lines) {
   const shop = prop_('SHOP_NAME', '買取日本'); const opt = { name: shop };
   if (prop_('NOTIFY_EMAIL')) opt.replyTo = prop_('NOTIFY_EMAIL');
-  const body = [noLinks_(v[4]) + ' 様', ''].concat(lines, ['', '注文番号: ' + v[0], '', '【商品】', noLinks_(v[10]), '合計: ' + yen_(v[12]) + '（税込）　' + v[11] + '点', '', 'ご不明な点は、このメールにご返信ください。', '', shop]).join('\n');
+  const body = [noLinks_(v[4]) + ' 様', ''].concat(lines, ['', '注文番号: ' + v[0], '', '【商品】', noLinks_(v[10]), '合計: ' + yen_(v[12]) + '（税込）　' + v[11] + '点', '', 'ご不明な点は、このメールにご返信ください。']).concat(reviewLines_(), ['', shop]).join('\n');
   GmailApp.sendEmail(v[6], '【' + shop + '】' + subject + '（' + v[0] + '）', body, opt);
 }
 function saleSetStatus_(f, status) {
