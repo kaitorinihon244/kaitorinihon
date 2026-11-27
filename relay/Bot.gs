@@ -130,34 +130,6 @@ function handleOrder_(b) {
 }
 
 
-/* ---------- repair bookings from the site (修理予約) ----------
-   The site first saves the booking in the stock system (Supabase, RP-xxxxx) and then posts it here: sheet row, owner mail and Telegram,
-   and a confirmation mail to the customer when they gave an address. If Supabase failed, sbFail says why and the notice is marked. */
-function repairTab_() { return tab_('修理予約', ['受付ID', '受付日時', '予約番号(RP)', '機種', '症状', '希望店舗', '希望日時', 'お名前', '電話', 'メール', 'メッセージ', '在庫システム保存']); }
-function handleRepair_(b) {
-  const s = function (v, n) { return String(v == null ? '' : v).replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, n || 200); };
-  const r = { no: /^RP-\d{3,10}$/.test(String(b.no || '')) ? String(b.no) : '', model: s(b.model, 120), problem: s(b.problem, 160), store: s(b.store, 80), when: s(b.when, 60),
-    name: s(b.name, 80), tel: s(b.tel, 40), email: s(b.email, 120), msg: s(b.message, 800), fail: s(b.sbFail, 160) };
-  if (!r.model || !r.problem || !r.name || !(r.tel || r.email)) return { ok: false, error: 'missing' };
-  if (!limit_('rp:' + idKey_(r.tel || r.email), 5, 3600)) return { ok: false, error: 'busy' };
-  const id = clientId_(b.cid, 'RB') || 'RB-' + Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyMMdd') + '-' + Math.floor(1000 + Math.random() * 9000);
-  repairTab_().appendRow(safeRow_([id, now_(), r.no, r.model, r.problem, r.store, r.when, r.name, r.tel, r.email, r.msg, r.no ? '保存済み' : '失敗: ' + r.fail]));
-  const lines = ['修理予約: ' + (r.no || id), r.no ? '' : '⚠️ Supabase保存失敗: ' + r.fail, '機種: ' + r.model, '症状: ' + r.problem, '希望店舗: ' + r.store, '希望日時: ' + r.when,
-    'お名前: ' + r.name, '電話: ' + r.tel, 'メール: ' + r.email, r.msg ? 'メッセージ: ' + r.msg : ''].filter(function (x) { return x !== ''; });
-  try { const to = prop_('NOTIFY_EMAIL'), shop = prop_('SHOP_NAME', '買取日本'); if (to) GmailApp.sendEmail(to, '【' + shop + '】修理予約 ' + (r.no || id) + ' / ' + r.name, lines.join('\n'), { name: shop + ' 受付' }); } catch (err) { console.error('repair mail', err); }
-  try { tgSend_('🔧 新しい修理予約\n' + lines.join('\n')); } catch (err) { console.error('repair tg', err); }
-  if (r.email) {
-    try {
-      const shop = prop_('SHOP_NAME', '買取日本');
-      GmailApp.sendEmail(r.email, '【' + shop + '】修理のご予約を受け付けました（' + (r.no || id) + '）',
-        [noLinks_(r.name) + ' 様', '', 'この度は' + shop + 'に修理のご予約をいただき、ありがとうございます。下記の内容で承りました。', '',
-          '予約番号: ' + (r.no || id), '機種: ' + noLinks_(r.model), '症状: ' + noLinks_(r.problem), '希望店舗: ' + noLinks_(r.store), '希望日時: ' + noLinks_(r.when), '',
-          '担当者より、日時の確定などについて改めてご連絡いたします。', 'ご不明な点は、このメールにご返信ください。', '', shop].join('\n'), { name: shop });
-    } catch (err) { console.error('repair customer mail', err); }
-  }
-  return { ok: true, id: id };
-}
-
 // mail-in orders are paid by transfer, so the customer's account is required. The full number stays in the sheet;
 // emails, Telegram and /order only ever show the last 4 digits.
 function bankIn_(x) {

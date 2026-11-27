@@ -63,7 +63,6 @@ function doPost(e) {
     if (!rateOk_()) return json_({ ok: false, error: 'busy' });
     if (body.kind === 'order') return json_(handleOrder_(body));   // site 買取申込 → Bot.gs
     if (body.kind === 'sale') return json_(handleSale_(body));     // site 購入カート → Bot.gs
-    if (body.kind === 'repair') return json_(handleRepair_(body)); // site 修理予約 → Bot.gs
     if (body.kind === 'master') return json_(handleMaster_(body));   // product master sync → Bot.gs
     if (/^(auth_start|auth_verify|me|profile|logout)$/.test(body.kind || '')) return json_(handleMember_(body));   // 会員 → Member.gs
     const r = clean_(body);
