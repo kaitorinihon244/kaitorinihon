@@ -1810,7 +1810,7 @@ html[data-mode="sell"] .pmode-note{display:flex}
         <input type="text" name="website" id="fWebsite" tabindex="-1" autocomplete="off" aria-hidden="true" class="rq-hp">
         <div class="row2f" data-for="shop">
           <label class="fld"><span>ご来店予定日 *</span><input class="ctl" id="fVisit" type="date"><small class="err" hidden></small></label>
-          <label class="fld"><span>ご来店時間帯</span><select class="ctl" id="fVisitTime"><option>11:00〜13:00</option><option>13:00〜15:00</option><option>15:00〜17:00</option><option>17:00〜19:30</option></select></label>
+          <label class="fld"><span>ご来店時間帯</span><select class="ctl" id="fVisitTime"><option>10:00〜12:00</option><option>12:00〜14:00</option><option>14:00〜16:00</option><option>16:00〜17:00</option></select></label>
         </div>
         <div data-for="mail" hidden>
           <div class="row2f">
@@ -2160,7 +2160,7 @@ const DEFAULT_SITE={
   catsTitle:"人気カテゴリー",band1:"売る",band2:"査定",band4:"現金",pricesEyebrow:"買取価格表",pricesTitle:"本日の強化買取",
   methodsTitle:"売り方は、4つから。",reasonsTitle:"選ばれる理由",statsEyebrow:"数字で見る買取日本",statsTitle:"実績が、査定額の根拠です。",statsNote:"",
   faqTitle:"よくあるご質問",faqLead:"掲載外のご質問はお気軽にお問い合わせください。",storesTitle:"お近くの店舗へ",cashTitle:"店舗・オフィスへのお持ち込みで、その場で現金お支払い",cashText:"査定金額にご納得いただければ、すぐに現金をお渡しします。商品と本人確認書類をお持ちください。",newsTitle:"お知らせ・SNS",storesNote:"ご来店前にお電話でのお問い合わせも承っております。",
-  openFrom:"10:30",openTo:"19:30",footA:"売るなら、いま。",footB:"まずは[無料査定]から。",footCta:"無料で査定する",
+  openFrom:"10:00",openTo:"17:00",footA:"売るなら、いま。",footB:"まずは[無料査定]から。",footCta:"無料で査定する",
   footTagline:"スマホ・ゲーム・カメラ・トレカ・ウイスキーを、東京相場で高価買取。",copyright:"© 2026 買取日本 Kaitorinihon. All rights reserved.",
   rqTitle:"お探しの商品が見つかりませんか？",rqLead:"掲載されていない商品も買取できます。写真と商品の情報を送るだけで、査定額をお知らせします。",
   contactEmail:"",lineUrl:"",relayUrl:"",bankInfo:"",instagramUrl:"https://www.instagram.com/kaitorinihon_/",tiktokUrl:"https://www.tiktok.com/@kaitorinihon247",xUrl:"",youtubeUrl:"",
@@ -2393,7 +2393,7 @@ $$('.pnav button>span').forEach(s=>hover(s,s.parentElement,{y:0},{y:-2},{tension
 const toMin=s=>{ const m=/^(\d{1,2}):(\d{2})$/.exec(s||''); return m?+m[1]*60+ +m[2]:null; };
 function clockTick(){ const d=new Date(); const t=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'); const ds=`${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日`;
   $$('[data-clock="t"]').forEach(e=>e.textContent=t); $$('[data-clock="d"]').forEach(e=>e.textContent=ds);
-  const mins=d.getHours()*60+d.getMinutes(), a=toMin(site.texts.openFrom)??630, b=toMin(site.texts.openTo)??1170; const open=mins>=a&&mins<b; $$('[data-open]').forEach(c=>{ c.classList.toggle('on',open); c.textContent=open?'営業中':'営業時間外'; }); }
+  const mins=d.getHours()*60+d.getMinutes(), a=toMin(site.texts.openFrom)??600, b=toMin(site.texts.openTo)??1020; const open=mins>=a&&mins<b; $$('[data-open]').forEach(c=>{ c.classList.toggle('on',open); c.textContent=open?'営業中':'営業時間外'; }); }
 setInterval(clockTick,1000);
 function bindPills(root=document){ $$('.pill',root).forEach(p=>{ if(p._hv) return; p._hv=1; hover(p.firstElementChild,p,{s:1},{s:1.04},{tension:320,friction:18}); const ic=p.querySelector('.ab .ic'); if(ic){ const ur=p.dataset.arrow==='up-right'; hover(ic,p,{x:0,y:0},ur?{x:2,y:-2}:{x:3,y:0},{tension:320,friction:18}); } }); }
 bindPills();
@@ -3310,7 +3310,7 @@ function renderEd(){
     h+=`<div class="help">${HL_HINT}</div>`;
     h+=`<h3>ブランド</h3>${F('店名','texts.brand')}${F('店名（ローマ字）','texts.romaji')}${F('キャッチコピー','texts.tagline')}${F('ヘッダーの一言','texts.headerPill')}${F('背景の大きな文字','texts.watermark')}`;
     h+=`<h3>トップ（ヒーロー）</h3>${F('小見出し','texts.heroEyebrow')}${F('更新日','texts.updated')}${F('見出し 1行目','texts.h1a')}${F('見出し 2行目','texts.h1b')}${F('見出し 3行目','texts.h1c')}${F('説明文','texts.lead','textarea')}<div class="row2">${F('評価','texts.ratingScore')}${F('評価の説明','texts.ratingText')}</div><div class="row2">${F('メインボタン','texts.ctaMain')}${F('サブボタン','texts.ctaSub')}</div>${F('操作のヒント','texts.hint')}${F('メーカー欄の見出し','texts.brandsLabel')}${F('古物商許可番号','texts.license')}${F('対応エリア','texts.status1')}`;
-    h+=`<h3>セクション</h3>${F('カテゴリー見出し','texts.catsTitle')}<div class="row3">${F('帯 1','texts.band1')}${F('帯 2','texts.band2')}${F('帯 4','texts.band4')}</div>${F('価格表 ラベル','texts.pricesEyebrow')}${F('価格表 見出し','texts.pricesTitle')}${F('買取の流れ 見出し','texts.methodsTitle')}${F('選ばれる理由 見出し','texts.reasonsTitle')}${F('実績 ラベル','texts.statsEyebrow')}${F('実績 見出し','texts.statsTitle')}${F('実績 注記','texts.statsNote')}${F('FAQ 見出し','texts.faqTitle')}${F('FAQ 説明','texts.faqLead')}${F('店舗 見出し','texts.storesTitle')}${F('店舗 注記','texts.storesNote')}<div class="row2">${F('開店時刻','texts.openFrom','text',{ph:'10:30'})}${F('閉店時刻','texts.openTo','text',{ph:'19:30'})}</div>`;
+    h+=`<h3>セクション</h3>${F('カテゴリー見出し','texts.catsTitle')}<div class="row3">${F('帯 1','texts.band1')}${F('帯 2','texts.band2')}${F('帯 4','texts.band4')}</div>${F('価格表 ラベル','texts.pricesEyebrow')}${F('価格表 見出し','texts.pricesTitle')}${F('買取の流れ 見出し','texts.methodsTitle')}${F('選ばれる理由 見出し','texts.reasonsTitle')}${F('実績 ラベル','texts.statsEyebrow')}${F('実績 見出し','texts.statsTitle')}${F('実績 注記','texts.statsNote')}${F('FAQ 見出し','texts.faqTitle')}${F('FAQ 説明','texts.faqLead')}${F('店舗 見出し','texts.storesTitle')}${F('店舗 注記','texts.storesNote')}<div class="row2">${F('開店時刻','texts.openFrom','text',{ph:'10:00'})}${F('閉店時刻','texts.openTo','text',{ph:'19:30'})}</div>`;
     h+=`<h3>フッター</h3>${F('見出し 1行目','texts.footA')}${F('見出し 2行目','texts.footB')}${F('ボタン','texts.footCta')}${F('紹介文','texts.footTagline','textarea')}${F('コピーライト','texts.copyright')}`;
     h+=`<h3>未掲載商品のご相談</h3><div class="help">価格表の下の「写真を送って相談する」から開くフォームです。お客様の端末から、下のLINE・メールあてに内容と写真が送られます（サイト上には保存されません）。どちらも空欄の場合は、スマホの共有機能と店舗の電話番号だけが表示されます。</div>${F('見出し','texts.rqTitle')}${F('説明文','texts.rqLead','textarea',{rows:2})}${F('受付システムのURL（Google Apps Script）','texts.relayUrl','text',{ph:'https://script.google.com/macros/s/…/exec',hint:'設定すると「この内容で送信する」ボタンになり、Gmail・Telegram・受付票に自動で届きます。'})}${F('受付メールアドレス','texts.contactEmail','text',{ph:'info@example.com'})}${F('LINE公式アカウントのURL','texts.lineUrl','text',{ph:'https://lin.ee/xxxxxxx'})}`;
     h+=`<h3>公式SNS</h3><div class="help">URLを入れたアカウントだけが、価格表の横とフッターに表示されます。LINEは上の「LINE公式アカウントのURL」を使います。</div>${F('Instagram','texts.instagramUrl','text',{ph:'https://www.instagram.com/…'})}${F('TikTok','texts.tiktokUrl','text',{ph:'https://www.tiktok.com/@…'})}${F('X（旧Twitter）','texts.xUrl','text',{ph:'https://x.com/…'})}${F('YouTube','texts.youtubeUrl','text',{ph:'https://www.youtube.com/@…'})}`;
