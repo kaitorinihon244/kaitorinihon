@@ -2828,6 +2828,7 @@ function applyAutoPrices(items){ let n=0;
   return n; }
 function loadPrices(){ const relay=rqRelay(); if(!relay||pricesLoaded) return; pricesLoaded=true;
   fetch(relay+'?prices=1').then(r=>r.json()).then(out=>{ if(!out||!out.ok||!out.items) return;
+    if(/^\d{4}\/\d\d\/\d\d \d\d:\d\d$/.test(out.updated||'')){ (site.texts=site.texts||{}).updated=out.updated; $$('[data-t="texts.updated"]').forEach(el=>el.textContent=out.updated); }   // the time of the last automatic price update
     if(applyAutoPrices(out.items)){ render(false); heroCard.refresh(); drawCart(); if(pdOpen) drawPD(); } }).catch(()=>{}); }function loadStock(){ const relay=rqRelay(); if(!relay||stockItems||stockLoading) return; stockLoading=true;
   fetch(relay+'?stock=1').then(r=>r.json()).then(out=>{ stockItems=out&&out.ok&&Array.isArray(out.items)?out.items:[]; }).catch(()=>{ stockItems=[]; })
     .finally(()=>{ stockLoading=false; if(SELL()) render(false); }); }
