@@ -26,7 +26,7 @@ Local preview: `.claude/launch.json`, server name `kaitori` (port 8766). The pre
 - GitHub: `kaitorinihon244/kaitorinihon`, branch `main`.
 
 ## Integrations
-- Supabase `https://vqfreyiveytlolsaaypy.supabase.co`, publishable key `sb_publishable_yqJcfi5QUeOzV7f8eucjFA_A9cVHAvH` (public; header `apikey`, not Bearer). Views `web_products_for_sale`, `web_buyback_prices`, `web_shops`; RPC `submit_buyback_request`. Stock rule: model+storage in `web_products_for_sale` → 在庫あり with its `selling_price`; otherwise 7日以内にお届け with the site price. Never show 在庫なし. Hide prices above ¥500,000 or below ¥1,000.
+- Supabase `https://vqfreyiveytlolsaaypy.supabase.co`, publishable key `sb_publishable_yqJcfi5QUeOzV7f8eucjFA_A9cVHAvH` (public; header `apikey`, not Bearer). Views `web_products_for_sale`, `web_buyback_prices`, `web_shops`; RPC `submit_buyback_request`. Stock rule: model+storage in `web_products_for_sale` → 在庫あり with its `selling_price`; otherwise 7日以内にお届け with the site price. Never show 在庫なし. Out-of-stock iPhones say ご注文後48時間以内にお届け; every other out-of-stock model says 7日以内にお届け (`waitTxt()` in uridoki.html, same wording in the relay order mails). Hide prices above ¥500,000 or below ¥1,000.
 - Google Analytics 4 `G-GJCHT41QT0`, loaded only after the visitor accepts cookies. Search Console and Bing Webmaster are set up (Bing tag in the home page head).
 - Relay Script properties (Telegram, NOTIFY_EMAIL, ID_PHOTO_REQUIRED, REVIEW_URL …) live only in Apps Script project settings.
 

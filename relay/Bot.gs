@@ -461,6 +461,9 @@ function handleSale_(b) {
   const id = clientId_(b.cid, 'S') || 'S-' + Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyMMdd') + '-' + Math.floor(1000 + Math.random() * 9000);
   // backorder: out-of-stock items take 1-2 weeks, so a pickup order's deadline moves out by 14 days
   const back = !!b.backorder;
+  // wait for out-of-stock items: 48時間以内 when every out-of-stock line is an iPhone (its label says so), otherwise 7日以内
+  const waitIP = back && items.some(function (it) { return /48時間/.test(it.label || ''); }) && !items.some(function (it) { return /7日以内/.test(it.label || ''); });
+  const wait = waitIP ? '48時間以内' : '7日以内';
   const due = Utilities.formatDate(new Date(Date.now() + (PAY_DAYS + (back && o.way === '店頭受取' ? 14 : 0)) * 864e5), 'Asia/Tokyo', 'yyyy/MM/dd');
   if (findById_(id)) return { ok: true, id: id, due: due, total: total };   // resent by the site
   if (!limit_('s:' + idKey_(o.email), 5, 3600)) return { ok: false, error: 'busy' };
@@ -471,7 +474,7 @@ function handleSale_(b) {
 
   const recv = o.way === '店頭受取' ? '店頭受取（' + o.store + '）' : '配送（〒' + o.zip + ' ' + o.addr + '）';
   const lines = ['注文番号: ' + id, '受け取り: ' + recv, 'お名前: ' + o.name + (o.kana ? '（' + o.kana + '）' : ''), 'メール: ' + o.email, '電話: ' + o.tel,
-    '', '【商品】', itemText, '合計: ' + yen_(total) + (pickup ? '（税込）　' : '（税込・送料別）　') + count + '点', back ? 'お取り寄せ: 在庫切れの商品を含むため、ご用意まで1〜2週間' : '', pickup ? 'お支払い: ご来店時に店舗で（' + STORE_PAY + '）' : '', (pickup ? (back ? 'お受け取り期限: ' : 'お取り置き期限: ') : 'お振込み期限: ') + due, o.note ? '備考: ' + o.note : ''].filter(function (x) { return x !== ''; });
+    '', '【商品】', itemText, '合計: ' + yen_(total) + (pickup ? '（税込）　' : '（税込・送料別）　') + count + '点', back ? 'お取り寄せ: 在庫切れの商品を含むため、ご用意まで' + wait : '', pickup ? 'お支払い: ご来店時に店舗で（' + STORE_PAY + '）' : '', (pickup ? (back ? 'お受け取り期限: ' : 'お取り置き期限: ') : 'お振込み期限: ') + due, o.note ? '備考: ' + o.note : ''].filter(function (x) { return x !== ''; });
   const shop = prop_('SHOP_NAME', '買取日本');
   try {
     const to = prop_('NOTIFY_EMAIL');
@@ -480,11 +483,11 @@ function handleSale_(b) {
   try {
     const bank = prop_('BANK_INFO');
     const next = pickup
-      ? ['【今後の流れ】', '1. ご注文の受付（このメール）', back ? '2. 入荷しましたらご連絡します（1〜2週間）。ご連絡後に ' + noLinks_(o.store) + ' へご来店ください' : '2. ' + due + ' までに ' + noLinks_(o.store) + ' へご来店ください', '3. 店舗でお支払い・お受け取り（' + STORE_PAY + '）', '', 'ご来店時に注文番号をお伝えください。ご請求額: ' + yen_(total), '期限までにご来店がない場合、ご注文はキャンセルとなります。']
+      ? ['【今後の流れ】', '1. ご注文の受付（このメール）', back ? '2. 入荷しましたらご連絡します（' + wait + '）。ご連絡後に ' + noLinks_(o.store) + ' へご来店ください' : '2. ' + due + ' までに ' + noLinks_(o.store) + ' へご来店ください', '3. 店舗でお支払い・お受け取り（' + STORE_PAY + '）', '', 'ご来店時に注文番号をお伝えください。ご請求額: ' + yen_(total), '期限までにご来店がない場合、ご注文はキャンセルとなります。']
       : ['【お振込み先】', bank || '振込先は担当者より改めてご連絡します。', '',
         'お振込み期限: ' + due + '（ご注文から' + PAY_DAYS + '日以内）', 'ご請求額: ' + yen_(total) + '（送料は別途ご案内します）',
         '振込人名の前に注文番号（' + id.replace(/-/g, '') + '）を入れてください。', '',
-        '【今後の流れ】', '1. ご注文の受付（このメール）', '2. ご入金の確認 → 確認メールをお送りします', back ? '3. お取り寄せ（ご入金確認後1〜2週間）→ 発送時に追跡番号をメールでお知らせします' : '3. 発送 → 追跡番号をメールでお知らせします', '', '期限までにご入金が確認できない場合、ご注文はキャンセルとなります。'];
+        '【今後の流れ】', '1. ご注文の受付（このメール）', '2. ご入金の確認 → 確認メールをお送りします', back ? '3. お取り寄せ（ご入金確認後' + wait + '）→ 発送時に追跡番号をメールでお知らせします' : '3. 発送 → 追跡番号をメールでお知らせします', '', '期限までにご入金が確認できない場合、ご注文はキャンセルとなります。'];
     const body = [noLinks_(o.name) + ' 様', '', 'このたびは' + shop + 'をご利用いただき、ありがとうございます。', '以下の内容でご注文を承りました。', '',
       lines.map(noLinks_).join('\n'), ''].concat(next, reviewLines_(), ['', shop]).join('\n');
     const opt = { name: shop }; if (prop_('NOTIFY_EMAIL')) opt.replyTo = prop_('NOTIFY_EMAIL');

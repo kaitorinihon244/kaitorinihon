@@ -1722,7 +1722,7 @@ html[data-mode="sell"] .ns-slide{background:var(--glass,#121c2e);border-color:rg
             <button id="vGrid" aria-pressed="true" aria-label="グリッド表示"><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg></button>
           </div>
         </div>
-        <p class="pmode-note" role="status"><i></i><span id="pmodeNote">在庫のある商品はすぐにご用意できます。在庫のない商品は、ご注文後7日以内にお届けします。</span></p>
+        <p class="pmode-note" role="status"><i></i><span id="pmodeNote">在庫のある商品はすぐにご用意できます。在庫のないiPhoneはご注文後48時間以内に、その他の商品は7日以内にお届けします。</span></p>
         <div class="grid" id="grid"></div>
         <div class="pager" id="pager"></div>
         <div class="rq-cta" data-reveal>
@@ -2796,12 +2796,13 @@ const BANK_DEFAULT='お振込み先は、ご注文確認メールでご案内し
 const byWay=()=>(bym.querySelector('input[name="byWay"]:checked')||{}).value||'pickup';
 function drawBackorder(){ const bo=sellCart.some(c=>!hasStock(findP(c.id))); $('#byBack').hidden=!bo;
   $('#bySubP').textContent=bo?'お支払いは入荷後、ご来店時に店舗で（現金・クレジットカード・バーコード決済など）。':'お支払いはご来店時に店舗で（現金・クレジットカード・バーコード決済など）。ご注文から3日間お取り置きします。';
-  $('#byStep2P').textContent=bo?'お届けの準備ができ次第ご連絡します（7日以内）':'3日以内に選んだ店舗へお越しください';
+  $('#byBack').textContent=boIP()?'在庫のない商品が含まれています。お届けまで48時間以内にご用意します。':'在庫のない商品が含まれています。お届けまで7日以内にご用意します。';
+  $('#byStep2P').textContent=bo?(boIP()?'お届けの準備ができ次第ご連絡します（48時間以内）':'お届けの準備ができ次第ご連絡します（7日以内）'):'3日以内に選んだ店舗へお越しください';
   $('#byDoneStep2P').textContent=bo?'お届けの準備ができ次第ご連絡します。ご連絡後にお越しください':'期限までに選んだ店舗へお越しください';
-  $('#byAgreeP').textContent=bo?'7日以内のお届けと、':'3日以内のご来店と、';
+  $('#byAgreeP').textContent=bo?(boIP()?'48時間以内のお届けと、':'7日以内のお届けと、'):'3日以内のご来店と、';
   $('#byDueLbl').textContent=bo?'お届け期間：':'お取り置き期限：'; }
 function byDraw(){ const w=byWay(); bym.querySelectorAll('[data-by]').forEach(el=>el.hidden=el.dataset.by!==w);
-  $('#byItems').innerHTML=sellCart.map(c=>{ const p=findP(c.id); return `<li><span>${esc(p.n)}<small>${esc(lineLabel(c))}${hasStock(p)?'':' · '+WAIT_TXT} × ${c.qty}</small></span><b class="num">${yen(unitSell(c)*c.qty)}</b></li>`; }).join('');
+  $('#byItems').innerHTML=sellCart.map(c=>{ const p=findP(c.id); return `<li><span>${esc(p.n)}<small>${esc(lineLabel(c))}${hasStock(p)?'':' · '+waitTxt(p)} × ${c.qty}</small></span><b class="num">${yen(unitSell(c)*c.qty)}</b></li>`; }).join('');
   drawBackorder();
   $('#byTotal').textContent=yen(sellTotal()); }
 function fillBuyFromMember(){ if(!member) return; const m={byName:member.name,byKana:member.kana,byEmail:member.email,byTel:member.tel,byZip:member.zip,byAddr:member.addr}; for(const k in m){ const el=$('#'+k); if(!el.value&&m[k]) el.value=m[k]; } }
@@ -2817,13 +2818,13 @@ bym.addEventListener('change',e=>{ if(e.target.name==='byWay') byDraw(); if(e.ta
 bym.addEventListener('input',e=>{ const er=e.target.parentElement&&e.target.parentElement.querySelector('.err'); if(er&&e.target.value.trim()){ er.hidden=true; e.target.classList.remove('bad'); } });
 $('#bySend').onclick=async()=>{ if(byBusy||!byValidate()) return;
   const v=id=>($('#'+id).value||'').trim(), w=byWay(), btn=$('#bySend'), lbl=btn.querySelector('.lbl');
-  const items=sellCart.map(c=>({rjp:findP(c.id).rjp,name:findP(c.id).n,label:lineLabel(c)+(hasStock(findP(c.id))?'':'・'+WAIT_TXT),qty:c.qty,unit:unitSell(c)})), total=sellTotal(), backorder=sellCart.some(c=>!hasStock(findP(c.id)));
+  const items=sellCart.map(c=>({rjp:findP(c.id).rjp,name:findP(c.id).n,label:lineLabel(c)+(hasStock(findP(c.id))?'':'・'+waitTxt(findP(c.id))),qty:c.qty,unit:unitSell(c)})), total=sellTotal(), backorder=sellCart.some(c=>!hasStock(findP(c.id)));
   byBusy=true; btn.disabled=true; lbl.textContent='送信中…';
   try{
     const out=await relaySend({kind:'sale',way:w,store:w==='pickup'?v('byStore'):'',name:v('byName'),kana:v('byKana'),email:v('byEmail'),tel:v('byTel'),zip:w==='delivery'?v('byZip'):'',addr:w==='delivery'?v('byAddr'):'',note:v('byNote'),hp:v('byHp'),items,total,backorder,token:getToken()||''},'S');
     if(!out||!out.ok) throw new Error(out&&out.error||'failed');
     const due=out.due||new Date(Date.now()+3*864e5).toLocaleDateString('ja-JP');
-    $('#byNo').textContent=out.id||''; $('#byDue').textContent=due; $('#byAmt').textContent=yen(total); $('#byDue2').textContent=backorder?'7日以内':due; $('#byAmt2').textContent=yen(total); $('#byPayStore').textContent=v('byStore');
+    $('#byNo').textContent=out.id||''; $('#byDue').textContent=due; $('#byAmt').textContent=yen(total); $('#byDue2').textContent=backorder?(boIP()?'48時間以内':'7日以内'):due; $('#byAmt2').textContent=yen(total); $('#byPayStore').textContent=v('byStore');
     $('#byBank').textContent=((site.texts||{}).bankInfo||'').trim()||BANK_DEFAULT;
     $('#byForm').hidden=true; $('#byDone').hidden=false; bym.querySelector('.pdp').scrollTop=0;
     sellCart=[]; $('#byNote').value=''; $('#byAgree').checked=false; drawCart(); setTimeout(()=>$('#byDoneClose').focus(),60);
@@ -2916,7 +2917,11 @@ const saveFavs=()=>{ if(!consentAll()) return; try{ localStorage.setItem('kaitor
 /* 在庫あり = the model/storage is in the stock system (Supabase web_products_for_sale) right now; otherwise 7日以内にお届け at the site price.
    Only if the stock system cannot be reached does the old rule apply. */
 const hasStock=p=>sbState==='ok'&&stockFor(p).length>0;
-const WAIT_TXT='7日以内にお届け';
+const WAIT_TXT='7日以内にお届け', WAIT_IP='ご注文後48時間以内にお届け';
+const isIP=p=>!!p&&(p.t==='iphone'||p.cat==='iPhone');
+const waitTxt=p=>isIP(p)?WAIT_IP:WAIT_TXT;
+/* the cart's wait: 48時間以内 when every out-of-stock line is an iPhone, otherwise 7日以内 */
+const boIP=()=>{ const b=sellCart.filter(c=>!hasStock(findP(c.id))); return b.length>0&&b.every(c=>isIP(findP(c.id))); };
 const P=()=>site.products;
 /* tabs with at least one product; empty tabs stay editable but are hidden from shoppers */
 const liveTabs=()=>{ const used=new Set(P().map(p=>p.t)); const t=site.tabs.filter(x=>used.has(x.id)); return t.length?t:site.tabs; };
@@ -3021,7 +3026,7 @@ if(BUY){ let tries=0; const go=()=>{ try{ if(!SELL()) setPriceMode('sell'); else
 document.addEventListener('visibilitychange',()=>{ if(!document.hidden&&SELL()&&Date.now()-stockAt>60000) loadStock(true); });
 setInterval(()=>{ if(!document.hidden&&SELL()&&Date.now()-stockAt>300000) loadStock(true); },60000);
 function syncModeUI(){ document.documentElement.dataset.mode=priceMode; document.querySelector('meta[name="theme-color"]')?.setAttribute('content',SELL()?'#0A101C':'#16233A'); $('#pmode').setAttribute('aria-checked',SELL()); if(SELL()) loadStock();
-  $('#pmodeNote').textContent=(site.sell&&site.sell.note)||'在庫のある商品はすぐにご用意できます。在庫のない商品は、ご注文後7日以内にお届けします。'; }
+  $('#pmodeNote').textContent=(site.sell&&site.sell.note)||'在庫のある商品はすぐにご用意できます。在庫のないiPhoneはご注文後48時間以内に、その他の商品は7日以内にお届けします。'; }
 function setPriceMode(m){ priceMode=m==='sell'?'sell':'buy'; if(consentAll()){ try{ localStorage.setItem('kaitori-mode',priceMode); }catch(e){} }
   syncModeUI(); if(!liveTabs().some(t=>t.id===tab)) tab=liveTabs()[0]?.id; tabsCtl.draw(); tabsCtl.select(tab); renderCats(); renderSide(); render(false); heroCard.refresh(); hero.set(); drawCart(); if(pdOpen) drawPD(); }
 syncModeUI();
@@ -3031,7 +3036,7 @@ function psumRow(c){ const ps=priced(c); if(!ps.length) return `<div class="ps">
 function stockPsum(list){ const ps=list.map(x=>x.price), lo=Math.min(...ps), hi=Math.max(...ps); return `<div class="ps"><span>在庫あり</span><b>${yen(lo)}${list.length>1?'<small>〜</small>':''}</b></div>`; }
 function cardHTML(p,i){
   const sp=specView(p); const inStock=SELL()?stockFor(p):[];
-  return `<article class="card" data-id="${p.id}" style="animation-delay:${i*40}ms">${p.kyo&&!SELL()?'<span class="kyo-b">強化</span>':''}${SELL()?(sbState==='load'?'':hasStock(p)?`<span class="instock">在庫あり${inStock.length>1?' '+inStock.length+'点':''}</span>`:(sbState==="load"?"":`<span class="instock out">${WAIT_TXT}</span>`)):''}
+  return `<article class="card" data-id="${p.id}" style="animation-delay:${i*40}ms">${p.kyo&&!SELL()?'<span class="kyo-b">強化</span>':''}${SELL()?(sbState==='load'?'':hasStock(p)?`<span class="instock">在庫あり${inStock.length>1?' '+inStock.length+'点':''}</span>`:(sbState==="load"?"":`<span class="instock out">${waitTxt(p)}</span>`)):''}
    <button class="fav" aria-pressed="${favs.has(p.id)}" aria-label="お気に入り">${favs.has(p.id)?ICON.heart:ICON.heartO}</button>
    <button class="cimg" data-pd aria-label="${esc(p.n)}の詳細"><span class="art pic">${pic(p.img,p.a,p.n)}</span><span class="share">${ICON.share}</span></button>
    <h3><button class="pname" data-pd>${esc(p.n)}</button></h3><div class="jan">${esc(p.rjp||'—')}</div><div class="memo">${hl(p.memo||'')}</div>
@@ -3140,7 +3145,7 @@ function drawStock(p,stk){ const el=$('#pdStock');
     if(urls.length>1){ const c=document.createElement('span'); c.className='cnt'; c.textContent='1/'+urls.length; h.appendChild(c); h.onclick=()=>{ i=(i+1)%urls.length; img.src=urls[i]; c.textContent=(i+1)+'/'+urls.length; }; } })); }
 pdm.addEventListener('click',e=>{ const b=e.target.closest('.sk-add'); if(!b) return; const p=findP(pd.id), it=(stockItems||[]).find(x=>x.id===b.dataset.code); if(!p||!it) return; addStockToCart(p,it); closePD(); });
 function drawPD(){ const p=findP(pd.id); const sp=specView(p); const cd=sp[pd.ci]; const op=cd&&cd.options[pd.oi]; const KIND=SELL()?'販売':'買取';
-  $('#pdSellNote').textContent=!hasStock(p)?'この商品は7日以内にお届けします。店頭受取は店舗でお支払い（現金・クレジットカード・バーコード決済など）、配送は銀行振込です。':(site.sell&&site.sell.pdNote)||'在庫あり。オンラインでご注文いただけます。店頭受取は店舗でお支払い（現金・クレジットカード・バーコード決済など）、配送は銀行振込です。';
+  $('#pdSellNote').textContent=!hasStock(p)?(isIP(p)?'この商品は48時間以内にお届けします。':'この商品は7日以内にお届けします。')+'店頭受取は店舗でお支払い（現金・クレジットカード・バーコード決済など）、配送は銀行振込です。':(site.sell&&site.sell.pdNote)||'在庫あり。オンラインでご注文いただけます。店頭受取は店舗でお支払い（現金・クレジットカード・バーコード決済など）、配送は銀行振込です。';
   const stk=SELL()&&sbState==='ok'?stockFor(p).slice().sort((a,b)=>a.price-b.price):[]; pdm.classList.toggle('stk',stk.length>0); $('#pdStock').hidden=!stk.length;
   if(stk.length){ $('#pdPriceLbl').textContent='販売価格（在庫あり）'; const pe=$('#pdPrice'); pe.classList.remove('ask'); pe.textContent=yen(stk[0].price)+(stk.length>1?'〜':''); $('#pdMsg').textContent=''; drawStock(p,stk); return; }
   $('#pdAdd span').textContent=SELL()?'購入カートに追加':'カートに追加する';
@@ -3417,7 +3422,7 @@ function renderEd(){
       const list=site.products.map((p,i)=>({p,i})).filter(({p})=>(edFilter==='all'||p.t===edFilter)&&(!edSearch||(p.n+' '+(p.cat||'')+' '+(p.rjp||'')+' '+(p.jan||'')).toLowerCase().includes(edSearch.toLowerCase())));
       h+=`<div class="help">商品の追加・編集・並べ替えができます。写真は商品を開いて「画像を選ぶ」から追加します。</div>`;
       h+=`<div class="ed-tools"><input class="ctl" id="edSearch" placeholder="商品名で絞り込む" value="${esc(edSearch)}" aria-label="商品名で絞り込む"><select class="ctl" id="edFilter" aria-label="カテゴリー"><option value="all">すべて</option>${tabOptions().map(([v,l])=>`<option value="${esc(v)}" ${edFilter===v?'selected':''}>${esc(l)}</option>`).join('')}</select></div>`;
-      h+=`<h3>販売価格（左上の「買取／販売」切り替え）</h3><div class="box"><div class="help">「販売」にすると、全商品の価格が「買取価格 ＋ 上乗せ率」で表示されます（指定した単位で切り上げ）。商品ごとの上乗せ率は各商品の編集画面で変更できます。カートと買取申込は常に買取価格です。</div><div class="row2">${F('上乗せ率（％）','sell.pct','num')}${F('切り上げ単位（円）','sell.round','num')}</div>${F('在庫として表示するSamsungの最低買取価格（円）','sell.stockMin','num')}${F('販売表示中のお知らせ文','sell.note','text',{ph:'在庫のある商品はすぐにご用意できます。在庫のない商品は、ご注文後7日以内にお届けします。'})}${F('商品詳細の購入案内','sell.pdNote','text',{ph:'ご購入は店頭、またはLINE・お電話でお問い合わせください。'})}</div>`;
+      h+=`<h3>販売価格（左上の「買取／販売」切り替え）</h3><div class="box"><div class="help">「販売」にすると、全商品の価格が「買取価格 ＋ 上乗せ率」で表示されます（指定した単位で切り上げ）。商品ごとの上乗せ率は各商品の編集画面で変更できます。カートと買取申込は常に買取価格です。</div><div class="row2">${F('上乗せ率（％）','sell.pct','num')}${F('切り上げ単位（円）','sell.round','num')}</div>${F('在庫として表示するSamsungの最低買取価格（円）','sell.stockMin','num')}${F('販売表示中のお知らせ文','sell.note','text',{ph:'在庫のある商品はすぐにご用意できます。在庫のないiPhoneはご注文後48時間以内に、その他の商品は7日以内にお届けします。'})}${F('商品詳細の購入案内','sell.pdNote','text',{ph:'ご購入は店頭、またはLINE・お電話でお問い合わせください。'})}</div>`;
       h+=`<button class="ebtn" data-add-product>＋ 商品を追加</button>`;
       const total=list.length; const shownList=list.slice(0,60);
       h+=`<p class="help">${total}件${total>60?'（先頭の60件を表示中。商品名やカテゴリーで絞り込んでください）':''}</p>`;

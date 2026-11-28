@@ -969,3 +969,10 @@
 967|Go|{0} Google reviews
 968|Go|View or write a Google review ↗
 969|当サ|This site uses cookies and similar browser storage to remember your favorites, display settings and sign-in. If you choose “Accept”, they are also used for analytics (Google Analytics). We don't use them for advertising.
+970|ご注|Delivered within {0} hours of your order
+971|在庫|Items in stock are ready right away. Out-of-stock iPhones are delivered within {0} hours of your order, and other items within {1} days.
+972|この|This item is delivered within {0} hours. For store pickup, pay at the store (cash, credit card, barcode payment, etc.); for delivery, pay by bank transfer.
+973|お届|We'll contact you as soon as your order is ready (within {0} hours)
+974|{0|delivery within {0} hours, and
+975|{0|within {0} hours
+976|在庫|Your order includes items that are not in stock. We'll have them ready for delivery within {0} hours.
